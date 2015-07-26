@@ -14,7 +14,7 @@ function getDojos()
                 
 				for (var i=0;i<list.length;i++)
 				{ 
-                    $('#listPanel').append('<a href="#" class="list-group-item" data-toggle="collapse" data-target="#' + list[i].id +'" data-parent="#menu">' + list[i].name +'</a>'
+                    $('#listPanel').append('<a href="#" class="list-group-item" data-toggle="collapse" data-target="#' + list[i].id +'" data-parent="#menu">' + list[i].name +' - ' + list[i].city + '</a>'
                         +'<div id="' + list[i].id +'" class="sublinks collapse">'
                         +'<a class="list-group-item small">Address: ' + list[i].address +'</a>'
                         +'<a class="list-group-item small">City: ' + list[i].city +'</a>'

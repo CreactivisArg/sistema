@@ -13,8 +13,8 @@ function getResponsibles()
                 $('#listPanel').empty();
                 
 				for (var i=0;i<list.length;i++)
-				{
-				    var padawans = '';
+				{ 
+                    var padawans = '';
                     for (var j=0;j<list[i].padawans.length;j++){
                         if ((j+1)==list[i].padawans.length)
                             padawans = padawans + list[i].padawans[j].lastname + ' ' + list[i].padawans[j].name;
@@ -30,9 +30,10 @@ function getResponsibles()
                         +'<a class="list-group-item small">Email: ' + list[i].email +'</a>'
                         +'<a class="list-group-item small">Facebook: ' + list[i].facebook +'</a>'
                         +'<a class="list-group-item small">Twitter: ' + list[i].twitter +'</a>'
-                        +'<a class="list-group-item small">Padawans: ' + padawans +'</a>'
                         +'<a class="list-group-item small">Status: ' + list[i].status +'</a>'
+                        +'<a class="list-group-item small">Padawans: ' + padawans +'</a>'
                        	+'<a class="list-group-item" onclick="editResponsible(\'' + list[i].id + '\')"><span class="glyphicon glyphicon-pencil"></span> Edit</a>'
+                        +'<a class="list-group-item" onclick="addPadawanResponsible(\'' + list[i].id + '\')"><span class="glyphicon glyphicon-plus"></span> Add Padawan</a>'
                         +'</div>');
 				}
         },
@@ -253,4 +254,104 @@ function newResponsible()
 }
 //---------------------------------------------------
 //FIN NEW PADRE
+//---------------------------------------------------
+
+//---------------------------------------------------
+//AGREGAR PADAWAN
+//---------------------------------------------------
+function addPadawanResponsible(id_responsible)
+{
+    setModalAddPadawan('Add Padawan',id_responsible);
+    showModalAddPadawan();
+    setPadawans();
+}
+
+function setModalAddPadawan(title, id_responsible)
+{   
+    $('#holderModal')
+    .empty()
+    .append(
+        '<!-- Modal -->'
+        +'<div class="modal fade" id="modalAddPadawan" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">'
+        +'  <div class="modal-dialog">'
+        +'    <div class="modal-content">'
+        +'      <div class="modal-header">'
+        +'        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>'
+        +'        <h4 class="modal-title" id="myModalLabel">' + title + '</h4>'
+        +'      </div>'
+        +'      <div class="modal-body" align="center">'
+        +'          <div  class="input-group-justified" style=" width:80%;">'
+        +'              <label>Padawans:</label>'
+        +'                   <select class="padawans-multiple" multiple="multiple" style="width: 80%" name="padawans" id="padawans">'
+        +'                  </select>'
+        +'          </div>'
+        +'      </div>'
+        +'      <div class="modal-footer">'
+        +'        <button type="button" class="btn btn-default" onclick="closeModalAddPadawan()">Close</button>'
+        +'       <button type="button" class="btn btn-primary" onclick="addPadawan(\'' + id_responsible + '\');">Add Padawan</button>'
+        +'      </div>');
+}
+
+function closeModalAddPadawan()
+{
+    $('#modalAddPadawan').modal('hide');
+}
+
+function showModalAddPadawan()
+{
+    $('#modalAddPadawan').modal('show');
+}
+
+function setPadawans()
+{
+    jQuery.ajax
+    ({
+        type: "GET",
+        url: "api/padawan/getPadawan.php",
+        cache: false,
+        success: function(list)
+        {        
+            $('#padawans').empty();
+             
+            for (var i=0;i<list.length;i++)
+            {
+                $('#padawans').append(
+                    
+                    '<option value='  + list[i].id +'>' + list[i].lastname + ' ' + list[i].name +'</option>'
+                );
+            }
+            $(".padawans-multiple").select2();
+        },
+        error: function(){
+            showDialog(BootstrapDialog.TYPE_WARNING,"Error","Ha ocurrido un error, intente nuevamente.");
+        }
+    });
+}
+
+function addPadawan(id_responsible)
+{
+    var ids = {
+            id_responsible: id_responsible,
+            padawans: $("#padawans").val()
+        };
+
+    jQuery.ajax
+    ({
+        type: "POST",
+        url: "api/responsible/addPadawan.php",
+        data: JSON.stringify(ids),
+        cache: false,
+        success: function(response)
+        {  
+            showDialog(BootstrapDialog.TYPE_INFO,"Confirm","El Padawan fue agregado correctamente");
+            closeModalAddPadawan();
+            getResponsibles();
+        },
+        error: function(){
+            showDialog(BootstrapDialog.TYPE_WARNING,"Error","Ha ocurrido un error, intente nuevamente.");
+        }
+    });
+}
+//---------------------------------------------------
+//FIN AGREGAR PADAWAN
 //---------------------------------------------------
