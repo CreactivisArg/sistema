@@ -6,11 +6,12 @@ $rawdata = file_get_contents('php://input');
 $obj = json_decode($rawdata);
 
 $id_dojo = $obj->id_dojo;
-$id_employee = $obj->id_employee;
+$employees = $obj->employees;
 
-$query =  sprintf("INSERT INTO dojo_employee (id_dojo, id_employee) VALUES ('%s', '%s')",mysql_real_escape_string($id_dojo),mysql_real_escape_string($id_employee));
-
-$result = mysql_query($query);
+foreach ($employees as $employee) {
+	$query =  sprintf("INSERT INTO dojo_employee (id_dojo, id_employee) VALUES ('%s', '%s')",mysql_real_escape_string($id_dojo),mysql_real_escape_string($employee));
+	$result = mysql_query($query);
+}
 
 if ($result)
     header("HTTP/1.1 200 OK");

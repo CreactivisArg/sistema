@@ -320,7 +320,7 @@ function setModalAddPadawan(title, id_dojo)
         +'      <div class="modal-body" align="center">'
         +'          <div  class="input-group-justified" style=" width:80%;">'
         +'              <label>Padawans:</label>'
-        +'                   <select name="padawans" id="padawans">'
+        +'                   <select class="padawans-multiple" multiple="multiple" style="width: 80%" name="padawans" id="padawans">'
         +'                  </select>'
         +'          </div>'
         +'      </div>'
@@ -358,6 +358,7 @@ function setPadawans()
                     '<option value='  + list[i].id +'>' + list[i].lastname + ' ' + list[i].name +'</option>'
                 );
             }
+            $(".padawans-multiple").select2();
         },
         error: function(){
             showDialog(BootstrapDialog.TYPE_WARNING,"Error","Ha ocurrido un error, intente nuevamente.");
@@ -369,7 +370,7 @@ function addPadawan(id_dojo)
 {
     var ids = {
             id_dojo: id_dojo,
-            id_padawan: $("#padawans").val()
+            padawans: $("#padawans").val()
         };
 
     jQuery.ajax
@@ -419,7 +420,7 @@ function setModalAddMentor(title, id_dojo)
         +'      <div class="modal-body" align="center">'
         +'          <div  class="input-group-justified" style=" width:80%;">'
         +'              <label>Mentors:</label>'
-        +'                   <select name="mentors" id="mentors">'
+        +'                   <select class="mentors-multiple" multiple="multiple" style="width: 80%" name="mentors" id="mentors">'
         +'                  </select>'
         +'          </div>'
         +'      </div>'
@@ -456,6 +457,7 @@ function setMentors()
                     
                     '<option value='  + list[i].id +'>' + list[i].lastname + ' ' + list[i].name +'</option>'
                 );
+                $(".mentors-multiple").select2();
             }
         },
         error: function(){
@@ -468,7 +470,7 @@ function addMentor(id_dojo)
 {
     var ids = {
             id_dojo: id_dojo,
-            id_mentor: $("#mentors").val()
+            mentors: $("#mentors").val()
         };
 
     jQuery.ajax
@@ -518,7 +520,7 @@ function setModalAddEmployee(title, id_dojo)
         +'      <div class="modal-body" align="center">'
         +'          <div  class="input-group-justified" style=" width:80%;">'
         +'              <label>Employees:</label>'
-        +'                   <select name="employees" id="employees">'
+        +'                   <select class="employees-multiple" multiple="multiple" style="width: 80%" name="employees" id="employees">'
         +'                  </select>'
         +'          </div>'
         +'      </div>'
@@ -555,6 +557,7 @@ function setEmployees()
                     
                     '<option value='  + list[i].id +'>' + list[i].lastname + ' ' + list[i].name +'</option>'
                 );
+                $(".employees-multiple").select2();
             }
         },
         error: function(){
@@ -567,7 +570,7 @@ function addEmployee(id_dojo)
 {
     var ids = {
             id_dojo: id_dojo,
-            id_employee: $("#employees").val()
+            employees: $("#employees").val()
         };
 
     jQuery.ajax
@@ -610,7 +613,7 @@ function removePadawan(id_dojo,id_padawan)
         success: function(response)
         {  
             showDialog(BootstrapDialog.TYPE_INFO,"Confirm","El Padawan fue removido correctamente.");
-            getMembers(id_dojo);
+            loadDojo(id_dojo);
         },
         error: function(){
             showDialog(BootstrapDialog.TYPE_WARNING,"Error","Ha ocurrido un error, intente nuevamente.");
