@@ -275,12 +275,6 @@ CTS.ListDojo = {
 	        +'       <button type="button" class="btn btn-primary" onclick="addPadawan(\'' + id_dojo + '\');">Add Padawan</button>'
 	        +'      </div>');
 	},
-	closeModalAddPadawan : function () {
-    	$('#modalAddPadawan').modal('hide');
-	},
-	howModalAddPadawan : function () {
-    	$('#modalAddPadawan').modal('show');
-	},
 	setPadawans : function () {
 	    jQuery.ajax({
 	        type: "GET",
