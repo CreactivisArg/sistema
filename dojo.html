@@ -84,16 +84,16 @@
     <script src="js/utils.js"></script>
     <script src="js/dojo.js"></script>
     <script>
-      var id_dojo = getURLParameter('id_dojo');
-    	$('#nameDojo').text(getURLParameter('name_dojo'));
+      var id_dojo = CTS.Utils.getURLParameter('id_dojo');
+    	$('#nameDojo').text(CTS.Utils.getURLParameter('name_dojo'));
       function buttonAddPadawan(){
-        addPadawanDojo(id_dojo);
+        CTS.Dojo.addPadawanDojo(id_dojo);
       }
       function buttonAddMentor(){
-        addMentorDojo(id_dojo);
+        CTS.Dojo.addMentorDojo(id_dojo);
       }
       function buttonAddEmployee(){
-        addEmployeeDojo(id_dojo);
+        CTS.Dojo.addEmployeeDojo(id_dojo);
       }
     	function showPadawans(){
     		$('#listPanelPadawans').show();
@@ -135,7 +135,6 @@
     		$('#tabResponsibles').removeClass('active');
     		$('#tabEmployees').addClass('active');
     	}
-    	getMembers(id_dojo);
 	</script>
     </body>
 </html>

@@ -46,6 +46,14 @@ if ($result)
                               'lastname' => $rowResponsible[2]
                         );
         }
+        $queryProject  = sprintf("select project.id, project.name from project_padawan left join project on project.id = project_padawan.id_project where project_padawan.id_padawan = '%s' order by project.name",mysql_real_escape_string($idPadawan));
+        $resultProject = mysql_query ($queryProject);
+        $projects = array();
+        while ($rowProject = mysql_fetch_row($resultProject)){
+            $projects [] = array('id' => $rowProject[0],
+                              'name' => $rowProject[1]
+                        );
+        }
         $padawans [] = array('id' => $idPadawan,
                             'name' => utf8_encode($row[1]),
                             'lastname' => utf8_encode($row[2]),
@@ -61,7 +69,8 @@ if ($result)
                             'status' => utf8_encode($row[12]),
                             'id_status' => $row[13],
                             'dojos' => $dojos,
-                            'responsibles' => $responsibles
+                            'responsibles' => $responsibles,
+                            'projects' => $projects
                             );
     }
     header('content-type: application/json; charset=utf-8');
