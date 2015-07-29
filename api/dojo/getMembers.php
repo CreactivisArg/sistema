@@ -9,7 +9,17 @@ if (isset($_POST['id_dojo'])){
     $resultPadawans = mysql_query ($queryPadawans);
     $padawans = array();
     while ($rowPadawan = mysql_fetch_row($resultPadawans)){
-        $padawans [] = array('id' => $rowPadawan[0],
+        $idPadawan = $rowPadawan[0];
+        $queryResponsibles  = sprintf("select responsible.id, contact.name, contact.lastname from responsible_padawan left join responsible on responsible.id = responsible_padawan.id_responsible left join contact on contact.id = responsible.id_contact where id_padawan = '%s' order by contact.lastname, contact.name",mysql_real_escape_string($idPadawan));
+        $resultResponsibles = mysql_query ($queryResponsibles);
+        $responsiblesAux = array();
+        while ($rowResponsible = mysql_fetch_row($resultResponsibles)){
+            $responsiblesAux [] = array('id' => $rowResponsible[0],
+                              'name' => $rowResponsible[1],
+                              'lastname' => $rowResponsible[2]
+                            );
+        }
+        $padawans [] = array('id' => $idPadawan,
                             'name' => utf8_encode($rowPadawan[1]),
                             'lastname' => utf8_encode($rowPadawan[2]),
                             'dni' => $rowPadawan[3],
@@ -22,7 +32,8 @@ if (isset($_POST['id_dojo'])){
                             'twitter' => utf8_encode($rowPadawan[10]),
                             'school' => utf8_encode($rowPadawan[11]),
                             'status' => utf8_encode($rowPadawan[12]),
-                            'id_status' => $rowPadawan[13]
+                            'id_status' => $rowPadawan[13],
+                            'responsibles' => $responsiblesAux
                             );
     }
     $queryMentors  = sprintf("select mentor.id, contact.name, contact.lastname, contact.dni, contact.address, contact.phone, contact.mobile, contact.email, contact.facebook, contact.twitter, status.name as status, mentor.id_status from mentor left join contact on contact.id = mentor.id_contact left join status on status.id = mentor.id_status inner join dojo_mentor on dojo_mentor.id_mentor = mentor.id and dojo_mentor.id_dojo = '%s' order by contact.lastname, contact.name",mysql_real_escape_string($id_dojo));
@@ -43,11 +54,21 @@ if (isset($_POST['id_dojo'])){
                             'id_status' => $rowMentors[11]
                             );
     }
-    $queryResponsibles  = sprintf("select responsible.id, contact.name, contact.lastname, contact.dni, contact.address, contact.phone, contact.mobile, contact.email, contact.facebook, contact.twitter, status.name as status, responsible.id_status from responsible left join contact on contact.id = responsible.id_contact left join status on status.id = responsible.id_status left join dojo_padawan on dojo_padawan.id_dojo = '%s' inner join responsible_padawan on responsible_padawan.id_padawan = dojo_padawan.id_padawan order by contact.lastname, contact.name",mysql_real_escape_string($id_dojo));
+    $queryResponsibles  = sprintf("select responsible.id, contact.name, contact.lastname, contact.dni, contact.address, contact.phone, contact.mobile, contact.email, contact.facebook, contact.twitter, status.name as status, responsible.id_status from responsible left join contact on contact.id = responsible.id_contact left join status on status.id = responsible.id_status left join dojo_padawan on dojo_padawan.id_dojo = '%s' inner join responsible_padawan on responsible_padawan.id_padawan = dojo_padawan.id_padawan and responsible_padawan.id_responsible = responsible.id order by contact.lastname, contact.name",mysql_real_escape_string($id_dojo));
     $resultResponsibles = mysql_query ($queryResponsibles);
     $responsibles = array();
     while ($rowResponsibles = mysql_fetch_row($resultResponsibles)){
-        $responsibles [] = array('id' => $rowResponsibles[0],
+        $idResponsible = $rowResponsibles[0];
+        $queryPadawan  = sprintf("select padawan.id, contact.name, contact.lastname from responsible_padawan left join padawan on padawan.id = responsible_padawan.id_padawan left join contact on contact.id = padawan.id_contact where responsible_padawan.id_responsible = '%s' order by contact.lastname, contact.name",mysql_real_escape_string($idResponsible));
+        $resultPadawan = mysql_query ($queryPadawan);
+        $padawansAux = array();
+        while ($rowPadawan = mysql_fetch_row($resultPadawan)){
+            $padawansAux [] = array('id' => $rowPadawan[0],
+                              'name' => $rowPadawan[1],
+                              'lastname' => $rowPadawan[2]
+                        );
+        }
+        $responsibles [] = array('id' => $idResponsible,
                             'name' => utf8_encode($rowResponsibles[1]),
                             'lastname' => utf8_encode($rowResponsibles[2]),
                             'dni' => $rowResponsibles[3],
@@ -58,7 +79,8 @@ if (isset($_POST['id_dojo'])){
                             'facebook' => utf8_encode($rowResponsibles[8]),
                             'twitter' => utf8_encode($rowResponsibles[9]),
                             'status' => utf8_encode($rowResponsibles[10]),
-                            'id_status' => $rowResponsibles[11]
+                            'id_status' => $rowResponsibles[11],
+                            'padawans' => $padawansAux
                             );
     }
     $queryEmployees  = sprintf("select employee.id, contact.name, contact.lastname, contact.dni, contact.address, contact.phone, contact.mobile, contact.email, contact.facebook, contact.twitter, status.name as status, employee.id_status from employee left join contact on contact.id = employee.id_contact left join status on status.id = employee.id_status inner join dojo_employee on dojo_employee.id_employee = employee.id and dojo_employee.id_dojo = '%s' order by contact.lastname, contact.name",mysql_real_escape_string($id_dojo));

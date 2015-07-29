@@ -38,8 +38,8 @@ CTS.Projects = {
                             +'<a class="list-group-item small">Why: ' + list[i].why +'</a>'
                             +'<a class="list-group-item small">Who: ' + list[i].who +'</a>'
                             +'<a class="list-group-item small">Scope: ' + list[i].scope +'</a>'
+                             +'<a class="list-group-item small">Padawans: ' + padawans +'</a>'
                             +'<a class="list-group-item small">Status: ' + list[i].status +'</a>'
-                            +'<a class="list-group-item small">Padawans: ' + padawans +'</a>'
                             +'<a class="list-group-item" onclick="CTS.Projects.editProject(\'' + list[i].id + '\')"><span class="glyphicon glyphicon-pencil"></span> Edit</a>'
                             +'<a class="list-group-item" onclick="CTS.Projects.addPadawanProject(\'' + list[i].id + '\')"><span class="glyphicon glyphicon-plus"></span> Add Padawan</a>'
                             +'</div>');

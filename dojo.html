@@ -51,16 +51,16 @@
   		<div class="jumbotron">
   			<p id="nameDojo"></p>
 	  		<div class="btn-group" role="group">
-  	  		<button type="button" class="btn btn-default" onclick="buttonAddPadawan()">Add Padawan</button>
-  				<button type="button" class="btn btn-default" onclick="buttonAddMentor()">Add Mentor</button>
-  				<button type="button" class="btn btn-default" onclick="buttonAddEmployee()">Add Employee</button>
+  	  			<button type="button" class="btn btn-default" id="addPadawan">Add Padawan</button>
+  				<button type="button" class="btn btn-default" id="addMentor">Add Mentor</button>
+  				<button type="button" class="btn btn-default" id="addEmployee">Add Employee</button>
 	  		</div>
 	  		<br><br>
 	  		<ul class="nav nav-tabs nav-justified">
-  			  <li role="presentation" id="tabPadawans" class="active"><a onclick="showPadawans()">Padawans</a></li>
-  			  <li role="presentation" id="tabMentors"><a onclick="showMentors()">Mentors</a></li>
-  			  <li role="presentation" id="tabResponsibles"><a onclick="showResponsibles()">Responsibles</a></li>
-  			  <li role="presentation" id="tabEmployees"><a onclick="showEmployees()">Employees</a></li>
+  			  <li role="presentation" id="tabPadawans" class="active"><a id="showPadawans">Padawans</a></li>
+  			  <li role="presentation" id="tabMentors"><a id="showMentors">Mentors</a></li>
+  			  <li role="presentation" id="tabResponsibles"><a id="showResponsibles">Responsibles</a></li>
+  			  <li role="presentation" id="tabEmployees"><a id="showEmployees">Employees</a></li>
 			  </ul>
   			<div class="panel list-group" id="listPanelPadawans">
   			</div>
@@ -83,58 +83,5 @@
     <script src="js/libs/select2.full.min.js"></script>
     <script src="js/utils.js"></script>
     <script src="js/dojo.js"></script>
-    <script>
-      var id_dojo = CTS.Utils.getURLParameter('id_dojo');
-    	$('#nameDojo').text(CTS.Utils.getURLParameter('name_dojo'));
-      function buttonAddPadawan(){
-        CTS.Dojo.addPadawanDojo(id_dojo);
-      }
-      function buttonAddMentor(){
-        CTS.Dojo.addMentorDojo(id_dojo);
-      }
-      function buttonAddEmployee(){
-        CTS.Dojo.addEmployeeDojo(id_dojo);
-      }
-    	function showPadawans(){
-    		$('#listPanelPadawans').show();
-    		$('#listPanelMentors').hide();
-    		$('#listPanelResponsibles').hide();
-    		$('#listPanelEmployees').hide();
-    		$('#tabPadawans').addClass('active');;
-    		$('#tabMentors').removeClass('active');
-    		$('#tabResponsibles').removeClass('active');
-    		$('#tabEmployees').removeClass('active');
-    	}
-    	function showMentors(){
-    		$('#listPanelPadawans').hide();
-    		$('#listPanelMentors').show();
-    		$('#listPanelResponsibles').hide();
-    		$('#listPanelEmployees').hide();
-    		$('#tabPadawans').removeClass('active');;
-    		$('#tabMentors').addClass('active');
-    		$('#tabResponsibles').removeClass('active');
-    		$('#tabEmployees').removeClass('active');
-    	}
-    	function showResponsibles(){
-    		$('#listPanelPadawans').hide();
-    		$('#listPanelMentors').hide();
-    		$('#listPanelResponsibles').show();
-    		$('#listPanelEmployees').hide();
-    		$('#tabPadawans').removeClass('active');;
-    		$('#tabMentors').removeClass('active');
-    		$('#tabResponsibles').addClass('active');
-    		$('#tabEmployees').removeClass('active');
-    	}
-    	function showEmployees(){
-    		$('#listPanelPadawans').hide();
-    		$('#listPanelMentors').hide();
-    		$('#listPanelResponsibles').hide();
-    		$('#listPanelEmployees').show();
-    		$('#tabPadawans').removeClass('active');;
-    		$('#tabMentors').removeClass('active');
-    		$('#tabResponsibles').removeClass('active');
-    		$('#tabEmployees').addClass('active');
-    	}
-	</script>
     </body>
 </html>
