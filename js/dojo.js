@@ -83,9 +83,9 @@ CTS.Dojo = {
                     var responsibles = '';
                     for (var j=0;j<dojo[0].padawans[i].responsibles.length;j++) {
                         if ((j+1)==dojo[0].padawans[i].responsibles.length)
-                            responsibles = responsibles + dojo[0].padawans[i].responsibles[j].lastname + ' ' + dojo[0].padawans[i].responsibles[j].name;
+                            responsibles = responsibles + '<a href="responsible.html?id_responsible=' + dojo[0].padawans[i].responsibles[j].id + '">' + dojo[0].padawans[i].responsibles[j].lastname + ' ' + dojo[0].padawans[i].responsibles[j].name+ '</a>';
                         else
-                            responsibles = responsibles + dojo[0].padawans[i].responsibles[j].lastname + ' ' + dojo[0].padawans[i].responsibles[j].name + ', ';
+                            responsibles = responsibles + '<a href="responsible.html?id_responsible=' + dojo[0].padawans[i].responsibles[j].id + '">' + dojo[0].padawans[i].responsibles[j].lastname + ' ' + dojo[0].padawans[i].responsibles[j].name + '</a>, ';
                     }
                     var projects = '';
                     for (var j=0;j<dojo[0].padawans[i].projects.length;j++) {
@@ -132,9 +132,9 @@ CTS.Dojo = {
                     var padawans = '';
                     for (var j=0;j<dojo[0].responsibles[i].padawans.length;j++){
                         if ((j+1)==dojo[0].responsibles[i].padawans.length)
-                            padawans = padawans + dojo[0].responsibles[i].padawans[j].lastname + ' ' + dojo[0].responsibles[i].padawans[j].name;
+                            padawans = padawans + '<a href="padawan.html?id_padawan=' + dojo[0].responsibles[i].padawans[j].id + '">' + dojo[0].responsibles[i].padawans[j].lastname + ' ' + dojo[0].responsibles[i].padawans[j].name + '</a>';
                         else
-                            padawans = padawans + dojo[0].responsibles[i].padawans[j].lastname + ' ' + dojo[0].responsibles[i].padawans[j].name + ', ';
+                            padawans = padawans + '<a href="padawan.html?id_padawan=' + dojo[0].responsibles[i].padawans[j].id + '">' + dojo[0].responsibles[i].padawans[j].lastname + ' ' + dojo[0].responsibles[i].padawans[j].name + '</a>, ';
                     }
                     $('#listPanelResponsibles').append('<a href="#" class="list-group-item" data-toggle="collapse" data-target="#' + dojo[0].responsibles[i].id +'" data-parent="#menu">' + dojo[0].responsibles[i].lastname + ' ' + dojo[0].responsibles[i].name + '</a>'
                         +'<div id="' + dojo[0].responsibles[i].id +'" class="sublinks collapse">'
