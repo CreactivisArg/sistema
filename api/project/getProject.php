@@ -9,6 +9,13 @@ if (isset($_POST['id']))
     $query  = sprintf("select project.id, project.name, project.track, project.description, project.target, project.why, project.who, project.scope, status.name as status, project.id_status from project left join status on status.id = project.id_status where project.id = '%s'",mysql_real_escape_string($id));
     $result = mysql_query ($query);
 }
+else if (isset($_POST['id_dojo']))
+{
+    //si viene el $_POST['id_dojo'] muestra los proyectos del dojo
+    $id_dojo = $_POST['id_dojo'];
+    $query  = sprintf("select project.id, project.name, project.track, project.description, project.target, project.why, project.who, project.scope, status.name as status, project.id_status from dojo_padawan inner join project_padawan on project_padawan.id_padawan = dojo_padawan.id_padawan inner join project on project.id = project_padawan.id_project left join status on status.id = project.id_status where dojo_padawan.id_dojo = '%s' order by project.name",mysql_real_escape_string($id_dojo));
+    $result = mysql_query ($query);
+}
 else
 {
     //si NO viene el $_POST['id'] lista todos los registros
