@@ -19,6 +19,14 @@ if (isset($_POST['id_dojo'])){
                               'lastname' => $rowResponsible[2]
                             );
         }
+        $queryProject  = sprintf("select project.id, project.name from project_padawan left join project on project.id = project_padawan.id_project where project_padawan.id_padawan = '%s' order by project.name",mysql_real_escape_string($idPadawan));
+        $resultProject = mysql_query ($queryProject);
+        $projectsAux = array();
+        while ($rowProject = mysql_fetch_row($resultProject)){
+            $projectsAux [] = array('id' => $rowProject[0],
+                              'name' => $rowProject[1]
+                        );
+        }
         $padawans [] = array('id' => $idPadawan,
                             'name' => utf8_encode($rowPadawan[1]),
                             'lastname' => utf8_encode($rowPadawan[2]),
@@ -33,7 +41,8 @@ if (isset($_POST['id_dojo'])){
                             'school' => utf8_encode($rowPadawan[11]),
                             'status' => utf8_encode($rowPadawan[12]),
                             'id_status' => $rowPadawan[13],
-                            'responsibles' => $responsiblesAux
+                            'responsibles' => $responsiblesAux,
+                            'projects' => $projectsAux
                             );
     }
     $queryMentors  = sprintf("select mentor.id, contact.name, contact.lastname, contact.dni, contact.address, contact.phone, contact.mobile, contact.email, contact.facebook, contact.twitter, status.name as status, mentor.id_status from mentor left join contact on contact.id = mentor.id_contact left join status on status.id = mentor.id_status inner join dojo_mentor on dojo_mentor.id_mentor = mentor.id and dojo_mentor.id_dojo = '%s' order by contact.lastname, contact.name",mysql_real_escape_string($id_dojo));

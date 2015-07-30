@@ -87,6 +87,13 @@ CTS.Dojo = {
                         else
                             responsibles = responsibles + dojo[0].padawans[i].responsibles[j].lastname + ' ' + dojo[0].padawans[i].responsibles[j].name + ', ';
                     }
+                    var projects = '';
+                    for (var j=0;j<dojo[0].padawans[i].projects.length;j++) {
+                        if ((j+1)==dojo[0].padawans[i].projects.length)
+                            projects = projects + dojo[0].padawans[i].projects[j].name;
+                        else
+                            projects = projects + dojo[0].padawans[i].projects[j].name + ', ';
+                    }
                     $('#listPanelPadawans').append('<a href="#" class="list-group-item" data-toggle="collapse" data-target="#' + dojo[0].padawans[i].id +'" data-parent="#menu">' + dojo[0].padawans[i].lastname + ' ' + dojo[0].padawans[i].name + '</a>'
                         +'<div id="' + dojo[0].padawans[i].id +'" class="sublinks collapse">'
                         +'<div class="list-group-item small">DNI: ' + dojo[0].padawans[i].dni +'</div>'
@@ -99,6 +106,7 @@ CTS.Dojo = {
                         +'<div class="list-group-item small">Twitter: ' + dojo[0].padawans[i].twitter +'</div>'
                         +'<div class="list-group-item small">School: ' + dojo[0].padawans[i].school +'</div>'
                         +'<div class="list-group-item small">Responsibles: ' + responsibles +'</div>'
+                        +'<div class="list-group-item small">Projects: ' + projects +'</div>'
                         +'<div class="list-group-item small">Status: ' + dojo[0].padawans[i].status +'</div>'
                         +'<a class="list-group-item" href="padawan.html?id_padawan=' + dojo[0].padawans[i].id + '"><span class="glyphicon glyphicon-eye-open"></span> View</a>'
                         +'<a class="list-group-item" onclick="CTS.Dojo.removePadawan(\'' + id_dojo + '\',\'' + dojo[0].padawans[i].id + '\')"><span class="glyphicon glyphicon-remove"></span> Remove Padawan</a>'
