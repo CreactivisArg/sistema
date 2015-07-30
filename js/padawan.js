@@ -1,66 +1,61 @@
 var CTS = CTS || {};
 
-CTS.Padawans = {
+CTS.Padawan = {
     init : function () {
-        this.bindActions();
-        this.getPadawans();
+        var id_padawan = CTS.Utils.getURLParameter('id_padawan');
+        this.bindActions(id_padawan);
+        this.getPadawan(id_padawan);
     },
-    bindActions : function () {
+    bindActions : function (id_padawan) {
         var self = this;
-        // setNewPadawan
-        $('.jumbotron .btn-primary').on('click', function () {
-            self.setNewPadawan();
+        $('#editPadawan').on('click', function () {
+            self.editPadawan(id_padawan);
         }); 
     },
-    getPadawans : function () {
+    getPadawan : function (id_padawan) {
         jQuery.ajax({
-            type: "GET",
+            type: "POST",
             url: "api/padawan/getPadawan.php",
+            data: 'id='+ id_padawan,
             cache: false,
-            success: function (list) {  
-                $('#listPanel').empty();
-                
-                for (var i=0;i<list.length;i++) {
+            success: function(padawan) {  
+                    $('#info').empty();
+                    
                     var dojos = '';
-                    for (var j=0;j<list[i].dojos.length;j++) {
-                        if ((j+1)==list[i].dojos.length)
-                            dojos = dojos + '<a href="dojo.html?name_dojo=' + list[i].dojos[j].name + '&id_dojo=' + list[i].dojos[j].id + '">' + list[i].dojos[j].name + '</a>';
+                    for (var i=0;i<padawan[0].dojos.length;i++) {
+                        if ((i+1)==padawan[0].dojos.length)
+                            dojos = dojos + '<a href="dojo.html?name_dojo=' + padawan[0].dojos[i].name + '&id_dojo=' + padawan[0].dojos[i].id + '">' + padawan[0].dojos[i].name + '</a>';
                         else
-                            dojos = dojos + '<a href="dojo.html?name_dojo=' + list[i].dojos[j].name + '&id_dojo=' + list[i].dojos[j].id + '">' + list[i].dojos[j].name + '</a>, ';
+                            dojos = dojos + '<a href="dojo.html?name_dojo=' + padawan[0].dojos[i].name + '&id_dojo=' + padawan[0].dojos[i].id + '">' + padawan[0].dojos[i].name + '</a>, ';
                     }
                     var responsibles = '';
-                    for (var j=0;j<list[i].responsibles.length;j++) {
-                        if ((j+1)==list[i].responsibles.length)
-                            responsibles = responsibles + '<a href="responsible.html?id_responsible=' + list[i].responsibles[j].id + '">' + list[i].responsibles[j].lastname + ' ' + list[i].responsibles[j].name + '</a>';
+                    for (var i=0;i<padawan[0].responsibles.length;i++) {
+                        if ((i+1)==padawan[0].responsibles.length)
+                            responsibles = responsibles + '<a href="responsible.html?id_responsible=' + padawan[0].responsibles[i].id + '">' + padawan[0].responsibles[i].lastname + ' ' + padawan[0].responsibles[i].name + '</a>';
                         else
-                            responsibles = responsibles + '<a href="responsible.html?id_responsible=' + list[i].responsibles[j].id + '">' + list[i].responsibles[j].lastname + ' ' + list[i].responsibles[j].name + '</a>, ';
+                            responsibles = responsibles + '<a href="responsible.html?id_responsible=' + padawan[0].responsibles[i].id + '">' + padawan[0].responsibles[i].lastname + ' ' + padawan[0].responsibles[i].name + '</a>, ';
                     }
                     var projects = '';
-                    for (var j=0;j<list[i].projects.length;j++) {
-                        if ((j+1)==list[i].projects.length)
-                            projects = projects + list[i].projects[j].name;
+                    for (var i=0;i<padawan[0].projects.length;i++) {
+                        if ((i+1)==padawan[0].projects.length)
+                            projects = projects + padawan[0].projects[i].name;
                         else
-                            projects = projects + list[i].projects[j].name + ', ';
+                            projects = projects + padawan[0].projects[i].name + ', ';
                     }
-                    $('#listPanel').append('<a href="#" class="list-group-item" data-toggle="collapse" data-target="#' + list[i].id +'" data-parent="#menu">' + list[i].lastname + ' ' + list[i].name + '</a>'
-                        +'<div id="' + list[i].id +'" class="sublinks collapse">'
-                        +'<div class="list-group-item small">DNI: ' + list[i].dni +'</div>'
-                        +'<div class="list-group-item small">Birthdate: ' + list[i].birthdate +'</div>'
-                        +'<div class="list-group-item small">Address: ' + list[i].address +'</div>'
-                        +'<div class="list-group-item small">Phone: ' + list[i].phone +'</div>'
-                        +'<div class="list-group-item small">Mobile: ' + list[i].mobile +'</div>'
-                        +'<div class="list-group-item small">Email: ' + list[i].email +'</div>'
-                        +'<div class="list-group-item small">Facebook: ' + list[i].facebook +'</div>'
-                        +'<div class="list-group-item small">Twitter: ' + list[i].twitter +'</div>'
-                        +'<div class="list-group-item small">School: ' + list[i].school +'</div>'
-                        +'<div class="list-group-item small">Dojos: ' + dojos +'</div>'
-                        +'<div class="list-group-item small">Responsibles: ' + responsibles +'</div>'
-                        +'<div class="list-group-item small">Projects: ' + projects +'</div>'
-                        +'<div class="list-group-item small">Status: ' + list[i].status +'</div>'
-                        +'<a class="list-group-item" href="padawan.html?id_padawan=' + list[i].id + '"><span class="glyphicon glyphicon-eye-open"></span> View</a>'
-                        +'<a class="list-group-item" onclick="CTS.Padawans.editPadawan(\'' + list[i].id + '\')"><span class="glyphicon glyphicon-pencil"></span> Edit</a>'
-                        +'</div>');
-                }
+                    $('#info').append('<p>' + padawan[0].lastname + ' ' + padawan[0].name + '</p>'
+                        +'<p>DNI: ' + padawan[0].dni +'</p>'
+                        +'<p>Birthdate: ' + padawan[0].birthdate +'</p>'
+                        +'<p>Address: ' + padawan[0].address +'</p>'
+                        +'<p>Phone: ' + padawan[0].phone +'</p>'
+                        +'<p>Mobile: ' + padawan[0].mobile +'</p>'
+                        +'<p>Email: ' + padawan[0].email +'</p>'
+                        +'<p>Facebook: ' + padawan[0].facebook +'</p>'
+                        +'<p>Twitter: ' + padawan[0].twitter +'</p>'
+                        +'<p>School: ' + padawan[0].school +'</p>'
+                        +'<p>Dojos: ' + dojos +'</p>'
+                        +'<p>Responsibles: ' + responsibles +'</p>'
+                        +'<p>Projects: ' + projects +'</p>'
+                        +'<p>Status: ' + padawan[0].status +'</p>');
             },
             error: function () {
                 CTS.Utils.showDialog(BootstrapDialog.TYPE_WARNING,"Error","Ha ocurrido un error, intente nuevamente.");
@@ -79,8 +74,6 @@ CTS.Padawans = {
         $('#modalEditPadawan').modal('show');
     },
     setModalPadawan : function (title,id) {
-        var saveBtn = (id) ? '<button type="button" class="btn btn-primary" onclick="CTS.Padawans.savePadawan(\'' + id + '\');">Save changes</button>' : '<button type="button" class="btn btn-primary" onclick="CTS.Padawans.newPadawan();">Save changes</button>';
-    
         $('#holderModal').empty().append(
             '<!-- Modal -->'
             +'<div class="modal fade" id="modalEditPadawan" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">'
@@ -110,7 +103,7 @@ CTS.Padawans = {
             +'      </div>'
             +'      <div class="modal-footer">'
             +'        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>'
-            +           saveBtn
+            +'        <button type="button" class="btn btn-primary" onclick="CTS.Padawan.savePadawan(\'' + id + '\');">Save changes</button>'
             +'      </div>');
         
     },
@@ -162,43 +155,8 @@ CTS.Padawans = {
             cache: false,
             success: function (response) {  
                 CTS.Utils.showDialog(BootstrapDialog.TYPE_INFO,"Confirm","El Padawan fue editado correctamente");
-                CTS.Padawans.closeModalEditPadawan();
-                CTS.Padawans.getPadawans();
-            },
-            error: function () {
-                CTS.Utils.showDialog(BootstrapDialog.TYPE_WARNING,"Error","Ha ocurrido un error, intente nuevamente.");
-            }
-        });
-    },
-    setNewPadawan : function () {
-        this.setModalPadawan('New Padawan', null);
-        this.showModalEditPadawan();
-        CTS.Utils.setStatus(null,'status');
-    },
-    newPadawan : function () {
-        var padawan = {
-                name: $("#name").val(),
-                lastname: $("#lastname").val(),
-                dni: $("#dni").val(),
-                birthdate: $("#birthdate").val(),
-                phone: $("#phone").val(),
-                mobile: $("#mobile").val(),
-                email: $("#email").val(),
-                facebook: $("#facebook").val(),
-                twitter: $("#twitter").val(),
-                school: $("#school").val(),
-                address: $("#address").val(),
-                id_status: $("#status").val()
-            };
-        jQuery.ajax({
-            type: "POST",
-            url: "api/padawan/newPadawan.php",
-            data: JSON.stringify(padawan),
-            cache: false,
-            success: function (response) {  
-                CTS.Utils.showDialog(BootstrapDialog.TYPE_INFO,"Confirm","El Padawan fue creado correctamente.");
-                CTS.Padawans.closeModalEditPadawan();
-                CTS.Padawans.getPadawans();
+                CTS.Padawan.closeModalEditPadawan();
+                CTS.Padawan.getPadawans();
             },
             error: function () {
                 CTS.Utils.showDialog(BootstrapDialog.TYPE_WARNING,"Error","Ha ocurrido un error, intente nuevamente.");
@@ -208,5 +166,5 @@ CTS.Padawans = {
 };
 
 $(function () {
-    CTS.Padawans.init();
+    CTS.Padawan.init();
 });

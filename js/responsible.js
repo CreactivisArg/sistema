@@ -1,49 +1,46 @@
 var CTS = CTS || {};
 
-CTS.Responsibles = {
+CTS.Responsible = {
     init : function () {
-        this.bindActions();
-        this.getResponsibles();
+        var id_responsible = CTS.Utils.getURLParameter('id_responsible');
+        this.bindActions(id_responsible);
+        this.getResponsible(id_responsible);
     },
-    bindActions : function () {
+    bindActions : function (id_responsible) {
         var self = this;
-        // setNewResponsible
-        $('.jumbotron .btn-primary').on('click', function () {
-            self.setNewResponsible();
+        $('#editResponsible').on('click', function () {
+            self.editResponsible(id_responsible);
+        }); 
+        $('#addPadawan').on('click', function () {
+            self.addPadawanResponsible(id_responsible);
         }); 
     },
-    getResponsibles : function () {
+    getResponsible : function (id_responsible) {
         jQuery.ajax({
-            type: "GET",
+            type: "POST",
             url: "api/responsible/getResponsible.php",
+            data: 'id='+ id_responsible,
             cache: false,
-            success: function (list) {  
-                    $('#listPanel').empty();
+            success: function(responsible) {  
+                    $('#info').empty();
                     
-                    for (var i=0;i<list.length;i++) { 
-                        var padawans = '';
-                        for (var j=0;j<list[i].padawans.length;j++) {
-                            if ((j+1)==list[i].padawans.length)
-                                padawans = padawans + '<a href="padawan.html?id_padawan=' + list[i].padawans[j].id + '">' + list[i].padawans[j].lastname + ' ' + list[i].padawans[j].name + '</a>';
-                            else
-                                padawans = padawans + '<a href="padawan.html?id_padawan=' + list[i].padawans[j].id + '">' + list[i].padawans[j].lastname + ' ' + list[i].padawans[j].name + '</a>, ';
-                        }
-                        $('#listPanel').append('<a href="#" class="list-group-item" data-toggle="collapse" data-target="#' + list[i].id +'" data-parent="#menu">' + list[i].lastname + ' ' + list[i].name + '</a>'
-                            +'<div id="' + list[i].id +'" class="sublinks collapse">'
-                            +'<div class="list-group-item small">DNI: ' + list[i].dni +'</div>'
-                            +'<div class="list-group-item small">Address: ' + list[i].address +'</div>'
-                            +'<div class="list-group-item small">Phone: ' + list[i].phone +'</div>'
-                            +'<div class="list-group-item small">Mobile: ' + list[i].mobile +'</div>'
-                            +'<div class="list-group-item small">Email: ' + list[i].email +'</div>'
-                            +'<div class="list-group-item small">Facebook: ' + list[i].facebook +'</div>'
-                            +'<div class="list-group-item small">Twitter: ' + list[i].twitter +'</div>'
-                            +'<div class="list-group-item small">Padawans: ' + padawans +'</div>'
-                            +'<div class="list-group-item small">Status: ' + list[i].status +'</div>'
-                            +'<a class="list-group-item" href="responsible.html?id_responsible=' + list[i].id + '"><span class="glyphicon glyphicon-eye-open"></span> View</a>'
-                            +'<a class="list-group-item" onclick="CTS.Responsibles.editResponsible(\'' + list[i].id + '\')"><span class="glyphicon glyphicon-pencil"></span> Edit</a>'
-                            +'<a class="list-group-item" onclick="CTS.Responsibles.addPadawanResponsible(\'' + list[i].id + '\')"><span class="glyphicon glyphicon-plus"></span> Add Padawan</a>'
-                            +'</div>');
+                    var padawans = '';
+                    for (var i=0;i<responsible[0].padawans.length;i++) {
+                        if ((i+1)==responsible[0].padawans.length)
+                            padawans = padawans + '<a href="padawan.html?id_padawan=' + responsible[0].padawans[i].id + '">' + responsible[0].padawans[i].lastname + ' ' + responsible[0].padawans[i].name + '</a>';
+                        else
+                            padawans = padawans + '<a href="padawan.html?id_padawan=' + responsible[0].padawans[i].id + '">' + responsible[0].padawans[i].lastname + ' ' + responsible[0].padawans[i].name + '</a>, ';
                     }
+                    $('#info').append('<p>' + responsible[0].lastname + ' ' + responsible[0].name + '</p>'
+                        +'<p>DNI: ' + responsible[0].dni +'</p>'
+                        +'<p>Address: ' + responsible[0].address +'</p>'
+                        +'<p>Phone: ' + responsible[0].phone +'</p>'
+                        +'<p>Mobile: ' + responsible[0].mobile +'</p>'
+                        +'<p>Email: ' + responsible[0].email +'</p>'
+                        +'<p>Facebook: ' + responsible[0].facebook +'</p>'
+                        +'<p>Twitter: ' + responsible[0].twitter +'</p>'
+                        +'<p>Padawans: ' + padawans +'</p>'
+                        +'<p>Status: ' + responsible[0].status +'</p>');
             },
             error: function () {
                 CTS.Utils.showDialog(BootstrapDialog.TYPE_WARNING,"Error","Ha ocurrido un error, intente nuevamente.");
@@ -62,8 +59,6 @@ CTS.Responsibles = {
         $('#modalEditResponsible').modal('show');
     },
     setModalResponsible : function (title,id) {
-        var saveBtn = (id) ? '<button type="button" class="btn btn-primary" onclick="CTS.Responsibles.saveResponsible(\'' + id + '\');">Save changes</button>' : '<button type="button" class="btn btn-primary" onclick="CTS.Responsibles.newResponsible();">Save changes</button>';
-    
         $('#holderModal').empty().append(
             '<!-- Modal -->'
             +'<div class="modal fade" id="modalEditResponsible" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">'
@@ -91,7 +86,7 @@ CTS.Responsibles = {
             +'      </div>'
             +'      <div class="modal-footer">'
             +'        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>'
-            +           saveBtn
+            +'        <button type="button" class="btn btn-primary" onclick="CTS.Responsible.saveResponsible(\'' + id + '\');">Save changes</button>'
             +'      </div>');
         
     },
@@ -139,46 +134,13 @@ CTS.Responsibles = {
             cache: false,
             success: function (response) {  
                 CTS.Utils.showDialog(BootstrapDialog.TYPE_INFO,"Confirm","El Responsable fue editado correctamente");
-                CTS.Responsibles.closeModalEditResponsible();
-                CTS.Responsibles.getResponsibles();
+                CTS.Responsible.closeModalEditResponsible();
+                CTS.Responsible.getResponsible(id);
             },
             error: function () {
                 CTS.Utils.showDialog(BootstrapDialog.TYPE_WARNING,"Error","Ha ocurrido un error, intente nuevamente.");
             }
         });
-    },
-    setNewResponsible : function () {
-        this.setModalResponsible('New Responsible', null);
-        this.showModalEditResponsible();
-        CTS.Utils.setStatus(null,'status');
-    },
-    newResponsible : function () {
-        var responsible = {
-                name: $("#name").val(),
-                lastname: $("#lastname").val(),
-                dni: $("#dni").val(),
-                phone: $("#phone").val(),
-                mobile: $("#mobile").val(),
-                email: $("#email").val(),
-                facebook: $("#facebook").val(),
-                twitter: $("#twitter").val(),
-                address: $("#address").val(),
-                id_status: $("#status").val()
-            };
-        jQuery.ajax({
-            type: "POST",
-            url: "api/responsible/newResponsible.php",
-            data: JSON.stringify(responsible),
-            cache: false,
-            success: function (response) {  
-                CTS.Utils.showDialog(BootstrapDialog.TYPE_INFO,"Confirm","El Responsable fue creado correctamente.");
-                CTS.Responsibles.closeModalEditResponsible();
-                CTS.Responsibles.getResponsibles();
-            },
-            error: function () {
-                CTS.Utils.showDialog(BootstrapDialog.TYPE_WARNING,"Error","Ha ocurrido un error, intente nuevamente.");
-            }
-        });   
     },
     addPadawanResponsible : function (id_responsible) {
         this.setModalAddPadawan('Add Padawan',id_responsible);
@@ -228,7 +190,7 @@ CTS.Responsibles = {
                 }
                 $(".padawans-multiple").select2();
             },
-            error: function () {
+            error: function() {
                 CTS.Utils.showDialog(BootstrapDialog.TYPE_WARNING,"Error","Ha ocurrido un error, intente nuevamente.");
             }
         });
@@ -245,8 +207,8 @@ CTS.Responsibles = {
             cache: false,
             success: function (response) {  
                 CTS.Utils.showDialog(BootstrapDialog.TYPE_INFO,"Confirm","El Padawan fue agregado correctamente");
-                CTS.Responsibles.closeModalAddPadawan();
-                CTS.Responsibles.getResponsibles();
+                CTS.Responsible.closeModalAddPadawan();
+                CTS.Responsible.getResponsible(id_responsible);
             },
             error: function () {
                 CTS.Utils.showDialog(BootstrapDialog.TYPE_WARNING,"Error","Ha ocurrido un error, intente nuevamente.");
@@ -256,5 +218,5 @@ CTS.Responsibles = {
 };
 
 $(function () {
-    CTS.Responsibles.init();
+    CTS.Responsible.init();
 });

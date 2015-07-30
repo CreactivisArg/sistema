@@ -24,14 +24,14 @@ CTS.Dojos = {
                 for (i; i < list.length; i++) { 
                     $('#listPanel').append('<a href="#" class="list-group-item" data-toggle="collapse" data-target="#' + list[i].id +'" data-parent="#menu">' + list[i].name +' - ' + list[i].city + '</a>'
                         +'<div id="' + list[i].id +'" class="sublinks collapse">'
-                        +'<a class="list-group-item small">Address: ' + list[i].address +'</a>'
-                        +'<a class="list-group-item small">City: ' + list[i].city +'</a>'
-                        +'<a class="list-group-item small">Description: ' + list[i].description +'</a>'
-                        +'<a class="list-group-item small">Phone: ' + list[i].phone +'</a>'
-                        +'<a class="list-group-item small">Email: ' + list[i].email +'</a>'
-                        +'<a class="list-group-item small">Facebook: ' + list[i].facebook +'</a>'
-                        +'<a class="list-group-item small">Twitter: ' + list[i].twitter +'</a>'
-                        +'<a class="list-group-item small">Status: ' + list[i].status +'</a>'
+                        +'<div class="list-group-item small">Address: ' + list[i].address +'</div>'
+                        +'<div class="list-group-item small">City: ' + list[i].city +'</div>'
+                        +'<div class="list-group-item small">Description: ' + list[i].description +'</div>'
+                        +'<div class="list-group-item small">Phone: ' + list[i].phone +'</div>'
+                        +'<div class="list-group-item small">Email: ' + list[i].email +'</div>'
+                        +'<div class="list-group-item small">Facebook: ' + list[i].facebook +'</div>'
+                        +'<div class="list-group-item small">Twitter: ' + list[i].twitter +'</div>'
+                        +'<div class="list-group-item small">Status: ' + list[i].status +'</div>'
                         +'<a class="list-group-item" href="dojo.html?name_dojo=' + list[i].name + '&id_dojo=' + list[i].id + '"><span class="glyphicon glyphicon-eye-open"></span> View</a>'
                         +'<a class="list-group-item" onclick="CTS.Dojos.editDojo(\'' + list[i].id + '\')"><span class="glyphicon glyphicon-pencil"></span> Edit</a>'
                         +'</div>');
@@ -53,7 +53,7 @@ CTS.Dojos = {
     showModalEditDojo : function () {
         $('#modalEditDojo').modal('show');
     },
-    setModalDojo : function (title, id) {
+    setModalDojo : function (title,id) {
         var saveBtn = (id) ? '<button type="button" class="btn btn-primary" onclick="CTS.Dojos.saveDojo(\'' + id + '\');">Save changes</button>' : '<button type="button" class="btn btn-primary" onclick="CTS.Dojos.newDojo();">Save changes</button>';
     
         $('#holderModal').empty().append(
@@ -92,8 +92,7 @@ CTS.Dojos = {
             url: "api/dojo/getDojo.php",
             data: 'id='+ id,
             cache: false,
-            success: function(atr)
-            {  
+            success: function (atr) {  
                 document.getElementById("name").value = atr[0].name; 
                 document.getElementById("address").value = atr[0].address;
                 document.getElementById("city").value = atr[0].city;
@@ -104,7 +103,7 @@ CTS.Dojos = {
                 document.getElementById("twitter").value = atr[0].twitter;
                 CTS.Utils.setStatus(atr[0].id_status,'status')
             },
-            error: function(){
+            error: function () {
                 CTS.Utils.showDialog(BootstrapDialog.TYPE_WARNING,"Error","Ha ocurrido un error, intente nuevamente.");
             }
         });
@@ -132,7 +131,7 @@ CTS.Dojos = {
                 CTS.Dojos.closeModalEditDojo();
                 CTS.Dojos.getDojos();
             },
-            error: function(){
+            error: function () {
                 CTS.Utils.showDialog(BootstrapDialog.TYPE_WARNING,"Error","Ha ocurrido un error, intente nuevamente.");
             }
         });
@@ -159,13 +158,12 @@ CTS.Dojos = {
             url: "api/dojo/newDojo.php",
             data: JSON.stringify(dojo),
             cache: false,
-            success: function(response)
-            {  
+            success: function (response) {  
                 CTS.Utils.showDialog(BootstrapDialog.TYPE_INFO,"Confirm","El Dojo fue creado correctamente.");
                 CTS.Dojos.closeModalEditDojo();
                 CTS.Dojos.getDojos();
             },
-            error: function(){
+            error: function () {
                 CTS.Utils.showDialog(BootstrapDialog.TYPE_WARNING,"Error","Ha ocurrido un error, intente nuevamente.");
             }
         });
