@@ -7,7 +7,6 @@ $obj = json_decode($rawdata);
 
 $id = $obj->id;
 $name = $obj->name;
-$track = $obj->track;
 $description = $obj->description;
 $target = $obj->target;
 $why = $obj->why;
@@ -15,8 +14,8 @@ $who = $obj->who;
 $scope = $obj->scope;
 $id_status = $obj->id_status;
 
-$query = sprintf("UPDATE project SET name = '%s', track = '%s', description = '%s', target = '%s', why = '%s', who = '%s', scope = '%s', id_status = '%s' WHERE id ='%s'",
-    mysql_real_escape_string($name),mysql_real_escape_string($track),mysql_real_escape_string($description),mysql_real_escape_string($target),mysql_real_escape_string($why),mysql_real_escape_string($who),mysql_real_escape_string($scope),mysql_real_escape_string($id_status),mysql_real_escape_string($id));
+$query = sprintf("UPDATE project SET name = '%s', description = '%s', target = '%s', why = '%s', who = '%s', scope = '%s', id_status = '%s' WHERE id ='%s'",
+    mysql_real_escape_string($name),mysql_real_escape_string($description),mysql_real_escape_string($target),mysql_real_escape_string($why),mysql_real_escape_string($who),mysql_real_escape_string($scope),mysql_real_escape_string($id_status),mysql_real_escape_string($id));
     
 $result = mysql_query($query);
 

@@ -21,6 +21,13 @@ CTS.Projects = {
                 $('#listPanel').empty();
                 
                 for (var i=0;i<list.length;i++) { 
+                    var categories = '';
+                    for (var j=0;j<list[i].categories.length;j++) {
+                        if ((j+1)==list[i].categories.length)
+                            categories = categories + list[i].categories[j].name;
+                        else
+                            categories = categories + list[i].categories[j].name + ', ';
+                    }
                     var padawans = '';
                     for (var j=0;j<list[i].padawans.length;j++) {
                         if ((j+1)==list[i].padawans.length)
@@ -30,7 +37,7 @@ CTS.Projects = {
                     }
                     $('#listPanel').append('<a href="#" class="list-group-item" data-toggle="collapse" data-target="#' + list[i].id +'" data-parent="#menu">' + list[i].name + '</a>'
                         +'<div id="' + list[i].id +'" class="sublinks collapse">'
-                        +'<div class="list-group-item small">Track: ' + list[i].track +'</div>'
+                        +'<div class="list-group-item small">Category: ' + categories +'</div>'
                         +'<div class="list-group-item small">Description: ' + list[i].description +'</div>'
                         +'<div class="list-group-item small">Target: ' + list[i].target +'</div>'
                         +'<div class="list-group-item small">Why: ' + list[i].why +'</div>'
@@ -74,7 +81,9 @@ CTS.Projects = {
             +'      <div class="modal-body" align="center">'
             +'          <div  class="input-group-justified" style=" width:80%;">'
             +'              <input id="name" type="text" class="form-control" placeholder="name"><br>'
-            +'              <input id="track" type="text" class="form-control" placeholder="track"><br>'
+            +'              <label>Category:</label>'
+            +'              <select class="categories-multiple" multiple="multiple" style="width: 80%" name="categories" id="categories">'
+            +'              </select><br><br>'
             +'              <input id="description" type="text" class="form-control" placeholder="description"><br>'
             +'              <input id="target" type="text" class="form-control" placeholder="target"><br>'
             +'              <input id="why" type="text" class="form-control" placeholder="why"><br>'
@@ -99,13 +108,13 @@ CTS.Projects = {
             cache: false,
             success: function (atr) {  
                 document.getElementById("name").value = atr[0].name; 
-                document.getElementById("track").value = atr[0].track;
                 document.getElementById("description").value = atr[0].description;
                 document.getElementById("target").value = atr[0].target;
                 document.getElementById("why").value = atr[0].why;
                 document.getElementById("who").value = atr[0].who;
                 document.getElementById("scope").value = atr[0].scope;
-                CTS.Utils.setStatus(atr[0].id_status,'status')
+                CTS.Utils.setStatus(atr[0].id_status,'status');
+                CTS.Utils.getCategories('categories');
             },
             error: function () {
                 CTS.Utils.showDialog(BootstrapDialog.TYPE_WARNING,"Error","Ha ocurrido un error, intente nuevamente.");
@@ -116,7 +125,6 @@ CTS.Projects = {
         var project = {
                 id: id,
                 name: $("#name").val(),
-                track: $("#track").val(),
                 description: $("#description").val(),
                 target: $("#target").val(),
                 why: $("#why").val(),
@@ -143,11 +151,12 @@ CTS.Projects = {
         this.setModalProject('New Project', null);
         this.showModalEditProject();
         CTS.Utils.setStatus(null,'status');
+        CTS.Utils.getCategories('categories');
     },
     newProject : function () {
         var project = {
                 name: $("#name").val(),
-                track: $("#track").val(),
+                categories: $("#categories").val(),
                 description: $("#description").val(),
                 target: $("#target").val(),
                 why: $("#why").val(),

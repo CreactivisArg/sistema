@@ -7,6 +7,55 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 
+# Volcado de tabla category
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `category`;
+
+CREATE TABLE `category` (
+  `id` char(36) NOT NULL DEFAULT '',
+  `name` varchar(255) NOT NULL DEFAULT '',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+LOCK TABLES `category` WRITE;
+/*!40000 ALTER TABLE `category` DISABLE KEYS */;
+
+INSERT INTO `category` (`id`, `name`)
+VALUES
+  ('67c480be-3703-11e5-823c-22cb9381cb76','web'),
+  ('6f2dd58a-3703-11e5-823c-22cb9381cb76','app'),
+  ('74f729bc-3703-11e5-823c-22cb9381cb76','game'),
+  ('7aca5454-3703-11e5-823c-22cb9381cb76','maker');
+
+/*!40000 ALTER TABLE `category` ENABLE KEYS */;
+UNLOCK TABLES;
+
+
+# Volcado de tabla contact
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `contact`;
+
+CREATE TABLE `contact` (
+  `id` char(36) NOT NULL DEFAULT '',
+  `name` varchar(255) NOT NULL DEFAULT '',
+  `lastname` varchar(255) NOT NULL DEFAULT '',
+  `dni` int(10) NOT NULL,
+  `birthdate` date DEFAULT NULL,
+  `address` varchar(255) NOT NULL,
+  `phone` varchar(255) DEFAULT NULL,
+  `mobile` varchar(255) DEFAULT NULL,
+  `email` varchar(255) NOT NULL DEFAULT '',
+  `facebook` varchar(255) DEFAULT NULL,
+  `twitter` varchar(255) DEFAULT NULL,
+  `school` varchar(255) DEFAULT NULL,
+  `path_picture` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+
 # Volcado de tabla diary
 # ------------------------------------------------------------
 
@@ -166,30 +215,6 @@ CREATE TABLE `mentor` (
 
 
 
-# Volcado de tabla contact
-# ------------------------------------------------------------
-
-DROP TABLE IF EXISTS `contact`;
-
-CREATE TABLE `contact` (
-  `id` char(36) NOT NULL DEFAULT '',
-  `name` varchar(255) NOT NULL DEFAULT '',
-  `lastname` varchar(255) NOT NULL DEFAULT '',
-  `dni` int(10) NOT NULL,
-  `birthdate` date DEFAULT NULL,
-  `address` varchar(255) NOT NULL,
-  `phone` varchar(255) DEFAULT NULL,
-  `mobile` varchar(255) DEFAULT NULL,
-  `email` varchar(255) NOT NULL DEFAULT '',
-  `facebook` varchar(255) DEFAULT NULL,
-  `twitter` varchar(255) DEFAULT NULL,
-  `school` varchar(255) DEFAULT NULL,
-  `path_picture` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-
-
 # Volcado de tabla padawan
 # ------------------------------------------------------------
 
@@ -235,7 +260,6 @@ DROP TABLE IF EXISTS `project`;
 CREATE TABLE `project` (
   `id` char(36) NOT NULL DEFAULT '',
   `name` varchar(255) NOT NULL DEFAULT '',
-  `track` varchar(255) NOT NULL DEFAULT '',
   `description` text NOT NULL,
   `target` varchar(255) NOT NULL DEFAULT '',
   `why` varchar(255) NOT NULL DEFAULT '',
@@ -245,6 +269,22 @@ CREATE TABLE `project` (
   `creation_date` datetime NOT NULL,
   PRIMARY KEY (`id`),
   KEY `id_status` (`id_status`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+
+# Volcado de tabla project_category
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `project_category`;
+
+CREATE TABLE `project_category` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `id_project` char(36) NOT NULL DEFAULT '',
+  `id_category` char(36) NOT NULL DEFAULT '',
+  PRIMARY KEY (`id`),
+  KEY `id_project` (`id_project`),
+  KEY `id_category` (`id_category`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
@@ -313,9 +353,9 @@ LOCK TABLES `status` WRITE;
 
 INSERT INTO `status` (`id`, `name`)
 VALUES
-	('0547367a-2d80-11e5-8741-2bb60d1f72e2','activo'),
-	('f9d8fb5c-2d7f-11e5-8741-2bb60d1f72e2','pendiente'),
-	('ff0de0c4-2d7f-11e5-8741-2bb60d1f72e2','lost');
+  ('0547367a-2d80-11e5-8741-2bb60d1f72e2','activo'),
+  ('f9d8fb5c-2d7f-11e5-8741-2bb60d1f72e2','pendiente'),
+  ('ff0de0c4-2d7f-11e5-8741-2bb60d1f72e2','lost');
 
 /*!40000 ALTER TABLE `status` ENABLE KEYS */;
 UNLOCK TABLES;
