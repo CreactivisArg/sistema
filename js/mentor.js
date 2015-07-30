@@ -1,48 +1,43 @@
 var CTS = CTS || {};
 
-CTS.Mentors = {
+CTS.Mentor = {
     init : function () {
-        this.bindActions();
-        this.getMentors();
+        var id_mentor = CTS.Utils.getURLParameter('id_mentor');
+        this.bindActions(id_mentor);
+        this.getMentor(id_mentor);
     },
-    bindActions : function () {
+    bindActions : function (id_mentor) {
         var self = this;
-        // setNewMentor
-        $('.jumbotron .btn-primary').on('click', function () {
-            self.setNewMentor();
+        $('#editMentor').on('click', function () {
+            self.editMentor(id_mentor);
         }); 
     },
-    getMentors : function () {
+    getMentor : function (id_mentor) {
         jQuery.ajax({
-            type: "GET",
+            type: "POST",
             url: "api/mentor/getMentor.php",
+            data: 'id='+ id_mentor,
             cache: false,
-            success: function(list) {  
-                $('#listPanel').empty();
-                
-                for (var i=0;i<list.length;i++) { 
+            success: function(mentor) {  
+                    $('#info').empty();
+                    
                     var dojos = '';
-                    for (var j=0;j<list[i].dojos.length;j++) {
-                        if ((j+1)==list[i].dojos.length)
-                            dojos = dojos + '<a href="dojo.html?name_dojo=' + list[i].dojos[j].name + '&id_dojo=' + list[i].dojos[j].id + '">' + list[i].dojos[j].name + '</a>';
+                    for (var i=0;i<mentor[0].dojos.length;i++) {
+                        if ((i+1)==mentor[0].dojos.length)
+                            dojos = dojos + '<a href="dojo.html?name_dojo=' + mentor[0].dojos[i].name + '&id_dojo=' + mentor[0].dojos[i].id + '">' + mentor[0].dojos[i].name + '</a>';
                         else
-                            dojos = dojos + '<a href="dojo.html?name_dojo=' + list[i].dojos[j].name + '&id_dojo=' + list[i].dojos[j].id + '">' + list[i].dojos[j].name + '</a>, ';
+                            dojos = dojos + '<a href="dojo.html?name_dojo=' + mentor[0].dojos[i].name + '&id_dojo=' + mentor[0].dojos[i].id + '">' + mentor[0].dojos[i].name + '</a>, ';
                     }
-                    $('#listPanel').append('<a href="#" class="list-group-item" data-toggle="collapse" data-target="#' + list[i].id +'" data-parent="#menu">' + list[i].lastname + ' ' + list[i].name + '</a>'
-                        +'<div id="' + list[i].id +'" class="sublinks collapse">'
-                        +'<div class="list-group-item small">DNI: ' + list[i].dni +'</div>'
-                        +'<div class="list-group-item small">Address: ' + list[i].address +'</div>'
-                        +'<div class="list-group-item small">Phone: ' + list[i].phone +'</div>'
-                        +'<div class="list-group-item small">Mobile: ' + list[i].mobile +'</div>'
-                        +'<div class="list-group-item small">Email: ' + list[i].email +'</div>'
-                        +'<div class="list-group-item small">Facebook: ' + list[i].facebook +'</div>'
-                        +'<div class="list-group-item small">Twitter: ' + list[i].twitter +'</div>'
-                        +'<div class="list-group-item small">Dojos: ' + dojos +'</div>'
-                        +'<div class="list-group-item small">Status: ' + list[i].status +'</div>'
-                        +'<a class="list-group-item" href="mentor.html?id_mentor=' + list[i].id + '"><span class="glyphicon glyphicon-eye-open"></span> View</a>'
-                        +'<a class="list-group-item" onclick="CTS.Mentors.editMentor(\'' + list[i].id + '\')"><span class="glyphicon glyphicon-pencil"></span> Edit</a>'
-                        +'</div>');
-                }
+                    $('#info').append('<p>' + mentor[0].lastname + ' ' + mentor[0].name + '</p>'
+                        +'<p>DNI: ' + mentor[0].dni +'</p>'
+                        +'<p>Address: ' + mentor[0].address +'</p>'
+                        +'<p>Phone: ' + mentor[0].phone +'</p>'
+                        +'<p>Mobile: ' + mentor[0].mobile +'</p>'
+                        +'<p>Email: ' + mentor[0].email +'</p>'
+                        +'<p>Facebook: ' + mentor[0].facebook +'</p>'
+                        +'<p>Twitter: ' + mentor[0].twitter +'</p>'
+                        +'<p>Dojos: ' + dojos +'</p>'
+                        +'<p>Status: ' + mentor[0].status +'</p>');
             },
             error: function () {
                 CTS.Utils.showDialog(BootstrapDialog.TYPE_WARNING,"Error","Ha ocurrido un error, intente nuevamente.");
@@ -61,8 +56,6 @@ CTS.Mentors = {
         $('#modalEditMentor').modal('show');
     },
     setModalMentor : function (title,id) {
-        var saveBtn = (id) ? '<button type="button" class="btn btn-primary" onclick="CTS.Mentors.saveMentor(\'' + id + '\');">Save changes</button>' : '<button type="button" class="btn btn-primary" onclick="CTS.Mentors.newMentor();">Save changes</button>';
-    
         $('#holderModal').empty().append(
             '<!-- Modal -->'
             +'<div class="modal fade" id="modalEditMentor" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">'
@@ -90,7 +83,7 @@ CTS.Mentors = {
             +'      </div>'
             +'      <div class="modal-footer">'
             +'        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>'
-            +           saveBtn
+            +'        <button type="button" class="btn btn-primary" onclick="CTS.Mentor.saveMentor(\'' + id + '\');">Save changes</button>'
             +'      </div>');
         
     },
@@ -138,41 +131,8 @@ CTS.Mentors = {
             cache: false,
             success: function (response) {  
                 CTS.Utils.showDialog(BootstrapDialog.TYPE_INFO,"Confirm","El Mentor fue editado correctamente");
-                CTS.Mentors.closeModalEditMentor();
-                CTS.Mentors.getMentors();
-            },
-            error: function () {
-                CTS.Utils.showDialog(BootstrapDialog.TYPE_WARNING,"Error","Ha ocurrido un error, intente nuevamente.");
-            }
-        });
-    },
-    setNewMentor : function () {
-        this.setModalMentor('New Mentor', null);
-        this.showModalEditMentor();
-        CTS.Utils.setStatus(null,'status');
-    },
-    newMentor : function () {
-        var mentor = {
-                name: $("#name").val(),
-                lastname: $("#lastname").val(),
-                dni: $("#dni").val(),
-                phone: $("#phone").val(),
-                mobile: $("#mobile").val(),
-                email: $("#email").val(),
-                facebook: $("#facebook").val(),
-                twitter: $("#twitter").val(),
-                address: $("#address").val(),
-                id_status: $("#status").val()
-            };
-        jQuery.ajax({
-            type: "POST",
-            url: "api/mentor/newMentor.php",
-            data: JSON.stringify(mentor),
-            cache: false,
-            success: function (response) {  
-                CTS.Utils.showDialog(BootstrapDialog.TYPE_INFO,"Confirm","El Mentor fue creado correctamente.");
-                CTS.Mentors.closeModalEditMentor();
-                CTS.Mentors.getMentors();
+                CTS.Mentor.closeModalEditMentor();
+                CTS.Mentor.getMentor(id);
             },
             error: function () {
                 CTS.Utils.showDialog(BootstrapDialog.TYPE_WARNING,"Error","Ha ocurrido un error, intente nuevamente.");
@@ -182,5 +142,5 @@ CTS.Mentors = {
 };
 
 $(function () {
-    CTS.Mentors.init();
+    CTS.Mentor.init();
 });

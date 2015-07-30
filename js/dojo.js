@@ -124,6 +124,7 @@ CTS.Dojo = {
                         +'<div class="list-group-item small">Facebook: ' + dojo[0].mentors[i].facebook +'</div>'
                         +'<div class="list-group-item small">Twitter: ' + dojo[0].mentors[i].twitter +'</div>'
                         +'<div class="list-group-item small">Status: ' + dojo[0].mentors[i].status +'</div>'
+                        +'<a class="list-group-item" href="mentor.html?id_mentor=' + dojo[0].mentors[i].id + '"><span class="glyphicon glyphicon-eye-open"></span> View</a>'
                         +'<a class="list-group-item" onclick="CTS.Dojo.removeMentor(\'' + id_dojo + '\',\'' + dojo[0].mentors[i].id + '\')"><span class="glyphicon glyphicon-remove"></span> Remove Mentor</a>'
                         +'</div>');
                 }
@@ -148,6 +149,7 @@ CTS.Dojo = {
                         +'<div class="list-group-item small">Padawans: ' + padawans +'</div>'
                         +'<div class="list-group-item small">Status: ' + dojo[0].responsibles[i].status +'</div>'
                         +'<a class="list-group-item" href="responsible.html?id_responsible=' + dojo[0].responsibles[i].id + '"><span class="glyphicon glyphicon-eye-open"></span> View</a>'
+                        +'<a class="list-group-item" href="responsible.html?id_responsible=' + dojo[0].responsibles[i].id + '"><span class="glyphicon glyphicon-eye-open"></span> View</a>'
                         +'</div>');
                 }
                 $('#listPanelEmployees').empty();
@@ -162,6 +164,7 @@ CTS.Dojo = {
                         +'<div class="list-group-item small">Facebook: ' + dojo[0].employees[i].facebook +'</div>'
                         +'<div class="list-group-item small">Twitter: ' + dojo[0].employees[i].twitter +'</div>'
                         +'<div class="list-group-item small">Status: ' + dojo[0].employees[i].status +'</div>'
+                        +'<a class="list-group-item" href="employee.html?id_employee=' + dojo[0].employees[i].id + '"><span class="glyphicon glyphicon-eye-open"></span> View</a>'
                         +'<a class="list-group-item" onclick="CTS.Dojo.removeEmployee(\'' + id_dojo + '\',\'' + dojo[0].employees[i].id + '\')"><span class="glyphicon glyphicon-remove"></span> Remove Employee</a>'
                         +'</div>');
                 }

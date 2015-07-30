@@ -39,6 +39,7 @@ CTS.Employees = {
                         +'<div class="list-group-item small">Twitter: ' + list[i].twitter +'</div>'
                         +'<div class="list-group-item small">Dojos: ' + dojos +'</div>'
                         +'<div class="list-group-item small">Status: ' + list[i].status +'</div>'
+                        +'<a class="list-group-item" href="employee.html?id_employee=' + list[i].id + '"><span class="glyphicon glyphicon-eye-open"></span> View</a>'
                         +'<a class="list-group-item" onclick="CTS.Employees.editEmployee(\'' + list[i].id + '\')"><span class="glyphicon glyphicon-pencil"></span> Edit</a>'
                         +'</div>');
                 }

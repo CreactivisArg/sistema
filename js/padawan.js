@@ -156,7 +156,7 @@ CTS.Padawan = {
             success: function (response) {  
                 CTS.Utils.showDialog(BootstrapDialog.TYPE_INFO,"Confirm","El Padawan fue editado correctamente");
                 CTS.Padawan.closeModalEditPadawan();
-                CTS.Padawan.getPadawans();
+                CTS.Padawan.getPadawan(id);
             },
             error: function () {
                 CTS.Utils.showDialog(BootstrapDialog.TYPE_WARNING,"Error","Ha ocurrido un error, intente nuevamente.");
