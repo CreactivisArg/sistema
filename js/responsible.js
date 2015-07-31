@@ -103,7 +103,7 @@ CTS.Responsible = {
         document.getElementById("facebook").value = this.responsible.facebook;
         document.getElementById("twitter").value = this.responsible.twitter;
         document.getElementById("address").value = this.responsible.address;
-        CTS.Utils.setStatus(this.responsible.id_status,'status')
+        CTS.Utils.setStatus(this.responsible.id_status,'status');
     },
     saveResponsible : function () {
         var responsible = {

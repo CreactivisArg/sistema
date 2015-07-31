@@ -91,9 +91,9 @@ CTS.Dojo = {
                     var projects = '';
                     for (var j=0;j<dojo[0].padawans[i].projects.length;j++) {
                         if ((j+1)==dojo[0].padawans[i].projects.length)
-                            projects = projects + dojo[0].padawans[i].projects[j].name;
+                            projects = projects + '<a href="project.html?id_project=' + dojo[0].padawans[i].projects[j].id + '">' + dojo[0].padawans[i].projects[j].name + '</a>';
                         else
-                            projects = projects + dojo[0].padawans[i].projects[j].name + ', ';
+                            projects = projects + '<a href="project.html?id_project=' + dojo[0].padawans[i].projects[j].id + '">' + dojo[0].padawans[i].projects[j].name + '</a>, ';
                     }
                     $('#listPanelPadawans').append('<a href="#" class="list-group-item" data-toggle="collapse" data-target="#' + dojo[0].padawans[i].id +'" data-parent="#menu">' + dojo[0].padawans[i].lastname + ' ' + dojo[0].padawans[i].name + '</a>'
                         +'<div id="' + dojo[0].padawans[i].id +'" class="sublinks collapse">'

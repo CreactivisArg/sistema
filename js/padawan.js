@@ -41,9 +41,9 @@ CTS.Padawan = {
                     var projects = '';
                     for (var i=0;i<padawan[0].projects.length;i++) {
                         if ((i+1)==padawan[0].projects.length)
-                            projects = projects + padawan[0].projects[i].name;
+                            projects = projects + '<a href="project.html?id_project=' + padawan[0].projects[i].id + '">' + padawan[0].projects[i].name + '</a>';
                         else
-                            projects = projects + padawan[0].projects[i].name + ', ';
+                            projects = projects + '<a href="project.html?id_project=' + padawan[0].projects[i].id + '">' + padawan[0].projects[i].name + '</a>, ';
                     }
                     $('#info').append('<p>' + padawan[0].lastname + ' ' + padawan[0].name + '</p>'
                         +'<p>DNI: ' + padawan[0].dni +'</p>'

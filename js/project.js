@@ -1,65 +1,65 @@
 var CTS = CTS || {};
 
-CTS.Projects = {
+CTS.Project = {
+    id_project : '',
+    project : {},
     init : function () {
+        this.id_project = CTS.Utils.getURLParameter('id_project');
         this.bindActions();
-        this.getProjects();
+        this.getProject();
     },
     bindActions : function () {
         var self = this;
-        // setNewProject
-        $('.jumbotron .btn-primary').on('click', function () {
-            self.setNewProject();
+        $('#editProject').on('click', function () {
+            self.editProject();
+        }); 
+        $('#addPadawan').on('click', function () {
+            self.addPadawanProject();
         }); 
     },
-    getProjects : function () {
+    getProject : function () {
         jQuery.ajax({
-            type: "GET",
+            type: "POST",
             url: "api/project/getProject.php",
+            data: 'id='+ this.id_project,
             cache: false,
-            success: function(list) {  
-                $('#listPanel').empty();
-                
-                for (var i=0;i<list.length;i++) { 
+            success: function(project) { 
+                    CTS.Project.project = project[0];   
+                    $('#info').empty();
+                    
                     var categories = '';
-                    for (var j=0;j<list[i].categories.length;j++) {
-                        if ((j+1)==list[i].categories.length)
-                            categories = categories + list[i].categories[j].name;
+                    for (var i=0;i<project[0].categories.length;i++) {
+                        if ((i+1)==project[0].categories.length)
+                            categories = categories + project[0].categories[i].name;
                         else
-                            categories = categories + list[i].categories[j].name + ', ';
+                            categories = categories + project[0].categories[i].name + ', ';
                     }
                     var padawans = '';
-                    for (var j=0;j<list[i].padawans.length;j++) {
-                        if ((j+1)==list[i].padawans.length)
-                            padawans = padawans + '<a href="padawan.html?id_padawan=' + list[i].padawans[j].id + '">' + list[i].padawans[j].lastname + ' ' + list[i].padawans[j].name + '</a>';
+                    for (var i=0;i<project[0].padawans.length;i++) {
+                        if ((i+1)==project[0].padawans.length)
+                            padawans = padawans + '<a href="padawan.html?id_padawan=' + project[0].padawans[i].id + '">' + project[0].padawans[i].lastname + ' ' + project[0].padawans[i].name + '</a>';
                         else
-                            padawans = padawans + '<a href="padawan.html?id_padawan=' + list[i].padawans[j].id + '">' + list[i].padawans[j].lastname + ' ' + list[i].padawans[j].name + '</a>, ';
+                            padawans = padawans + '<a href="padawan.html?id_padawan=' + project[0].padawans[i].id + '">' + project[0].padawans[i].lastname + ' ' + project[0].padawans[i].name + '</a>, ';
                     }
-                    $('#listPanel').append('<a href="#" class="list-group-item" data-toggle="collapse" data-target="#' + list[i].id +'" data-parent="#menu">' + list[i].name + '</a>'
-                        +'<div id="' + list[i].id +'" class="sublinks collapse">'
-                        +'<div class="list-group-item small">Category: ' + categories +'</div>'
-                        +'<div class="list-group-item small">Description: ' + list[i].description +'</div>'
-                        +'<div class="list-group-item small">Target: ' + list[i].target +'</div>'
-                        +'<div class="list-group-item small">Why: ' + list[i].why +'</div>'
-                        +'<div class="list-group-item small">Who: ' + list[i].who +'</div>'
-                        +'<div class="list-group-item small">Scope: ' + list[i].scope +'</div>'
-                        +'<div class="list-group-item small">Padawans: ' + padawans +'</div>'
-                        +'<div class="list-group-item small">Status: ' + list[i].status +'</div>'
-                        +'<a class="list-group-item" href="project.html?id_project=' + list[i].id + '"><span class="glyphicon glyphicon-eye-open"></span> View</a>'
-                        +'<a class="list-group-item" onclick="CTS.Projects.editProject(\'' + list[i].id + '\')"><span class="glyphicon glyphicon-pencil"></span> Edit</a>'
-                        +'<a class="list-group-item" onclick="CTS.Projects.addPadawanProject(\'' + list[i].id + '\')"><span class="glyphicon glyphicon-plus"></span> Add Padawan</a>'
-                        +'</div>');
-                }
+                    $('#info').append('<p>' + project[0].name + '</p>'
+                        +'<p>Category: ' + categories +'</p>'
+                        +'<p>Description: ' + project[0].description +'</p>'
+                        +'<p>Target: ' + project[0].target +'</p>'
+                        +'<p>Why: ' + project[0].why +'</p>'
+                        +'<p>Who: ' + project[0].who +'</p>'
+                        +'<p>Scope: ' + project[0].scope +'</p>'
+                        +'<p>Padawans: ' + padawans +'</p>'
+                        +'<p>Status: ' + project[0].status +'</p>');
             },
             error: function () {
                 CTS.Utils.showDialog(BootstrapDialog.TYPE_WARNING,"Error","Ha ocurrido un error, intente nuevamente.");
             }
         });
     },
-    editProject : function (id) {
-        this.setModalProject('Edit Project', id);
+    editProject : function () {
+        this.setModalProject('Edit Project');
         this.showModalEditProject();
-        this.setProject(id);
+        this.setProject();
     },
     closeModalEditProject : function () {
         $('#modalEditProject').modal('hide');
@@ -67,9 +67,7 @@ CTS.Projects = {
     showModalEditProject : function () {
         $('#modalEditProject').modal('show');
     },
-    setModalProject : function (title,id) {
-        var saveBtn = (id) ? '<button type="button" class="btn btn-primary" onclick="CTS.Projects.saveProject(\'' + id + '\');">Save changes</button>' : '<button type="button" class="btn btn-primary" onclick="CTS.Projects.newProject();">Save changes</button>';
-    
+    setModalProject : function (title) {
         $('#holderModal').empty().append(
             '<!-- Modal -->'
             +'<div class="modal fade" id="modalEditProject" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">'
@@ -97,42 +95,31 @@ CTS.Projects = {
             +'      </div>'
             +'      <div class="modal-footer">'
             +'        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>'
-            +           saveBtn
+            +'        <button type="button" class="btn btn-primary" onclick="CTS.Project.saveProject();">Save changes</button>'
             +'      </div>');
         
     },
-    setProject : function (id) {
-        jQuery.ajax({
-            type: "POST",
-            url: "api/project/getProject.php",
-            data: 'id='+ id,
-            cache: false,
-            success: function (atr) {  
-                document.getElementById("name").value = atr[0].name; 
-                document.getElementById("description").value = atr[0].description;
-                document.getElementById("target").value = atr[0].target;
-                document.getElementById("why").value = atr[0].why;
-                document.getElementById("who").value = atr[0].who;
-                document.getElementById("scope").value = atr[0].scope;
-                CTS.Utils.setStatus(atr[0].id_status,'status');
-                if (atr[0].categories.length==0)
-                    CTS.Utils.getCategories(null,'categories');
-                else {
-                    var categories = [];
-                    for (var i=0;i<atr[0].categories.length;i++) {
-                        categories.push(atr[0].categories[i].id);
-                    }
-                    CTS.Utils.getCategories(categories,'categories');
-                }
-            },
-            error: function () {
-                CTS.Utils.showDialog(BootstrapDialog.TYPE_WARNING,"Error","Ha ocurrido un error, intente nuevamente.");
+    setProject : function () {
+        document.getElementById("name").value = this.project.name; 
+        document.getElementById("description").value = this.project.description;
+        document.getElementById("target").value = this.project.target;
+        document.getElementById("why").value = this.project.why;
+        document.getElementById("who").value = this.project.who;
+        document.getElementById("scope").value = this.project.scope;
+        CTS.Utils.setStatus(this.project.id_status,'status');
+        if (this.project.categories.length==0)
+            CTS.Utils.getCategories(null,'categories');
+        else {
+            var categories = [];
+            for (var i=0;i<this.project.categories.length;i++) {
+                categories.push(this.project.categories[i].id);
             }
-        });
+            CTS.Utils.getCategories(categories,'categories');
+        }
     },
-    saveProject : function (id) {
+    saveProject : function () {
         var project = {
-                id: id,
+                id: this.id_project,
                 name: $("#name").val(),
                 categories: $("#categories").val(),
                 description: $("#description").val(),
@@ -149,52 +136,20 @@ CTS.Projects = {
             cache: false,
             success: function (response) {  
                 CTS.Utils.showDialog(BootstrapDialog.TYPE_INFO,"Confirm","El Proyecto fue editado correctamente");
-                CTS.Projects.closeModalEditProject();
-                CTS.Projects.getProjects();
+                CTS.Project.closeModalEditProject();
+                CTS.Project.getProject();
             },
             error: function () {
                 CTS.Utils.showDialog(BootstrapDialog.TYPE_WARNING,"Error","Ha ocurrido un error, intente nuevamente.");
             }
         });
     },
-    setNewProject : function () {
-        this.setModalProject('New Project', null);
-        this.showModalEditProject();
-        CTS.Utils.setStatus(null,'status');
-        CTS.Utils.getCategories(null,'categories');
-    },
-    newProject : function () {
-        var project = {
-                name: $("#name").val(),
-                categories: $("#categories").val(),
-                description: $("#description").val(),
-                target: $("#target").val(),
-                why: $("#why").val(),
-                who: $("#who").val(),
-                scope: $("#scope").val(),
-                id_status: $("#status").val()
-            };
-        jQuery.ajax({
-            type: "POST",
-            url: "api/project/newProject.php",
-            data: JSON.stringify(project),
-            cache: false,
-            success: function (response) {  
-                CTS.Utils.showDialog(BootstrapDialog.TYPE_INFO,"Confirm","El Proyecto fue creado correctamente.");
-                CTS.Projects.closeModalEditProject();
-                CTS.Projects.getProjects();
-            },
-            error: function () {
-                CTS.Utils.showDialog(BootstrapDialog.TYPE_WARNING,"Error","Ha ocurrido un error, intente nuevamente.");
-            }
-        });      
-    },
-    addPadawanProject : function (id_project) {
-        this.setModalAddPadawan('Add Padawan',id_project);
+    addPadawanProject : function () {
+        this.setModalAddPadawan('Add Padawan');
         this.showModalAddPadawan();
         this.setPadawans();
     },
-    setModalAddPadawan : function (title,id_project){
+    setModalAddPadawan : function (title){
         $('#holderModal').empty().append(
             '<!-- Modal -->'
             +'<div class="modal fade" id="modalAddPadawan" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">'
@@ -213,7 +168,7 @@ CTS.Projects = {
             +'      </div>'
             +'      <div class="modal-footer">'
             +'       <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>'
-            +'       <button type="button" class="btn btn-primary" onclick="CTS.Projects.addPadawan(\'' + id_project + '\');">Add Padawan</button>'
+            +'       <button type="button" class="btn btn-primary" onclick="CTS.Project.addPadawan();">Add Padawan</button>'
             +'      </div>');
     },
     closeModalAddPadawan : function () {
@@ -237,14 +192,14 @@ CTS.Projects = {
                 }
                 $(".padawans-multiple").select2();
             },
-            error: function () {
+            error: function() {
                 CTS.Utils.showDialog(BootstrapDialog.TYPE_WARNING,"Error","Ha ocurrido un error, intente nuevamente.");
             }
         });
     },
-    addPadawan : function (id_project) {
+    addPadawan : function () {
         var ids = {
-                id_project: id_project,
+                id_project: this.id_project,
                 padawans: $("#padawans").val()
             };
         jQuery.ajax({
@@ -252,10 +207,10 @@ CTS.Projects = {
             url: "api/project/addPadawan.php",
             data: JSON.stringify(ids),
             cache: false,
-            success: function (response) {  
+            success: function () {  
                 CTS.Utils.showDialog(BootstrapDialog.TYPE_INFO,"Confirm","El Padawan fue agregado correctamente");
-                CTS.Projects.closeModalAddPadawan();
-                CTS.Projects.getProjects();
+                CTS.Project.closeModalAddPadawan();
+                CTS.Project.getProject();
             },
             error: function () {
                 CTS.Utils.showDialog(BootstrapDialog.TYPE_WARNING,"Error","Ha ocurrido un error, intente nuevamente.");
@@ -265,5 +220,5 @@ CTS.Projects = {
 };
 
 $(function () {
-    CTS.Projects.init();
+    CTS.Project.init();
 });

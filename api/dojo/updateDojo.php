@@ -1,5 +1,4 @@
 <?php
-
 require_once('../db.php');
 connect_to_db();
 

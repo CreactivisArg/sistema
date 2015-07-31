@@ -38,9 +38,9 @@ CTS.Padawans = {
                     var projects = '';
                     for (var j=0;j<list[i].projects.length;j++) {
                         if ((j+1)==list[i].projects.length)
-                            projects = projects + list[i].projects[j].name;
+                            projects = projects + '<a href="project.html?id_project=' + list[i].projects[j].id + '">' + list[i].projects[j].name + '</a>';
                         else
-                            projects = projects + list[i].projects[j].name + ', ';
+                            projects = projects + '<a href="project.html?id_project=' + list[i].projects[j].id + '">' + list[i].projects[j].name + '</a>, ';
                     }
                     $('#listPanel').append('<a href="#" class="list-group-item" data-toggle="collapse" data-target="#' + list[i].id +'" data-parent="#menu">' + list[i].lastname + ' ' + list[i].name + '</a>'
                         +'<div id="' + list[i].id +'" class="sublinks collapse">'

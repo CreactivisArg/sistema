@@ -31,7 +31,7 @@ CTS.Utils = {
             }
         });    
     },
-    getCategories : function (selectName) {
+    getCategories : function (id,selectName) {
         var self = this;
         jQuery.ajax({
             type: "GET",
@@ -44,6 +44,8 @@ CTS.Utils = {
                     $('#'+selectName).append('<option value='  + listCategory[i].id +'>' + listCategory[i].name +'</option>');
                 }
                 $('#'+selectName).select2();
+                if (id)
+                    $('#'+selectName).val(id).trigger("change");
             },
             error: function () {
                 self.showDialog(BootstrapDialog.TYPE_WARNING,"Error","Ha ocurrido un error, intente nuevamente.");

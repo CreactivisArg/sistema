@@ -28,7 +28,7 @@ if ($result)
     $mentors = array();
     while ($row = mysql_fetch_row($result))
     {
-        $idMentor = $row[0];
+    	$idMentor = $row[0];
     	$queryDojo  = sprintf("select dojo.id, dojo.name from dojo_mentor left join dojo on dojo.id = dojo_mentor.id_dojo where dojo_mentor.id_mentor = '%s' order by dojo.name",mysql_real_escape_string($idMentor));
     	$resultDojo = mysql_query ($queryDojo);
     	$dojos = array();
