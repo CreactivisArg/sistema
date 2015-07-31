@@ -1,22 +1,23 @@
 var CTS = CTS || {};
 
 CTS.Dojo = {
+    id_dojo : '',
     init : function () {
         $('#nameDojo').text(CTS.Utils.getURLParameter('name_dojo'));
-        var id_dojo = CTS.Utils.getURLParameter('id_dojo');
-        this.bindActions(id_dojo);
-        this.getMembers(id_dojo);
+        this.id_dojo = CTS.Utils.getURLParameter('id_dojo');
+        this.bindActions();
+        this.getMembers();
     },
-    bindActions : function (id_dojo) {
+    bindActions : function () {
         var self = this;
         $('#addPadawan').on('click', function () {
-            self.addPadawanDojo(id_dojo);
+            self.addPadawanDojo();
         }); 
         $('#addMentor').on('click', function () {
-            self.addMentorDojo(id_dojo);
+            self.addMentorDojo();
         }); 
         $('#addEmployee').on('click', function () {
-            self.addEmployeeDojo(id_dojo);
+            self.addEmployeeDojo();
         }); 
         $('#showPadawans').on('click', function () {
             self.showPadawans();
@@ -71,11 +72,11 @@ CTS.Dojo = {
         $('#tabResponsibles').removeClass('active');
         $('#tabEmployees').addClass('active');
     },
-    getMembers : function (id_dojo) {
+    getMembers : function () {
         jQuery.ajax({
             type: "POST",
             url: "api/dojo/getMembers.php",
-            data: 'id_dojo='+ id_dojo,
+            data: 'id_dojo='+ this.id_dojo,
             cache: false,
             success: function(dojo) {  
                 $('#listPanelPadawans').empty();
@@ -109,7 +110,7 @@ CTS.Dojo = {
                         +'<div class="list-group-item small">Projects: ' + projects +'</div>'
                         +'<div class="list-group-item small">Status: ' + dojo[0].padawans[i].status +'</div>'
                         +'<a class="list-group-item" href="padawan.html?id_padawan=' + dojo[0].padawans[i].id + '"><span class="glyphicon glyphicon-eye-open"></span> View</a>'
-                        +'<a class="list-group-item" onclick="CTS.Dojo.removePadawan(\'' + id_dojo + '\',\'' + dojo[0].padawans[i].id + '\')"><span class="glyphicon glyphicon-remove"></span> Remove Padawan</a>'
+                        +'<a class="list-group-item" onclick="CTS.Dojo.removePadawan(\'' + dojo[0].padawans[i].id + '\')"><span class="glyphicon glyphicon-remove"></span> Remove Padawan</a>'
                         +'</div>');
                 }
                 $('#listPanelMentors').empty();
@@ -125,7 +126,7 @@ CTS.Dojo = {
                         +'<div class="list-group-item small">Twitter: ' + dojo[0].mentors[i].twitter +'</div>'
                         +'<div class="list-group-item small">Status: ' + dojo[0].mentors[i].status +'</div>'
                         +'<a class="list-group-item" href="mentor.html?id_mentor=' + dojo[0].mentors[i].id + '"><span class="glyphicon glyphicon-eye-open"></span> View</a>'
-                        +'<a class="list-group-item" onclick="CTS.Dojo.removeMentor(\'' + id_dojo + '\',\'' + dojo[0].mentors[i].id + '\')"><span class="glyphicon glyphicon-remove"></span> Remove Mentor</a>'
+                        +'<a class="list-group-item" onclick="CTS.Dojo.removeMentor(\'' + dojo[0].mentors[i].id + '\')"><span class="glyphicon glyphicon-remove"></span> Remove Mentor</a>'
                         +'</div>');
                 }
                 $('#listPanelResponsibles').empty();
@@ -149,7 +150,6 @@ CTS.Dojo = {
                         +'<div class="list-group-item small">Padawans: ' + padawans +'</div>'
                         +'<div class="list-group-item small">Status: ' + dojo[0].responsibles[i].status +'</div>'
                         +'<a class="list-group-item" href="responsible.html?id_responsible=' + dojo[0].responsibles[i].id + '"><span class="glyphicon glyphicon-eye-open"></span> View</a>'
-                        +'<a class="list-group-item" href="responsible.html?id_responsible=' + dojo[0].responsibles[i].id + '"><span class="glyphicon glyphicon-eye-open"></span> View</a>'
                         +'</div>');
                 }
                 $('#listPanelEmployees').empty();
@@ -165,7 +165,7 @@ CTS.Dojo = {
                         +'<div class="list-group-item small">Twitter: ' + dojo[0].employees[i].twitter +'</div>'
                         +'<div class="list-group-item small">Status: ' + dojo[0].employees[i].status +'</div>'
                         +'<a class="list-group-item" href="employee.html?id_employee=' + dojo[0].employees[i].id + '"><span class="glyphicon glyphicon-eye-open"></span> View</a>'
-                        +'<a class="list-group-item" onclick="CTS.Dojo.removeEmployee(\'' + id_dojo + '\',\'' + dojo[0].employees[i].id + '\')"><span class="glyphicon glyphicon-remove"></span> Remove Employee</a>'
+                        +'<a class="list-group-item" onclick="CTS.Dojo.removeEmployee(\'' + dojo[0].employees[i].id + '\')"><span class="glyphicon glyphicon-remove"></span> Remove Employee</a>'
                         +'</div>');
                 }
             },
@@ -174,8 +174,8 @@ CTS.Dojo = {
             }
         });
     },
-    addPadawanDojo : function (id_dojo) {
-        this.setModalAddPadawan('Add Padawan',id_dojo);
+    addPadawanDojo : function () {
+        this.setModalAddPadawan('Add Padawan');
         this.showModalAddPadawan();
         this.setPadawans();
     },
@@ -185,7 +185,7 @@ CTS.Dojo = {
     showModalAddPadawan : function () {
         $('#modalAddPadawan').modal('show');
     },
-    setModalAddPadawan : function (title,id_dojo) {   
+    setModalAddPadawan : function (title) {   
         $('#holderModal').empty().append(
             '<!-- Modal -->'
             +'<div class="modal fade" id="modalAddPadawan" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">'
@@ -204,7 +204,7 @@ CTS.Dojo = {
             +'      </div>'
             +'      <div class="modal-footer">'
             +'       <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>'
-            +'       <button type="button" class="btn btn-primary" onclick="CTS.Dojo.addPadawan(\'' + id_dojo + '\');">Add Padawan</button>'
+            +'       <button type="button" class="btn btn-primary" onclick="CTS.Dojo.addPadawan();">Add Padawan</button>'
             +'      </div>');
     },
     setPadawans : function () {
@@ -227,9 +227,9 @@ CTS.Dojo = {
             }
         });
     },
-    addPadawan : function (id_dojo) {
+    addPadawan : function () {
         var ids = {
-                id_dojo: id_dojo,
+                id_dojo: this.id_dojo,
                 padawans: $("#padawans").val()
             };
         jQuery.ajax({
@@ -237,18 +237,18 @@ CTS.Dojo = {
             url: "api/dojo/addPadawan.php",
             data: JSON.stringify(ids),
             cache: false,
-            success: function (response) {  
+            success: function () {  
                 CTS.Utils.showDialog(BootstrapDialog.TYPE_INFO,"Confirm","El Padawan fue agregado correctamente");
                 CTS.Dojo.closeModalAddPadawan();
-                CTS.Dojo.getMembers(id_dojo);
+                CTS.Dojo.getMembers();
             },
             error: function () {
                 CTS.Utils.showDialog(BootstrapDialog.TYPE_WARNING,"Error","Ha ocurrido un error, intente nuevamente.");
             }
         });
     },
-    addMentorDojo : function (id_dojo) {
-        this.setModalAddMentor('Add Mentor',id_dojo);
+    addMentorDojo : function () {
+        this.setModalAddMentor('Add Mentor');
         this.showModalAddMentor();
         this.setMentors();
     },
@@ -258,7 +258,7 @@ CTS.Dojo = {
     showModalAddMentor : function () {
         $('#modalAddMentor').modal('show');
     },
-    setModalAddMentor : function (title,id_dojo) {   
+    setModalAddMentor : function (title) {   
         $('#holderModal').empty().append(
             '<!-- Modal -->'
             +'<div class="modal fade" id="modalAddMentor" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">'
@@ -277,7 +277,7 @@ CTS.Dojo = {
             +'      </div>'
             +'      <div class="modal-footer">'
             +'       <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>'
-            +'       <button type="button" class="btn btn-primary" onclick="CTS.Dojo.addMentor(\'' + id_dojo + '\');">Add Mentor</button>'
+            +'       <button type="button" class="btn btn-primary" onclick="CTS.Dojo.addMentor();">Add Mentor</button>'
             +'      </div>');
     },
     setMentors : function () {
@@ -300,9 +300,9 @@ CTS.Dojo = {
             }
         });
     },
-    addMentor : function (id_dojo) {
+    addMentor : function () {
         var ids = {
-                id_dojo: id_dojo,
+                id_dojo: this.id_dojo,
                 mentors: $("#mentors").val()
             };
         jQuery.ajax({
@@ -310,18 +310,18 @@ CTS.Dojo = {
             url: "api/dojo/addMentor.php",
             data: JSON.stringify(ids),
             cache: false,
-            success: function (response) {  
+            success: function () {  
                 CTS.Utils.showDialog(BootstrapDialog.TYPE_INFO,"Confirm","El Mentor fue agregado correctamente");
                 CTS.Dojo.closeModalAddMentor();
-                CTS.Dojo.getMembers(id_dojo);
+                CTS.Dojo.getMembers();
             },
             error: function () {
                 CTS.Utils.showDialog(BootstrapDialog.TYPE_WARNING,"Error","Ha ocurrido un error, intente nuevamente.");
             }
         });
     },
-    addEmployeeDojo : function (id_dojo) {
-        this.setModalAddEmployee('Add Employee',id_dojo);
+    addEmployeeDojo : function () {
+        this.setModalAddEmployee('Add Employee');
         this.showModalAddEmployee();
         this.setEmployees();
     },
@@ -331,7 +331,7 @@ CTS.Dojo = {
     showModalAddEmployee : function () {
         $('#modalAddEmployee').modal('show');
     },
-    setModalAddEmployee : function (title,id_dojo) {   
+    setModalAddEmployee : function (title) {   
         $('#holderModal').empty().append(
             '<!-- Modal -->'
             +'<div class="modal fade" id="modalAddEmployee" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">'
@@ -350,7 +350,7 @@ CTS.Dojo = {
             +'      </div>'
             +'      <div class="modal-footer">'
             +'       <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>'
-            +'       <button type="button" class="btn btn-primary" onclick="CTS.Dojo.addEmployee(\'' + id_dojo + '\');">Add Employee</button>'
+            +'       <button type="button" class="btn btn-primary" onclick="CTS.Dojo.addEmployee();">Add Employee</button>'
             +'      </div>');
     },
     setEmployees : function () {
@@ -373,9 +373,9 @@ CTS.Dojo = {
             }
         });
     },
-    addEmployee : function (id_dojo) {
+    addEmployee : function () {
         var ids = {
-                id_dojo: id_dojo,
+                id_dojo: this.id_dojo,
                 employees: $("#employees").val()
             };
         jQuery.ajax({
@@ -383,19 +383,19 @@ CTS.Dojo = {
             url: "api/dojo/addEmployee.php",
             data: JSON.stringify(ids),
             cache: false,
-            success: function (response) {  
+            success: function () {  
                 CTS.Utils.showDialog(BootstrapDialog.TYPE_INFO,"Confirm","El Empleado fue agregado correctamente");
                 CTS.Dojo.closeModalAddEmployee();
-                CTS.Dojo.getMembers(id_dojo);
+                CTS.Dojo.getMembers();
             },
             error: function () {
                 CTS.Utils.showDialog(BootstrapDialog.TYPE_WARNING,"Error","Ha ocurrido un error, intente nuevamente.");
             }
         });
     },
-    removePadawan : function (id_dojo,id_padawan) {
+    removePadawan : function (id_padawan) {
         var ids = {
-                id_dojo: id_dojo,
+                id_dojo: this.id_dojo,
                 id_padawan: id_padawan
             };
         jQuery.ajax({
@@ -403,18 +403,18 @@ CTS.Dojo = {
             url: "api/dojo/removePadawan.php",
             data: JSON.stringify(ids),
             cache: false,
-            success: function (response) {  
+            success: function () {  
                 CTS.Utils.showDialog(BootstrapDialog.TYPE_INFO,"Confirm","El Padawan fue removido correctamente.");
-                CTS.Dojo.getMembers(id_dojo);
+                CTS.Dojo.getMembers();
             },
             error: function () {
                 CTS.Utils.showDialog(BootstrapDialog.TYPE_WARNING,"Error","Ha ocurrido un error, intente nuevamente.");
             }
         });
     },
-    removeMentor : function (id_dojo,id_mentor) {
+    removeMentor : function (id_mentor) {
         var ids = {
-                id_dojo: id_dojo,
+                id_dojo: this.id_dojo,
                 id_mentor: id_mentor
             };
         jQuery.ajax({
@@ -422,18 +422,18 @@ CTS.Dojo = {
             url: "api/dojo/removeMentor.php",
             data: JSON.stringify(ids),
             cache: false,
-            success: function (response) {  
+            success: function () {  
                 CTS.Utils.showDialog(BootstrapDialog.TYPE_INFO,"Confirm","El Mentor fue removido correctamente.");
-                CTS.Dojo.getMembers(id_dojo);
+                CTS.Dojo.getMembers();
             },
             error: function () {
                 CTS.Utils.showDialog(BootstrapDialog.TYPE_WARNING,"Error","Ha ocurrido un error, intente nuevamente.");
             }
         });
     },
-    removeEmployee : function (id_dojo,id_employee) {
+    removeEmployee : function (id_employee) {
         var ids = {
-                id_dojo: id_dojo,
+                id_dojo: this.id_dojo,
                 id_employee: id_employee
             };
         jQuery.ajax({
@@ -441,9 +441,9 @@ CTS.Dojo = {
             url: "api/dojo/removeEmployee.php",
             data: JSON.stringify(ids),
             cache: false,
-            success: function (response) {  
+            success: function () {  
                 CTS.Utils.showDialog(BootstrapDialog.TYPE_INFO,"Confirm","El Empleado fue removido correctamente.");
-                CTS.Dojo.getMembers(id_dojo);
+                CTS.Dojo.getMembers();
             },
             error: function () {
                 CTS.Utils.showDialog(BootstrapDialog.TYPE_WARNING,"Error","Ha ocurrido un error, intente nuevamente.");

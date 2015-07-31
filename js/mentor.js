@@ -1,24 +1,27 @@
 var CTS = CTS || {};
 
 CTS.Mentor = {
+    id_mentor : '',
+    mentor : {},
     init : function () {
-        var id_mentor = CTS.Utils.getURLParameter('id_mentor');
-        this.bindActions(id_mentor);
-        this.getMentor(id_mentor);
+        this.id_mentor = CTS.Utils.getURLParameter('id_mentor');
+        this.bindActions();
+        this.getMentor();
     },
-    bindActions : function (id_mentor) {
+    bindActions : function () {
         var self = this;
         $('#editMentor').on('click', function () {
-            self.editMentor(id_mentor);
+            self.editMentor();
         }); 
     },
-    getMentor : function (id_mentor) {
+    getMentor : function () {
         jQuery.ajax({
             type: "POST",
             url: "api/mentor/getMentor.php",
-            data: 'id='+ id_mentor,
+            data: 'id='+ this.id_mentor,
             cache: false,
-            success: function(mentor) {  
+            success: function(mentor) {
+                    CTS.Mentor.mentor = mentor[0];  
                     $('#info').empty();
                     
                     var dojos = '';
@@ -44,10 +47,10 @@ CTS.Mentor = {
             }
         });
     },
-    editMentor : function (id) {
-        this.setModalMentor('Edit Mentor', id);
+    editMentor : function () {
+        this.setModalMentor('Edit Mentor');
         this.showModalEditMentor();
-        this.setMentor(id);
+        this.setMentor();
     },
     closeModalEditMentor : function () {
         $('#modalEditMentor').modal('hide');
@@ -55,7 +58,7 @@ CTS.Mentor = {
     showModalEditMentor : function () {
         $('#modalEditMentor').modal('show');
     },
-    setModalMentor : function (title,id) {
+    setModalMentor : function (title) {
         $('#holderModal').empty().append(
             '<!-- Modal -->'
             +'<div class="modal fade" id="modalEditMentor" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">'
@@ -83,36 +86,25 @@ CTS.Mentor = {
             +'      </div>'
             +'      <div class="modal-footer">'
             +'        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>'
-            +'        <button type="button" class="btn btn-primary" onclick="CTS.Mentor.saveMentor(\'' + id + '\');">Save changes</button>'
+            +'        <button type="button" class="btn btn-primary" onclick="CTS.Mentor.saveMentor();">Save changes</button>'
             +'      </div>');
         
     },
-    setMentor : function (id) {
-        jQuery.ajax({
-            type: "POST",
-            url: "api/mentor/getMentor.php",
-            data: 'id='+ id,
-            cache: false,
-            success: function (atr) {  
-                document.getElementById("name").value = atr[0].name; 
-                document.getElementById("lastname").value = atr[0].lastname;
-                document.getElementById("dni").value = atr[0].dni;
-                document.getElementById("phone").value = atr[0].phone;
-                document.getElementById("mobile").value = atr[0].mobile;
-                document.getElementById("email").value = atr[0].email;
-                document.getElementById("facebook").value = atr[0].facebook;
-                document.getElementById("twitter").value = atr[0].twitter;
-                document.getElementById("address").value = atr[0].address;
-                CTS.Utils.setStatus(atr[0].id_status,'status')
-            },
-            error: function () {
-                CTS.Utils.showDialog(BootstrapDialog.TYPE_WARNING,"Error","Ha ocurrido un error, intente nuevamente.");
-            }
-        });
+    setMentor : function () {
+        document.getElementById("name").value = this.mentor.name; 
+        document.getElementById("lastname").value = this.mentor.lastname;
+        document.getElementById("dni").value = this.mentor.dni;
+        document.getElementById("phone").value = this.mentor.phone;
+        document.getElementById("mobile").value = this.mentor.mobile;
+        document.getElementById("email").value = this.mentor.email;
+        document.getElementById("facebook").value = this.mentor.facebook;
+        document.getElementById("twitter").value = this.mentor.twitter;
+        document.getElementById("address").value = this.mentor.address;
+        CTS.Utils.setStatus(this.mentor.id_status,'status');
     },
-    saveMentor : function (id) {
+    saveMentor : function () {
         var mentor = {
-                id: id,
+                id: this.id_mentor,
                 name: $("#name").val(),
                 lastname: $("#lastname").val(),
                 dni: $("#dni").val(),
@@ -129,10 +121,10 @@ CTS.Mentor = {
             url: "api/mentor/updateMentor.php",
             data: JSON.stringify(mentor),
             cache: false,
-            success: function (response) {  
+            success: function () {  
                 CTS.Utils.showDialog(BootstrapDialog.TYPE_INFO,"Confirm","El Mentor fue editado correctamente");
                 CTS.Mentor.closeModalEditMentor();
-                CTS.Mentor.getMentor(id);
+                CTS.Mentor.getMentor();
             },
             error: function () {
                 CTS.Utils.showDialog(BootstrapDialog.TYPE_WARNING,"Error","Ha ocurrido un error, intente nuevamente.");

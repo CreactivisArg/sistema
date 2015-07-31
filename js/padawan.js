@@ -1,24 +1,27 @@
 var CTS = CTS || {};
 
 CTS.Padawan = {
+    id_padawan : '',
+    padawan : {},
     init : function () {
-        var id_padawan = CTS.Utils.getURLParameter('id_padawan');
-        this.bindActions(id_padawan);
-        this.getPadawan(id_padawan);
+        this.id_padawan = CTS.Utils.getURLParameter('id_padawan');
+        this.bindActions();
+        this.getPadawan();
     },
-    bindActions : function (id_padawan) {
+    bindActions : function () {
         var self = this;
         $('#editPadawan').on('click', function () {
-            self.editPadawan(id_padawan);
+            self.editPadawan();
         }); 
     },
-    getPadawan : function (id_padawan) {
+    getPadawan : function () {
         jQuery.ajax({
             type: "POST",
             url: "api/padawan/getPadawan.php",
-            data: 'id='+ id_padawan,
+            data: 'id='+ this.id_padawan,
             cache: false,
             success: function(padawan) {  
+                    CTS.Padawan.padawan = padawan[0];
                     $('#info').empty();
                     
                     var dojos = '';
@@ -62,10 +65,10 @@ CTS.Padawan = {
             }
         });
     },
-    editPadawan : function (id) {
-        this.setModalPadawan('Edit Padawan', id);
+    editPadawan : function () {
+        this.setModalPadawan('Edit Padawan');
         this.showModalEditPadawan();
-        this.setPadawan(id);
+        this.setPadawan();
     },
     closeModalEditPadawan : function () {
         $('#modalEditPadawan').modal('hide');
@@ -73,7 +76,7 @@ CTS.Padawan = {
     showModalEditPadawan : function () {
         $('#modalEditPadawan').modal('show');
     },
-    setModalPadawan : function (title,id) {
+    setModalPadawan : function (title) {
         $('#holderModal').empty().append(
             '<!-- Modal -->'
             +'<div class="modal fade" id="modalEditPadawan" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">'
@@ -103,38 +106,27 @@ CTS.Padawan = {
             +'      </div>'
             +'      <div class="modal-footer">'
             +'        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>'
-            +'        <button type="button" class="btn btn-primary" onclick="CTS.Padawan.savePadawan(\'' + id + '\');">Save changes</button>'
+            +'        <button type="button" class="btn btn-primary" onclick="CTS.Padawan.savePadawan();">Save changes</button>'
             +'      </div>');
         
     },
-    setPadawan : function (id) {
-        jQuery.ajax({
-            type: "POST",
-            url: "api/padawan/getPadawan.php",
-            data: 'id='+ id,
-            cache: false,
-            success: function (atr) {  
-                document.getElementById("name").value = atr[0].name; 
-                document.getElementById("lastname").value = atr[0].lastname;
-                document.getElementById("dni").value = atr[0].dni;
-                document.getElementById("birthdate").value = atr[0].birthdate;
-                document.getElementById("phone").value = atr[0].phone;
-                document.getElementById("mobile").value = atr[0].mobile;
-                document.getElementById("email").value = atr[0].email;
-                document.getElementById("facebook").value = atr[0].facebook;
-                document.getElementById("twitter").value = atr[0].twitter;
-                document.getElementById("school").value = atr[0].school;
-                document.getElementById("address").value = atr[0].address;
-                CTS.Utils.setStatus(atr[0].id_status,'status')
-            },
-            error: function () {
-                CTS.Utils.showDialog(BootstrapDialog.TYPE_WARNING,"Error","Ha ocurrido un error, intente nuevamente.");
-            }
-        });
+    setPadawan : function () {
+        document.getElementById("name").value = this.padawan.name; 
+        document.getElementById("lastname").value = this.padawan.lastname;
+        document.getElementById("dni").value = this.padawan.dni;
+        document.getElementById("birthdate").value = this.padawan.birthdate;
+        document.getElementById("phone").value = this.padawan.phone;
+        document.getElementById("mobile").value = this.padawan.mobile;
+        document.getElementById("email").value = this.padawan.email;
+        document.getElementById("facebook").value = this.padawan.facebook;
+        document.getElementById("twitter").value = this.padawan.twitter;
+        document.getElementById("school").value = this.padawan.school;
+        document.getElementById("address").value = this.padawan.address;
+        CTS.Utils.setStatus(this.padawan.id_status,'status');
     },
-    savePadawan : function (id) {
+    savePadawan : function () {
         var padawan = {
-                id: id,
+                id: this.id_padawan,
                 name: $("#name").val(),
                 lastname: $("#lastname").val(),
                 dni: $("#dni").val(),
@@ -153,10 +145,10 @@ CTS.Padawan = {
             url: "api/padawan/updatePadawan.php",
             data: JSON.stringify(padawan),
             cache: false,
-            success: function (response) {  
+            success: function () {  
                 CTS.Utils.showDialog(BootstrapDialog.TYPE_INFO,"Confirm","El Padawan fue editado correctamente");
                 CTS.Padawan.closeModalEditPadawan();
-                CTS.Padawan.getPadawan(id);
+                CTS.Padawan.getPadawan();
             },
             error: function () {
                 CTS.Utils.showDialog(BootstrapDialog.TYPE_WARNING,"Error","Ha ocurrido un error, intente nuevamente.");

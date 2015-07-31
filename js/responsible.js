@@ -1,27 +1,30 @@
 var CTS = CTS || {};
 
 CTS.Responsible = {
+    id_responsible : '',
+    responsible : {},
     init : function () {
-        var id_responsible = CTS.Utils.getURLParameter('id_responsible');
-        this.bindActions(id_responsible);
-        this.getResponsible(id_responsible);
+        this.id_responsible = CTS.Utils.getURLParameter('id_responsible');
+        this.bindActions();
+        this.getResponsible();
     },
-    bindActions : function (id_responsible) {
+    bindActions : function () {
         var self = this;
         $('#editResponsible').on('click', function () {
-            self.editResponsible(id_responsible);
+            self.editResponsible();
         }); 
         $('#addPadawan').on('click', function () {
-            self.addPadawanResponsible(id_responsible);
+            self.addPadawanResponsible();
         }); 
     },
-    getResponsible : function (id_responsible) {
+    getResponsible : function () {
         jQuery.ajax({
             type: "POST",
             url: "api/responsible/getResponsible.php",
-            data: 'id='+ id_responsible,
+            data: 'id='+ this.id_responsible,
             cache: false,
-            success: function(responsible) {  
+            success: function(responsible) { 
+                    CTS.Responsible.responsible = responsible[0];   
                     $('#info').empty();
                     
                     var padawans = '';
@@ -47,10 +50,10 @@ CTS.Responsible = {
             }
         });
     },
-    editResponsible : function (id) {
-        this.setModalResponsible('Edit Responsible', id);
+    editResponsible : function () {
+        this.setModalResponsible('Edit Responsible');
         this.showModalEditResponsible();
-        this.setResponsible(id);
+        this.setResponsible();
     },
     closeModalEditResponsible : function () {
         $('#modalEditResponsible').modal('hide');
@@ -58,7 +61,7 @@ CTS.Responsible = {
     showModalEditResponsible : function () {
         $('#modalEditResponsible').modal('show');
     },
-    setModalResponsible : function (title,id) {
+    setModalResponsible : function (title) {
         $('#holderModal').empty().append(
             '<!-- Modal -->'
             +'<div class="modal fade" id="modalEditResponsible" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">'
@@ -86,36 +89,25 @@ CTS.Responsible = {
             +'      </div>'
             +'      <div class="modal-footer">'
             +'        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>'
-            +'        <button type="button" class="btn btn-primary" onclick="CTS.Responsible.saveResponsible(\'' + id + '\');">Save changes</button>'
+            +'        <button type="button" class="btn btn-primary" onclick="CTS.Responsible.saveResponsible();">Save changes</button>'
             +'      </div>');
         
     },
-    setResponsible : function (id) {
-        jQuery.ajax({
-            type: "POST",
-            url: "api/responsible/getResponsible.php",
-            data: 'id='+ id,
-            cache: false,
-            success: function (atr) {  
-                document.getElementById("name").value = atr[0].name; 
-                document.getElementById("lastname").value = atr[0].lastname;
-                document.getElementById("dni").value = atr[0].dni;
-                document.getElementById("phone").value = atr[0].phone;
-                document.getElementById("mobile").value = atr[0].mobile;
-                document.getElementById("email").value = atr[0].email;
-                document.getElementById("facebook").value = atr[0].facebook;
-                document.getElementById("twitter").value = atr[0].twitter;
-                document.getElementById("address").value = atr[0].address;
-                CTS.Utils.setStatus(atr[0].id_status,'status')
-            },
-            error: function () {
-                CTS.Utils.showDialog(BootstrapDialog.TYPE_WARNING,"Error","Ha ocurrido un error, intente nuevamente.");
-            }
-        });
+    setResponsible : function () {
+        document.getElementById("name").value = this.responsible.name; 
+        document.getElementById("lastname").value = this.responsible.lastname;
+        document.getElementById("dni").value = this.responsible.dni;
+        document.getElementById("phone").value = this.responsible.phone;
+        document.getElementById("mobile").value = this.responsible.mobile;
+        document.getElementById("email").value = this.responsible.email;
+        document.getElementById("facebook").value = this.responsible.facebook;
+        document.getElementById("twitter").value = this.responsible.twitter;
+        document.getElementById("address").value = this.responsible.address;
+        CTS.Utils.setStatus(this.responsible.id_status,'status')
     },
-    saveResponsible : function (id) {
+    saveResponsible : function () {
         var responsible = {
-                id: id,
+                id: this.id_responsible,
                 name: $("#name").val(),
                 lastname: $("#lastname").val(),
                 dni: $("#dni").val(),
@@ -132,22 +124,22 @@ CTS.Responsible = {
             url: "api/responsible/updateResponsible.php",
             data: JSON.stringify(responsible),
             cache: false,
-            success: function (response) {  
+            success: function () {  
                 CTS.Utils.showDialog(BootstrapDialog.TYPE_INFO,"Confirm","El Responsable fue editado correctamente");
                 CTS.Responsible.closeModalEditResponsible();
-                CTS.Responsible.getResponsible(id);
+                CTS.Responsible.getResponsible();
             },
             error: function () {
                 CTS.Utils.showDialog(BootstrapDialog.TYPE_WARNING,"Error","Ha ocurrido un error, intente nuevamente.");
             }
         });
     },
-    addPadawanResponsible : function (id_responsible) {
-        this.setModalAddPadawan('Add Padawan',id_responsible);
+    addPadawanResponsible : function () {
+        this.setModalAddPadawan('Add Padawan');
         this.showModalAddPadawan();
         this.setPadawans();
     },
-    setModalAddPadawan : function (title,id_responsible){
+    setModalAddPadawan : function (title){
         $('#holderModal').empty().append(
             '<!-- Modal -->'
             +'<div class="modal fade" id="modalAddPadawan" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">'
@@ -166,7 +158,7 @@ CTS.Responsible = {
             +'      </div>'
             +'      <div class="modal-footer">'
             +'       <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>'
-            +'       <button type="button" class="btn btn-primary" onclick="CTS.Responsibles.addPadawan(\'' + id_responsible + '\');">Add Padawan</button>'
+            +'       <button type="button" class="btn btn-primary" onclick="CTS.Responsible.addPadawan();">Add Padawan</button>'
             +'      </div>');
     },
     closeModalAddPadawan : function () {
@@ -195,9 +187,9 @@ CTS.Responsible = {
             }
         });
     },
-    addPadawan : function (id_responsible) {
+    addPadawan : function () {
         var ids = {
-                id_responsible: id_responsible,
+                id_responsible: this.id_responsible,
                 padawans: $("#padawans").val()
             };
         jQuery.ajax({
@@ -205,10 +197,10 @@ CTS.Responsible = {
             url: "api/responsible/addPadawan.php",
             data: JSON.stringify(ids),
             cache: false,
-            success: function (response) {  
+            success: function () {  
                 CTS.Utils.showDialog(BootstrapDialog.TYPE_INFO,"Confirm","El Padawan fue agregado correctamente");
                 CTS.Responsible.closeModalAddPadawan();
-                CTS.Responsible.getResponsible(id_responsible);
+                CTS.Responsible.getResponsible();
             },
             error: function () {
                 CTS.Utils.showDialog(BootstrapDialog.TYPE_WARNING,"Error","Ha ocurrido un error, intente nuevamente.");

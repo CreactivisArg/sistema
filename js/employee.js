@@ -1,24 +1,27 @@
 var CTS = CTS || {};
 
 CTS.Employee = {
+    id_employee : '',
+    employee : {},
     init : function () {
-        var id_employee = CTS.Utils.getURLParameter('id_employee');
-        this.bindActions(id_employee);
-        this.getEmployee(id_employee);
+        this.id_employee = CTS.Utils.getURLParameter('id_employee');
+        this.bindActions();
+        this.getEmployee();
     },
-    bindActions : function (id_employee) {
+    bindActions : function () {
         var self = this;
         $('#editEmployee').on('click', function () {
-            self.editEmployee(id_employee);
+            self.editEmployee();
         }); 
     },
-    getEmployee : function (id_employee) {
+    getEmployee : function () {
         jQuery.ajax({
             type: "POST",
             url: "api/employee/getEmployee.php",
-            data: 'id='+ id_employee,
+            data: 'id='+ this.id_employee,
             cache: false,
-            success: function(employee) {  
+            success: function(employee) {
+                    CTS.Employee.employee = employee[0];  
                     $('#info').empty();
                     
                     var dojos = '';
@@ -44,10 +47,10 @@ CTS.Employee = {
             }
         });
     },
-    editEmployee : function (id) {
-        this.setModalEmployee('Edit Employee', id);
+    editEmployee : function () {
+        this.setModalEmployee('Edit Employee');
         this.showModalEditEmployee();
-        this.setEmployee(id);
+        this.setEmployee();
     },
     closeModalEditEmployee : function () {
         $('#modalEditEmployee').modal('hide');
@@ -55,7 +58,7 @@ CTS.Employee = {
     showModalEditEmployee : function () {
         $('#modalEditEmployee').modal('show');
     },
-    setModalEmployee : function (title,id) {
+    setModalEmployee : function (title) {
         $('#holderModal').empty().append(
             '<!-- Modal -->'
             +'<div class="modal fade" id="modalEditEmployee" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">'
@@ -83,36 +86,25 @@ CTS.Employee = {
             +'      </div>'
             +'      <div class="modal-footer">'
             +'        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>'
-            +'        <button type="button" class="btn btn-primary" onclick="CTS.Employee.saveEmployee(\'' + id + '\');">Save changes</button>'
+            +'        <button type="button" class="btn btn-primary" onclick="CTS.Employee.saveEmployee();">Save changes</button>'
             +'      </div>');
         
     },
-    setEmployee : function (id) {
-        jQuery.ajax({
-            type: "POST",
-            url: "api/employee/getEmployee.php",
-            data: 'id='+ id,
-            cache: false,
-            success: function (atr) {  
-                document.getElementById("name").value = atr[0].name; 
-                document.getElementById("lastname").value = atr[0].lastname;
-                document.getElementById("dni").value = atr[0].dni;
-                document.getElementById("phone").value = atr[0].phone;
-                document.getElementById("mobile").value = atr[0].mobile;
-                document.getElementById("email").value = atr[0].email;
-                document.getElementById("facebook").value = atr[0].facebook;
-                document.getElementById("twitter").value = atr[0].twitter;
-                document.getElementById("address").value = atr[0].address;
-                CTS.Utils.setStatus(atr[0].id_status,'status')
-            },
-            error: function () {
-                CTS.Utils.showDialog(BootstrapDialog.TYPE_WARNING,"Error","Ha ocurrido un error, intente nuevamente.");
-            }
-        });
+    setEmployee : function () {
+        document.getElementById("name").value = this.employee.name; 
+        document.getElementById("lastname").value = this.employee.lastname;
+        document.getElementById("dni").value = this.employee.dni;
+        document.getElementById("phone").value = this.employee.phone;
+        document.getElementById("mobile").value = this.employee.mobile;
+        document.getElementById("email").value = this.employee.email;
+        document.getElementById("facebook").value = this.employee.facebook;
+        document.getElementById("twitter").value = this.employee.twitter;
+        document.getElementById("address").value = this.employee.address;
+        CTS.Utils.setStatus(this.employee.id_status,'status');
     },
-    saveEmployee : function (id) {
+    saveEmployee : function () {
         var employee = {
-                id: id,
+                id: this.id_employee,
                 name: $("#name").val(),
                 lastname: $("#lastname").val(),
                 dni: $("#dni").val(),
@@ -129,10 +121,10 @@ CTS.Employee = {
             url: "api/employee/updateEmployee.php",
             data: JSON.stringify(employee),
             cache: false,
-            success: function (response) {  
+            success: function () {  
                 CTS.Utils.showDialog(BootstrapDialog.TYPE_INFO,"Confirm","El Empleado fue editado correctamente");
                 CTS.Employee.closeModalEditEmployee();
-                CTS.Employee.getEmployee(id);
+                CTS.Employee.getEmployee();
             },
             error: function () {
                 CTS.Utils.showDialog(BootstrapDialog.TYPE_WARNING,"Error","Ha ocurrido un error, intente nuevamente.");
