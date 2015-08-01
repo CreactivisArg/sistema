@@ -12,7 +12,7 @@ CTS.Employee = {
         var self = this;
         $('#editEmployee').on('click', function () {
             self.editEmployee();
-        }); 
+        });
     },
     getEmployee : function () {
         jQuery.ajax({
@@ -21,9 +21,9 @@ CTS.Employee = {
             data: 'id='+ this.id_employee,
             cache: false,
             success: function(employee) {
-                    CTS.Employee.employee = employee[0];  
+                    CTS.Employee.employee = employee[0];
                     $('#info').empty();
-                    
+
                     var dojos = '';
                     for (var i=0;i<employee[0].dojos.length;i++) {
                         if ((i+1)==employee[0].dojos.length)
@@ -49,15 +49,10 @@ CTS.Employee = {
     },
     editEmployee : function () {
         this.setModalEmployee('Edit Employee');
-        this.showModalEditEmployee();
+        CTS.Utils.showModal('modalEditEmployee');
         this.setEmployee();
     },
-    closeModalEditEmployee : function () {
-        $('#modalEditEmployee').modal('hide');
-    },
-    showModalEditEmployee : function () {
-        $('#modalEditEmployee').modal('show');
-    },
+
     setModalEmployee : function (title) {
         $('#holderModal').empty().append(
             '<!-- Modal -->'
@@ -88,10 +83,10 @@ CTS.Employee = {
             +'        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>'
             +'        <button type="button" class="btn btn-primary" onclick="CTS.Employee.saveEmployee();">Save changes</button>'
             +'      </div>');
-        
+
     },
     setEmployee : function () {
-        document.getElementById("name").value = this.employee.name; 
+        document.getElementById("name").value = this.employee.name;
         document.getElementById("lastname").value = this.employee.lastname;
         document.getElementById("dni").value = this.employee.dni;
         document.getElementById("phone").value = this.employee.phone;
@@ -121,9 +116,9 @@ CTS.Employee = {
             url: "api/employee/updateEmployee.php",
             data: JSON.stringify(employee),
             cache: false,
-            success: function () {  
+            success: function () {
                 CTS.Utils.showDialog(BootstrapDialog.TYPE_INFO,"Confirm","El Empleado fue editado correctamente");
-                CTS.Employee.closeModalEditEmployee();
+                CTS.Utils.closeModal('modalEditEmployee');
                 CTS.Employee.getEmployee();
             },
             error: function () {

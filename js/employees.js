@@ -10,16 +10,16 @@ CTS.Employees = {
         // setNewEmployee
         $('.jumbotron .btn-primary').on('click', function () {
             self.setNewEmployee();
-        }); 
+        });
     },
     getEmployees : function () {
         jQuery.ajax({
             type: "GET",
             url: "api/employee/getEmployee.php",
             cache: false,
-            success: function(list) {  
+            success: function(list) {
                 $('#listPanel').empty();
-                
+
                 for (var i=0;i<list.length;i++) {
                     var dojos = '';
                     for (var j=0;j<list[i].dojos.length;j++) {
@@ -54,15 +54,10 @@ CTS.Employees = {
         this.showModalEditEmployee();
         this.setEmployee(id);
     },
-    closeModalEditEmployee : function () {
-        $('#modalEditEmployee').modal('hide');
-    },
-    showModalEditEmployee : function () {
-        $('#modalEditEmployee').modal('show');
-    },
+
     setModalEmployee : function (title,id) {
         var saveBtn = (id) ? '<button type="button" class="btn btn-primary" onclick="CTS.Employees.saveEmployee(\'' + id + '\');">Save changes</button>' : '<button type="button" class="btn btn-primary" onclick="CTS.Employees.newEmployee();">Save changes</button>';
-    
+
         $('#holderModal').empty().append(
         '<!-- Modal -->'
         +'<div class="modal fade" id="modalEditEmployee" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">'
@@ -92,7 +87,7 @@ CTS.Employees = {
         +'        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>'
         +           saveBtn
         +'      </div>');
-        
+
     },
     setEmployee : function (id) {
         jQuery.ajax({
@@ -100,8 +95,8 @@ CTS.Employees = {
             url: "api/employee/getEmployee.php",
             data: 'id='+ id,
             cache: false,
-            success: function (atr) {  
-                document.getElementById("name").value = atr[0].name; 
+            success: function (atr) {
+                document.getElementById("name").value = atr[0].name;
                 document.getElementById("lastname").value = atr[0].lastname;
                 document.getElementById("dni").value = atr[0].dni;
                 document.getElementById("phone").value = atr[0].phone;
@@ -136,9 +131,9 @@ CTS.Employees = {
             url: "api/employee/updateEmployee.php",
             data: JSON.stringify(employee),
             cache: false,
-            success: function (response) {  
+            success: function (response) {
                 CTS.Utils.showDialog(BootstrapDialog.TYPE_INFO,"Confirm","El Empleado fue editado correctamente");
-                CTS.Employees.closeModalEditEmployee();
+                CTS.Utils.closeModal('modalEditEmployee');
                 CTS.Employees.getEmployees();
             },
             error: function () {
@@ -148,7 +143,7 @@ CTS.Employees = {
     },
     setNewEmployee : function () {
         this.setModalEmployee('New Employee', null);
-        this.showModalEditEmployee();
+        CTS.Utils.showModal('modalEditEmployee');
         CTS.Utils.setStatus(null,'status');
     },
     newEmployee : function () {
@@ -169,9 +164,9 @@ CTS.Employees = {
             url: "api/employee/newEmployee.php",
             data: JSON.stringify(employee),
             cache: false,
-            success: function (response) {  
+            success: function (response) {
                 CTS.Utils.showDialog(BootstrapDialog.TYPE_INFO,"Confirm","El Empleado fue creado correctamente.");
-                CTS.Employees.closeModalEditEmployee();
+                CTS.Utils.closeModal('modalEditEmployee');
                 CTS.Employees.getEmployees();
             },
             error: function () {

@@ -14,12 +14,12 @@ CTS.Utils = {
             type: "GET",
             url: "api/getStatus.php",
             cache: false,
-            success: function (listStatus) {        
+            success: function (listStatus) {
                 $('#'+selectName).empty();
-                 
+
                 for (var i=0;i<listStatus.length;i++) {
                     var selected = "";
-                    
+
                     if (id==listStatus[i].id)
                         selected = "selected";
 
@@ -29,7 +29,7 @@ CTS.Utils = {
             error: function () {
                 self.showDialog(BootstrapDialog.TYPE_WARNING,"Error","Ha ocurrido un error, intente nuevamente.");
             }
-        });    
+        });
     },
     getCategories : function (id,selectName) {
         var self = this;
@@ -37,9 +37,9 @@ CTS.Utils = {
             type: "GET",
             url: "api/getCategory.php",
             cache: false,
-            success: function (listCategory) {        
+            success: function (listCategory) {
                 $('#'+selectName).empty();
-                 
+
                 for (var i=0;i<listCategory.length;i++) {
                     $('#'+selectName).append('<option value='  + listCategory[i].id +'>' + listCategory[i].name +'</option>');
                 }
@@ -50,9 +50,18 @@ CTS.Utils = {
             error: function () {
                 self.showDialog(BootstrapDialog.TYPE_WARNING,"Error","Ha ocurrido un error, intente nuevamente.");
             }
-        });    
+        });
     },
     getURLParameter : function (name) {
         return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.search)||[,""])[1].replace(/\+/g, '%20'))||null;
+    },
+
+    closeModal : function (id){
+      $('#'+id).modal('hide');
+    },
+
+    showModal : function(id){
+      $('#'+id).modal('show');
     }
+
 };
