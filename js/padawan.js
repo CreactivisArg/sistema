@@ -12,7 +12,7 @@ CTS.Padawan = {
         var self = this;
         $('#editPadawan').on('click', function () {
             self.editPadawan();
-        }); 
+        });
     },
     getPadawan : function () {
         jQuery.ajax({
@@ -20,10 +20,10 @@ CTS.Padawan = {
             url: "api/padawan/getPadawan.php",
             data: 'id='+ this.id_padawan,
             cache: false,
-            success: function(padawan) {  
+            success: function(padawan) {
                     CTS.Padawan.padawan = padawan[0];
                     $('#info').empty();
-                    
+
                     var dojos = '';
                     for (var i=0;i<padawan[0].dojos.length;i++) {
                         if ((i+1)==padawan[0].dojos.length)
@@ -67,15 +67,10 @@ CTS.Padawan = {
     },
     editPadawan : function () {
         this.setModalPadawan('Edit Padawan');
-        this.showModalEditPadawan();
+        CTS.Utils.showModal('modalEditPadawan');
         this.setPadawan();
     },
-    closeModalEditPadawan : function () {
-        $('#modalEditPadawan').modal('hide');
-    },
-    showModalEditPadawan : function () {
-        $('#modalEditPadawan').modal('show');
-    },
+
     setModalPadawan : function (title) {
         $('#holderModal').empty().append(
             '<!-- Modal -->'
@@ -108,10 +103,10 @@ CTS.Padawan = {
             +'        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>'
             +'        <button type="button" class="btn btn-primary" onclick="CTS.Padawan.savePadawan();">Save changes</button>'
             +'      </div>');
-        
+
     },
     setPadawan : function () {
-        document.getElementById("name").value = this.padawan.name; 
+        document.getElementById("name").value = this.padawan.name;
         document.getElementById("lastname").value = this.padawan.lastname;
         document.getElementById("dni").value = this.padawan.dni;
         document.getElementById("birthdate").value = this.padawan.birthdate;
@@ -145,7 +140,7 @@ CTS.Padawan = {
             url: "api/padawan/updatePadawan.php",
             data: JSON.stringify(padawan),
             cache: false,
-            success: function () {  
+            success: function () {
                 CTS.Utils.showDialog(BootstrapDialog.TYPE_INFO,"Confirm","El Padawan fue editado correctamente");
                 CTS.Padawan.closeModalEditPadawan();
                 CTS.Padawan.getPadawan();

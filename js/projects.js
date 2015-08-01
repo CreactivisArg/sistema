@@ -10,17 +10,17 @@ CTS.Projects = {
         // setNewProject
         $('.jumbotron .btn-primary').on('click', function () {
             self.setNewProject();
-        }); 
+        });
     },
     getProjects : function () {
         jQuery.ajax({
             type: "GET",
             url: "api/project/getProject.php",
             cache: false,
-            success: function(list) {  
+            success: function(list) {
                 $('#listPanel').empty();
-                
-                for (var i=0;i<list.length;i++) { 
+
+                for (var i=0;i<list.length;i++) {
                     var categories = '';
                     for (var j=0;j<list[i].categories.length;j++) {
                         if ((j+1)==list[i].categories.length)
@@ -58,18 +58,12 @@ CTS.Projects = {
     },
     editProject : function (id) {
         this.setModalProject('Edit Project', id);
-        this.showModalEditProject();
+        CTS.Utils.showModal('modalEditProject');
         this.setProject(id);
-    },
-    closeModalEditProject : function () {
-        $('#modalEditProject').modal('hide');
-    },
-    showModalEditProject : function () {
-        $('#modalEditProject').modal('show');
     },
     setModalProject : function (title,id) {
         var saveBtn = (id) ? '<button type="button" class="btn btn-primary" onclick="CTS.Projects.saveProject(\'' + id + '\');">Save changes</button>' : '<button type="button" class="btn btn-primary" onclick="CTS.Projects.newProject();">Save changes</button>';
-    
+
         $('#holderModal').empty().append(
             '<!-- Modal -->'
             +'<div class="modal fade" id="modalEditProject" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">'
@@ -99,7 +93,7 @@ CTS.Projects = {
             +'        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>'
             +           saveBtn
             +'      </div>');
-        
+
     },
     setProject : function (id) {
         jQuery.ajax({
@@ -107,8 +101,8 @@ CTS.Projects = {
             url: "api/project/getProject.php",
             data: 'id='+ id,
             cache: false,
-            success: function (atr) {  
-                document.getElementById("name").value = atr[0].name; 
+            success: function (atr) {
+                document.getElementById("name").value = atr[0].name;
                 document.getElementById("description").value = atr[0].description;
                 document.getElementById("target").value = atr[0].target;
                 document.getElementById("why").value = atr[0].why;
@@ -147,7 +141,7 @@ CTS.Projects = {
             url: "api/project/updateProject.php",
             data: JSON.stringify(project),
             cache: false,
-            success: function (response) {  
+            success: function (response) {
                 CTS.Utils.showDialog(BootstrapDialog.TYPE_INFO,"Confirm","El Proyecto fue editado correctamente");
                 CTS.Projects.closeModalEditProject();
                 CTS.Projects.getProjects();
@@ -159,7 +153,7 @@ CTS.Projects = {
     },
     setNewProject : function () {
         this.setModalProject('New Project', null);
-        this.showModalEditProject();
+        CTS.Utils.showModal('modalEditProject');
         CTS.Utils.setStatus(null,'status');
         CTS.Utils.getCategories(null,'categories');
     },
@@ -179,7 +173,7 @@ CTS.Projects = {
             url: "api/project/newProject.php",
             data: JSON.stringify(project),
             cache: false,
-            success: function (response) {  
+            success: function (response) {
                 CTS.Utils.showDialog(BootstrapDialog.TYPE_INFO,"Confirm","El Proyecto fue creado correctamente.");
                 CTS.Projects.closeModalEditProject();
                 CTS.Projects.getProjects();
@@ -187,11 +181,11 @@ CTS.Projects = {
             error: function () {
                 CTS.Utils.showDialog(BootstrapDialog.TYPE_WARNING,"Error","Ha ocurrido un error, intente nuevamente.");
             }
-        });      
+        });
     },
     addPadawanProject : function (id_project) {
         this.setModalAddPadawan('Add Padawan',id_project);
-        this.showModalAddPadawan();
+        CTS.Utils.showModal('modalAddPadawan');
         this.setPadawans();
     },
     setModalAddPadawan : function (title,id_project){
@@ -216,20 +210,15 @@ CTS.Projects = {
             +'       <button type="button" class="btn btn-primary" onclick="CTS.Projects.addPadawan(\'' + id_project + '\');">Add Padawan</button>'
             +'      </div>');
     },
-    closeModalAddPadawan : function () {
-        $('#modalAddPadawan').modal('hide');
-    },
-    showModalAddPadawan : function () {
-        $('#modalAddPadawan').modal('show');
-    },
+    
     setPadawans : function () {
         jQuery.ajax({
             type: "GET",
             url: "api/padawan/getPadawan.php",
             cache: false,
-            success: function (list) {        
+            success: function (list) {
                 $('#padawans').empty();
-                 
+
                 for (var i=0;i<list.length;i++) {
                     $('#padawans').append(
                         '<option value='  + list[i].id +'>' + list[i].lastname + ' ' + list[i].name +'</option>'
@@ -252,7 +241,7 @@ CTS.Projects = {
             url: "api/project/addPadawan.php",
             data: JSON.stringify(ids),
             cache: false,
-            success: function (response) {  
+            success: function (response) {
                 CTS.Utils.showDialog(BootstrapDialog.TYPE_INFO,"Confirm","El Padawan fue agregado correctamente");
                 CTS.Projects.closeModalAddPadawan();
                 CTS.Projects.getProjects();

@@ -12,25 +12,25 @@ CTS.Dojo = {
         var self = this;
         $('#addPadawan').on('click', function () {
             self.addPadawanDojo();
-        }); 
+        });
         $('#addMentor').on('click', function () {
             self.addMentorDojo();
-        }); 
+        });
         $('#addEmployee').on('click', function () {
             self.addEmployeeDojo();
-        }); 
+        });
         $('#showPadawans').on('click', function () {
             self.showPadawans();
-        }); 
+        });
         $('#showMentors').on('click', function () {
             self.showMentors();
-        }); 
+        });
         $('#showResponsibles').on('click', function () {
             self.showResponsibles();
-        }); 
+        });
         $('#showEmployees').on('click', function () {
             self.showEmployees();
-        }); 
+        });
     },
     showPadawans : function () {
         $('#listPanelPadawans').show();
@@ -78,9 +78,9 @@ CTS.Dojo = {
             url: "api/dojo/getMembers.php",
             data: 'id_dojo='+ this.id_dojo,
             cache: false,
-            success: function(dojo) {  
+            success: function(dojo) {
                 $('#listPanelPadawans').empty();
-                for (var i=0;i<dojo[0].padawans.length;i++) { 
+                for (var i=0;i<dojo[0].padawans.length;i++) {
                     var responsibles = '';
                     for (var j=0;j<dojo[0].padawans[i].responsibles.length;j++) {
                         if ((j+1)==dojo[0].padawans[i].responsibles.length)
@@ -114,7 +114,7 @@ CTS.Dojo = {
                         +'</div>');
                 }
                 $('#listPanelMentors').empty();
-                for (var i=0;i<dojo[0].mentors.length;i++) { 
+                for (var i=0;i<dojo[0].mentors.length;i++) {
                     $('#listPanelMentors').append('<a href="#" class="list-group-item" data-toggle="collapse" data-target="#' + dojo[0].mentors[i].id +'" data-parent="#menu">' + dojo[0].mentors[i].lastname + ' ' + dojo[0].mentors[i].name + '</a>'
                         +'<div id="' + dojo[0].mentors[i].id +'" class="sublinks collapse">'
                         +'<div class="list-group-item small">DNI: ' + dojo[0].mentors[i].dni +'</div>'
@@ -130,7 +130,7 @@ CTS.Dojo = {
                         +'</div>');
                 }
                 $('#listPanelResponsibles').empty();
-                for (var i=0;i<dojo[0].responsibles.length;i++) { 
+                for (var i=0;i<dojo[0].responsibles.length;i++) {
                     var padawans = '';
                     for (var j=0;j<dojo[0].responsibles[i].padawans.length;j++){
                         if ((j+1)==dojo[0].responsibles[i].padawans.length)
@@ -153,7 +153,7 @@ CTS.Dojo = {
                         +'</div>');
                 }
                 $('#listPanelEmployees').empty();
-                for (var i=0;i<dojo[0].employees.length;i++) { 
+                for (var i=0;i<dojo[0].employees.length;i++) {
                     $('#listPanelEmployees').append('<a href="#" class="list-group-item" data-toggle="collapse" data-target="#' + dojo[0].employees[i].id +'" data-parent="#menu">' + dojo[0].employees[i].lastname + ' ' + dojo[0].employees[i].name + '</a>'
                         +'<div id="' + dojo[0].employees[i].id +'" class="sublinks collapse">'
                         +'<div class="list-group-item small">DNI: ' + dojo[0].employees[i].dni +'</div>'
@@ -176,16 +176,10 @@ CTS.Dojo = {
     },
     addPadawanDojo : function () {
         this.setModalAddPadawan('Add Padawan');
-        this.showModalAddPadawan();
+        CTS.Utils.showModal('modalAddPadawan');
         this.setPadawans();
     },
-    closeModalAddPadawan : function () {
-        $('#modalAddPadawan').modal('hide');
-    },
-    showModalAddPadawan : function () {
-        $('#modalAddPadawan').modal('show');
-    },
-    setModalAddPadawan : function (title) {   
+    setModalAddPadawan : function (title) {
         $('#holderModal').empty().append(
             '<!-- Modal -->'
             +'<div class="modal fade" id="modalAddPadawan" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">'
@@ -212,9 +206,9 @@ CTS.Dojo = {
             type: "GET",
             url: "api/padawan/getPadawan.php",
             cache: false,
-            success: function (list) {        
+            success: function (list) {
                 $('#padawans').empty();
-                 
+
                 for (var i=0;i<list.length;i++) {
                     $('#padawans').append(
                         '<option value='  + list[i].id +'>' + list[i].lastname + ' ' + list[i].name +'</option>'
@@ -237,7 +231,7 @@ CTS.Dojo = {
             url: "api/dojo/addPadawan.php",
             data: JSON.stringify(ids),
             cache: false,
-            success: function () {  
+            success: function () {
                 CTS.Utils.showDialog(BootstrapDialog.TYPE_INFO,"Confirm","El Padawan fue agregado correctamente");
                 CTS.Dojo.closeModalAddPadawan();
                 CTS.Dojo.getMembers();
@@ -249,16 +243,11 @@ CTS.Dojo = {
     },
     addMentorDojo : function () {
         this.setModalAddMentor('Add Mentor');
-        this.showModalAddMentor();
+        CTS.Utils.showModal('modalAdd');
         this.setMentors();
     },
-    closeModalAddMentor : function () {
-        $('#modalAddMentor').modal('hide');
-    },
-    showModalAddMentor : function () {
-        $('#modalAddMentor').modal('show');
-    },
-    setModalAddMentor : function (title) {   
+
+    setModalAddMentor : function (title) {
         $('#holderModal').empty().append(
             '<!-- Modal -->'
             +'<div class="modal fade" id="modalAddMentor" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">'
@@ -285,9 +274,9 @@ CTS.Dojo = {
             type: "GET",
             url: "api/mentor/getMentor.php",
             cache: false,
-            success: function (list) {        
+            success: function (list) {
                 $('#mentors').empty();
-                 
+
                 for (var i=0;i<list.length;i++) {
                     $('#mentors').append(
                         '<option value='  + list[i].id +'>' + list[i].lastname + ' ' + list[i].name +'</option>'
@@ -310,7 +299,7 @@ CTS.Dojo = {
             url: "api/dojo/addMentor.php",
             data: JSON.stringify(ids),
             cache: false,
-            success: function () {  
+            success: function () {
                 CTS.Utils.showDialog(BootstrapDialog.TYPE_INFO,"Confirm","El Mentor fue agregado correctamente");
                 CTS.Dojo.closeModalAddMentor();
                 CTS.Dojo.getMembers();
@@ -322,16 +311,11 @@ CTS.Dojo = {
     },
     addEmployeeDojo : function () {
         this.setModalAddEmployee('Add Employee');
-        this.showModalAddEmployee();
+        CTS.Utils.showModal('modalAddEmployee');
         this.setEmployees();
     },
-    closeModalAddEmployee : function () {
-        $('#modalAddEmployee').modal('hide');
-    },
-    showModalAddEmployee : function () {
-        $('#modalAddEmployee').modal('show');
-    },
-    setModalAddEmployee : function (title) {   
+
+    setModalAddEmployee : function (title) {
         $('#holderModal').empty().append(
             '<!-- Modal -->'
             +'<div class="modal fade" id="modalAddEmployee" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">'
@@ -358,9 +342,9 @@ CTS.Dojo = {
             type: "GET",
             url: "api/employee/getEmployee.php",
             cache: false,
-            success: function (list) {        
+            success: function (list) {
                 $('#employees').empty();
-                 
+
                 for (var i=0;i<list.length;i++) {
                     $('#employees').append(
                         '<option value='  + list[i].id +'>' + list[i].lastname + ' ' + list[i].name +'</option>'
@@ -383,7 +367,7 @@ CTS.Dojo = {
             url: "api/dojo/addEmployee.php",
             data: JSON.stringify(ids),
             cache: false,
-            success: function () {  
+            success: function () {
                 CTS.Utils.showDialog(BootstrapDialog.TYPE_INFO,"Confirm","El Empleado fue agregado correctamente");
                 CTS.Dojo.closeModalAddEmployee();
                 CTS.Dojo.getMembers();
@@ -403,7 +387,7 @@ CTS.Dojo = {
             url: "api/dojo/removePadawan.php",
             data: JSON.stringify(ids),
             cache: false,
-            success: function () {  
+            success: function () {
                 CTS.Utils.showDialog(BootstrapDialog.TYPE_INFO,"Confirm","El Padawan fue removido correctamente.");
                 CTS.Dojo.getMembers();
             },
@@ -422,7 +406,7 @@ CTS.Dojo = {
             url: "api/dojo/removeMentor.php",
             data: JSON.stringify(ids),
             cache: false,
-            success: function () {  
+            success: function () {
                 CTS.Utils.showDialog(BootstrapDialog.TYPE_INFO,"Confirm","El Mentor fue removido correctamente.");
                 CTS.Dojo.getMembers();
             },
@@ -441,7 +425,7 @@ CTS.Dojo = {
             url: "api/dojo/removeEmployee.php",
             data: JSON.stringify(ids),
             cache: false,
-            success: function () {  
+            success: function () {
                 CTS.Utils.showDialog(BootstrapDialog.TYPE_INFO,"Confirm","El Empleado fue removido correctamente.");
                 CTS.Dojo.getMembers();
             },

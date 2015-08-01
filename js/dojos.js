@@ -10,7 +10,7 @@ CTS.Dojos = {
         // setNewDojo
         $('.jumbotron .btn-primary').on('click', function () {
             self.setNewDojo();
-        }); 
+        });
     },
     getDojos : function () {
         var i = 0;
@@ -18,10 +18,10 @@ CTS.Dojos = {
             type: "GET",
             url: "api/dojo/getDojo.php",
             cache: false,
-            success: function(list) {  
+            success: function(list) {
                 $('#listPanel').empty();
-                
-                for (i; i < list.length; i++) { 
+
+                for (i; i < list.length; i++) {
                     $('#listPanel').append('<a href="#" class="list-group-item" data-toggle="collapse" data-target="#' + list[i].id +'" data-parent="#menu">' + list[i].name +' - ' + list[i].city + '</a>'
                         +'<div id="' + list[i].id +'" class="sublinks collapse">'
                         +'<div class="list-group-item small">Address: ' + list[i].address +'</div>'
@@ -44,18 +44,13 @@ CTS.Dojos = {
     },
     editDojo : function (id) {
         this.setModalDojo('Edit Dojo', id);
-        this.showModalEditDojo();
+        CTS.Utils.showModal('modalEditDojo');
         this.setDojo(id);
     },
-    closeModalEditDojo : function () {
-	    $('#modalEditDojo').modal('hide');
-	},
-    showModalEditDojo : function () {
-        $('#modalEditDojo').modal('show');
-    },
+
     setModalDojo : function (title,id) {
         var saveBtn = (id) ? '<button type="button" class="btn btn-primary" onclick="CTS.Dojos.saveDojo(\'' + id + '\');">Save changes</button>' : '<button type="button" class="btn btn-primary" onclick="CTS.Dojos.newDojo();">Save changes</button>';
-    
+
         $('#holderModal').empty().append(
             '<!-- Modal -->'
             +'<div class="modal fade" id="modalEditDojo" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">'
@@ -84,7 +79,7 @@ CTS.Dojos = {
             +'        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>'
             +           saveBtn
             +'      </div>');
-        
+
     },
     setDojo : function (id) {
         jQuery.ajax({
@@ -92,8 +87,8 @@ CTS.Dojos = {
             url: "api/dojo/getDojo.php",
             data: 'id='+ id,
             cache: false,
-            success: function (atr) {  
-                document.getElementById("name").value = atr[0].name; 
+            success: function (atr) {
+                document.getElementById("name").value = atr[0].name;
                 document.getElementById("address").value = atr[0].address;
                 document.getElementById("city").value = atr[0].city;
                 document.getElementById("description").value = atr[0].description;
@@ -126,7 +121,7 @@ CTS.Dojos = {
             url: "api/dojo/updateDojo.php",
             data: JSON.stringify(dojo),
             cache: false,
-            success: function (response) {  
+            success: function (response) {
                 CTS.Utils.showDialog(BootstrapDialog.TYPE_INFO,"Confirm","El Dojo fue editado correctamente");
                 CTS.Dojos.closeModalEditDojo();
                 CTS.Dojos.getDojos();
@@ -138,7 +133,7 @@ CTS.Dojos = {
     },
     setNewDojo : function () {
         this.setModalDojo('New Dojo', null);
-        this.showModalEditDojo();
+        CTS.Utils.showModal('modalEditDojo');
         CTS.Utils.setStatus(null,'status');
     },
     newDojo : function () {
@@ -158,7 +153,7 @@ CTS.Dojos = {
             url: "api/dojo/newDojo.php",
             data: JSON.stringify(dojo),
             cache: false,
-            success: function (response) {  
+            success: function (response) {
                 CTS.Utils.showDialog(BootstrapDialog.TYPE_INFO,"Confirm","El Dojo fue creado correctamente.");
                 CTS.Dojos.closeModalEditDojo();
                 CTS.Dojos.getDojos();

@@ -12,7 +12,7 @@ CTS.Mentor = {
         var self = this;
         $('#editMentor').on('click', function () {
             self.editMentor();
-        }); 
+        });
     },
     getMentor : function () {
         jQuery.ajax({
@@ -21,9 +21,9 @@ CTS.Mentor = {
             data: 'id='+ this.id_mentor,
             cache: false,
             success: function(mentor) {
-                    CTS.Mentor.mentor = mentor[0];  
+                    CTS.Mentor.mentor = mentor[0];
                     $('#info').empty();
-                    
+
                     var dojos = '';
                     for (var i=0;i<mentor[0].dojos.length;i++) {
                         if ((i+1)==mentor[0].dojos.length)
@@ -49,15 +49,10 @@ CTS.Mentor = {
     },
     editMentor : function () {
         this.setModalMentor('Edit Mentor');
-        this.showModalEditMentor();
+        CTS.Utils.showModal('modalEditMentor');
         this.setMentor();
     },
-    closeModalEditMentor : function () {
-        $('#modalEditMentor').modal('hide');
-    },
-    showModalEditMentor : function () {
-        $('#modalEditMentor').modal('show');
-    },
+
     setModalMentor : function (title) {
         $('#holderModal').empty().append(
             '<!-- Modal -->'
@@ -88,10 +83,10 @@ CTS.Mentor = {
             +'        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>'
             +'        <button type="button" class="btn btn-primary" onclick="CTS.Mentor.saveMentor();">Save changes</button>'
             +'      </div>');
-        
+
     },
     setMentor : function () {
-        document.getElementById("name").value = this.mentor.name; 
+        document.getElementById("name").value = this.mentor.name;
         document.getElementById("lastname").value = this.mentor.lastname;
         document.getElementById("dni").value = this.mentor.dni;
         document.getElementById("phone").value = this.mentor.phone;
@@ -121,9 +116,9 @@ CTS.Mentor = {
             url: "api/mentor/updateMentor.php",
             data: JSON.stringify(mentor),
             cache: false,
-            success: function () {  
+            success: function () {
                 CTS.Utils.showDialog(BootstrapDialog.TYPE_INFO,"Confirm","El Mentor fue editado correctamente");
-                CTS.Mentor.closeModalEditMentor();
+                CTS.Mentor.closeModal('modalEditMentor');
                 CTS.Mentor.getMentor();
             },
             error: function () {

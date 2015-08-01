@@ -51,7 +51,7 @@ CTS.Employees = {
     },
     editEmployee : function (id) {
         this.setModalEmployee('Edit Employee', id);
-        this.showModalEditEmployee();
+        CTS.Utils.showModal('modalEditEmployee');
         this.setEmployee(id);
     },
 

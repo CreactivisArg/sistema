@@ -10,16 +10,16 @@ CTS.Padawans = {
         // setNewPadawan
         $('.jumbotron .btn-primary').on('click', function () {
             self.setNewPadawan();
-        }); 
+        });
     },
     getPadawans : function () {
         jQuery.ajax({
             type: "GET",
             url: "api/padawan/getPadawan.php",
             cache: false,
-            success: function (list) {  
+            success: function (list) {
                 $('#listPanel').empty();
-                
+
                 for (var i=0;i<list.length;i++) {
                     var dojos = '';
                     for (var j=0;j<list[i].dojos.length;j++) {
@@ -69,18 +69,13 @@ CTS.Padawans = {
     },
     editPadawan : function (id) {
         this.setModalPadawan('Edit Padawan', id);
-        this.showModalEditPadawan();
+        CTS.Utils.showModal('modalEditPadawan');
         this.setPadawan(id);
     },
-    closeModalEditPadawan : function () {
-        $('#modalEditPadawan').modal('hide');
-    },
-    showModalEditPadawan : function () {
-        $('#modalEditPadawan').modal('show');
-    },
+
     setModalPadawan : function (title,id) {
         var saveBtn = (id) ? '<button type="button" class="btn btn-primary" onclick="CTS.Padawans.savePadawan(\'' + id + '\');">Save changes</button>' : '<button type="button" class="btn btn-primary" onclick="CTS.Padawans.newPadawan();">Save changes</button>';
-    
+
         $('#holderModal').empty().append(
             '<!-- Modal -->'
             +'<div class="modal fade" id="modalEditPadawan" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">'
@@ -112,7 +107,7 @@ CTS.Padawans = {
             +'        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>'
             +           saveBtn
             +'      </div>');
-        
+
     },
     setPadawan : function (id) {
         jQuery.ajax({
@@ -120,8 +115,8 @@ CTS.Padawans = {
             url: "api/padawan/getPadawan.php",
             data: 'id='+ id,
             cache: false,
-            success: function (atr) {  
-                document.getElementById("name").value = atr[0].name; 
+            success: function (atr) {
+                document.getElementById("name").value = atr[0].name;
                 document.getElementById("lastname").value = atr[0].lastname;
                 document.getElementById("dni").value = atr[0].dni;
                 document.getElementById("birthdate").value = atr[0].birthdate;
@@ -160,7 +155,7 @@ CTS.Padawans = {
             url: "api/padawan/updatePadawan.php",
             data: JSON.stringify(padawan),
             cache: false,
-            success: function (response) {  
+            success: function (response) {
                 CTS.Utils.showDialog(BootstrapDialog.TYPE_INFO,"Confirm","El Padawan fue editado correctamente");
                 CTS.Padawans.closeModalEditPadawan();
                 CTS.Padawans.getPadawans();
@@ -172,7 +167,7 @@ CTS.Padawans = {
     },
     setNewPadawan : function () {
         this.setModalPadawan('New Padawan', null);
-        this.showModalEditPadawan();
+        CTS.Utils.showModal('modalEditPadawan');
         CTS.Utils.setStatus(null,'status');
     },
     newPadawan : function () {
@@ -195,7 +190,7 @@ CTS.Padawans = {
             url: "api/padawan/newPadawan.php",
             data: JSON.stringify(padawan),
             cache: false,
-            success: function (response) {  
+            success: function (response) {
                 CTS.Utils.showDialog(BootstrapDialog.TYPE_INFO,"Confirm","El Padawan fue creado correctamente.");
                 CTS.Padawans.closeModalEditPadawan();
                 CTS.Padawans.getPadawans();

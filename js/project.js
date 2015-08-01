@@ -12,10 +12,10 @@ CTS.Project = {
         var self = this;
         $('#editProject').on('click', function () {
             self.editProject();
-        }); 
+        });
         $('#addPadawan').on('click', function () {
             self.addPadawanProject();
-        }); 
+        });
     },
     getProject : function () {
         jQuery.ajax({
@@ -23,10 +23,10 @@ CTS.Project = {
             url: "api/project/getProject.php",
             data: 'id='+ this.id_project,
             cache: false,
-            success: function(project) { 
-                    CTS.Project.project = project[0];   
+            success: function(project) {
+                    CTS.Project.project = project[0];
                     $('#info').empty();
-                    
+
                     var categories = '';
                     for (var i=0;i<project[0].categories.length;i++) {
                         if ((i+1)==project[0].categories.length)
@@ -58,15 +58,10 @@ CTS.Project = {
     },
     editProject : function () {
         this.setModalProject('Edit Project');
-        this.showModalEditProject();
+        CTS.Utils.showModal('modalEditProject');
         this.setProject();
     },
-    closeModalEditProject : function () {
-        $('#modalEditProject').modal('hide');
-    },
-    showModalEditProject : function () {
-        $('#modalEditProject').modal('show');
-    },
+
     setModalProject : function (title) {
         $('#holderModal').empty().append(
             '<!-- Modal -->'
@@ -97,10 +92,10 @@ CTS.Project = {
             +'        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>'
             +'        <button type="button" class="btn btn-primary" onclick="CTS.Project.saveProject();">Save changes</button>'
             +'      </div>');
-        
+
     },
     setProject : function () {
-        document.getElementById("name").value = this.project.name; 
+        document.getElementById("name").value = this.project.name;
         document.getElementById("description").value = this.project.description;
         document.getElementById("target").value = this.project.target;
         document.getElementById("why").value = this.project.why;
@@ -134,7 +129,7 @@ CTS.Project = {
             url: "api/project/updateProject.php",
             data: JSON.stringify(project),
             cache: false,
-            success: function (response) {  
+            success: function (response) {
                 CTS.Utils.showDialog(BootstrapDialog.TYPE_INFO,"Confirm","El Proyecto fue editado correctamente");
                 CTS.Project.closeModalEditProject();
                 CTS.Project.getProject();
@@ -146,7 +141,7 @@ CTS.Project = {
     },
     addPadawanProject : function () {
         this.setModalAddPadawan('Add Padawan');
-        this.showModalAddPadawan();
+        CTS.Utils.showModal('modalAddPadawan');
         this.setPadawans();
     },
     setModalAddPadawan : function (title){
@@ -171,20 +166,14 @@ CTS.Project = {
             +'       <button type="button" class="btn btn-primary" onclick="CTS.Project.addPadawan();">Add Padawan</button>'
             +'      </div>');
     },
-    closeModalAddPadawan : function () {
-        $('#modalAddPadawan').modal('hide');
-    },
-    showModalAddPadawan : function () {
-        $('#modalAddPadawan').modal('show');
-    },
     setPadawans : function () {
         jQuery.ajax({
             type: "GET",
             url: "api/padawan/getPadawan.php",
             cache: false,
-            success: function (list) {        
+            success: function (list) {
                 $('#padawans').empty();
-                 
+
                 for (var i=0;i<list.length;i++) {
                     $('#padawans').append(
                         '<option value='  + list[i].id +'>' + list[i].lastname + ' ' + list[i].name +'</option>'
@@ -207,7 +196,7 @@ CTS.Project = {
             url: "api/project/addPadawan.php",
             data: JSON.stringify(ids),
             cache: false,
-            success: function () {  
+            success: function () {
                 CTS.Utils.showDialog(BootstrapDialog.TYPE_INFO,"Confirm","El Padawan fue agregado correctamente");
                 CTS.Project.closeModalAddPadawan();
                 CTS.Project.getProject();

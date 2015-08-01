@@ -12,10 +12,10 @@ CTS.Responsible = {
         var self = this;
         $('#editResponsible').on('click', function () {
             self.editResponsible();
-        }); 
+        });
         $('#addPadawan').on('click', function () {
             self.addPadawanResponsible();
-        }); 
+        });
     },
     getResponsible : function () {
         jQuery.ajax({
@@ -23,10 +23,10 @@ CTS.Responsible = {
             url: "api/responsible/getResponsible.php",
             data: 'id='+ this.id_responsible,
             cache: false,
-            success: function(responsible) { 
-                    CTS.Responsible.responsible = responsible[0];   
+            success: function(responsible) {
+                    CTS.Responsible.responsible = responsible[0];
                     $('#info').empty();
-                    
+
                     var padawans = '';
                     for (var i=0;i<responsible[0].padawans.length;i++) {
                         if ((i+1)==responsible[0].padawans.length)
@@ -52,14 +52,8 @@ CTS.Responsible = {
     },
     editResponsible : function () {
         this.setModalResponsible('Edit Responsible');
-        this.showModalEditResponsible();
+        CTS.Utils.showModal('modalEditResponsible');
         this.setResponsible();
-    },
-    closeModalEditResponsible : function () {
-        $('#modalEditResponsible').modal('hide');
-    },
-    showModalEditResponsible : function () {
-        $('#modalEditResponsible').modal('show');
     },
     setModalResponsible : function (title) {
         $('#holderModal').empty().append(
@@ -91,10 +85,10 @@ CTS.Responsible = {
             +'        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>'
             +'        <button type="button" class="btn btn-primary" onclick="CTS.Responsible.saveResponsible();">Save changes</button>'
             +'      </div>');
-        
+
     },
     setResponsible : function () {
-        document.getElementById("name").value = this.responsible.name; 
+        document.getElementById("name").value = this.responsible.name;
         document.getElementById("lastname").value = this.responsible.lastname;
         document.getElementById("dni").value = this.responsible.dni;
         document.getElementById("phone").value = this.responsible.phone;
@@ -124,7 +118,7 @@ CTS.Responsible = {
             url: "api/responsible/updateResponsible.php",
             data: JSON.stringify(responsible),
             cache: false,
-            success: function () {  
+            success: function () {
                 CTS.Utils.showDialog(BootstrapDialog.TYPE_INFO,"Confirm","El Responsable fue editado correctamente");
                 CTS.Responsible.closeModalEditResponsible();
                 CTS.Responsible.getResponsible();
@@ -136,7 +130,7 @@ CTS.Responsible = {
     },
     addPadawanResponsible : function () {
         this.setModalAddPadawan('Add Padawan');
-        this.showModalAddPadawan();
+        CTS.Utils.showModal('modalAddPadawan');
         this.setPadawans();
     },
     setModalAddPadawan : function (title){
@@ -161,20 +155,15 @@ CTS.Responsible = {
             +'       <button type="button" class="btn btn-primary" onclick="CTS.Responsible.addPadawan();">Add Padawan</button>'
             +'      </div>');
     },
-    closeModalAddPadawan : function () {
-        $('#modalAddPadawan').modal('hide');
-    },
-    showModalAddPadawan : function () {
-        $('#modalAddPadawan').modal('show');
-    },
+    
     setPadawans : function () {
         jQuery.ajax({
             type: "GET",
             url: "api/padawan/getPadawan.php",
             cache: false,
-            success: function (list) {        
+            success: function (list) {
                 $('#padawans').empty();
-                 
+
                 for (var i=0;i<list.length;i++) {
                     $('#padawans').append(
                         '<option value='  + list[i].id +'>' + list[i].lastname + ' ' + list[i].name +'</option>'
@@ -197,7 +186,7 @@ CTS.Responsible = {
             url: "api/responsible/addPadawan.php",
             data: JSON.stringify(ids),
             cache: false,
-            success: function () {  
+            success: function () {
                 CTS.Utils.showDialog(BootstrapDialog.TYPE_INFO,"Confirm","El Padawan fue agregado correctamente");
                 CTS.Responsible.closeModalAddPadawan();
                 CTS.Responsible.getResponsible();
