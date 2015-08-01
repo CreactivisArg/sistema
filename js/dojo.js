@@ -233,7 +233,7 @@ CTS.Dojo = {
             cache: false,
             success: function () {
                 CTS.Utils.showDialog(BootstrapDialog.TYPE_INFO,"Confirm","El Padawan fue agregado correctamente");
-                CTS.Dojo.closeModalAddPadawan();
+                CTS.Utils.closeModal('modalAddPadawan');
                 CTS.Dojo.getMembers();
             },
             error: function () {
@@ -301,7 +301,7 @@ CTS.Dojo = {
             cache: false,
             success: function () {
                 CTS.Utils.showDialog(BootstrapDialog.TYPE_INFO,"Confirm","El Mentor fue agregado correctamente");
-                CTS.Dojo.closeModalAddMentor();
+                CTS.Utils.closeModal('modalAddMentor');
                 CTS.Dojo.getMembers();
             },
             error: function () {
@@ -369,7 +369,7 @@ CTS.Dojo = {
             cache: false,
             success: function () {
                 CTS.Utils.showDialog(BootstrapDialog.TYPE_INFO,"Confirm","El Empleado fue agregado correctamente");
-                CTS.Dojo.closeModalAddEmployee();
+                CTS.Utils.closeModal('modalAddEmployee')
                 CTS.Dojo.getMembers();
             },
             error: function () {

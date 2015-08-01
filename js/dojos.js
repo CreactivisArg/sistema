@@ -123,7 +123,7 @@ CTS.Dojos = {
             cache: false,
             success: function (response) {
                 CTS.Utils.showDialog(BootstrapDialog.TYPE_INFO,"Confirm","El Dojo fue editado correctamente");
-                CTS.Dojos.closeModalEditDojo();
+                CTS.Utils.closeModal('modalEditDojo')
                 CTS.Dojos.getDojos();
             },
             error: function () {
@@ -155,7 +155,7 @@ CTS.Dojos = {
             cache: false,
             success: function (response) {
                 CTS.Utils.showDialog(BootstrapDialog.TYPE_INFO,"Confirm","El Dojo fue creado correctamente.");
-                CTS.Dojos.closeModalEditDojo();
+                CTS.Utils.closeModal('modalEditDojo')
                 CTS.Dojos.getDojos();
             },
             error: function () {

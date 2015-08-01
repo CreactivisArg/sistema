@@ -134,7 +134,7 @@ CTS.Responsibles = {
             cache: false,
             success: function (response) {
                 CTS.Utils.showDialog(BootstrapDialog.TYPE_INFO,"Confirm","El Responsable fue editado correctamente");
-                CTS.Responsibles.closeModalEditResponsible();
+                CTS.Utils.closeModal('modalEditResponsible');
                 CTS.Responsibles.getResponsibles();
             },
             error: function () {
@@ -167,7 +167,7 @@ CTS.Responsibles = {
             cache: false,
             success: function (response) {
                 CTS.Utils.showDialog(BootstrapDialog.TYPE_INFO,"Confirm","El Responsable fue creado correctamente.");
-                CTS.Responsibles.closeModalEditResponsible();
+                CTS.Utils.closeModal('modalEditResponsible');
                 CTS.Responsibles.getResponsibles();
             },
             error: function () {
@@ -235,7 +235,7 @@ CTS.Responsibles = {
             cache: false,
             success: function (response) {
                 CTS.Utils.showDialog(BootstrapDialog.TYPE_INFO,"Confirm","El Padawan fue agregado correctamente");
-                CTS.Responsibles.closeModalAddPadawan();
+                CTS.Utils.closeModal('modalAddPadawan');
                 CTS.Responsibles.getResponsibles();
             },
             error: function () {

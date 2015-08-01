@@ -142,7 +142,7 @@ CTS.Padawan = {
             cache: false,
             success: function () {
                 CTS.Utils.showDialog(BootstrapDialog.TYPE_INFO,"Confirm","El Padawan fue editado correctamente");
-                CTS.Padawan.closeModalEditPadawan();
+                CTS.Utils.closeModal('modalEditPadawan')
                 CTS.Padawan.getPadawan();
             },
             error: function () {

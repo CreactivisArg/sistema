@@ -143,7 +143,7 @@ CTS.Projects = {
             cache: false,
             success: function (response) {
                 CTS.Utils.showDialog(BootstrapDialog.TYPE_INFO,"Confirm","El Proyecto fue editado correctamente");
-                CTS.Projects.closeModalEditProject();
+                CTS.Utils.closeModal('modalEditProject');
                 CTS.Projects.getProjects();
             },
             error: function () {
@@ -175,7 +175,7 @@ CTS.Projects = {
             cache: false,
             success: function (response) {
                 CTS.Utils.showDialog(BootstrapDialog.TYPE_INFO,"Confirm","El Proyecto fue creado correctamente.");
-                CTS.Projects.closeModalEditProject();
+                CTS.Utils.closeModal('modalEditProject');
                 CTS.Projects.getProjects();
             },
             error: function () {
@@ -210,7 +210,7 @@ CTS.Projects = {
             +'       <button type="button" class="btn btn-primary" onclick="CTS.Projects.addPadawan(\'' + id_project + '\');">Add Padawan</button>'
             +'      </div>');
     },
-    
+
     setPadawans : function () {
         jQuery.ajax({
             type: "GET",
@@ -243,7 +243,7 @@ CTS.Projects = {
             cache: false,
             success: function (response) {
                 CTS.Utils.showDialog(BootstrapDialog.TYPE_INFO,"Confirm","El Padawan fue agregado correctamente");
-                CTS.Projects.closeModalAddPadawan();
+                CTS.Utils.closeModal('modalAddPadawan');
                 CTS.Projects.getProjects();
             },
             error: function () {

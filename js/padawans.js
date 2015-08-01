@@ -157,7 +157,7 @@ CTS.Padawans = {
             cache: false,
             success: function (response) {
                 CTS.Utils.showDialog(BootstrapDialog.TYPE_INFO,"Confirm","El Padawan fue editado correctamente");
-                CTS.Padawans.closeModalEditPadawan();
+                CTS.Utils.closeModal('modalEditPadawan')
                 CTS.Padawans.getPadawans();
             },
             error: function () {
@@ -192,7 +192,7 @@ CTS.Padawans = {
             cache: false,
             success: function (response) {
                 CTS.Utils.showDialog(BootstrapDialog.TYPE_INFO,"Confirm","El Padawan fue creado correctamente.");
-                CTS.Padawans.closeModalEditPadawan();
+                CTS.Utils.closeModal('modalEditPadawan');
                 CTS.Padawans.getPadawans();
             },
             error: function () {

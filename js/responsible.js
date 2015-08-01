@@ -120,7 +120,7 @@ CTS.Responsible = {
             cache: false,
             success: function () {
                 CTS.Utils.showDialog(BootstrapDialog.TYPE_INFO,"Confirm","El Responsable fue editado correctamente");
-                CTS.Responsible.closeModalEditResponsible();
+                CTS.Utils.closeModal('modalEditResponsible');
                 CTS.Responsible.getResponsible();
             },
             error: function () {
@@ -155,7 +155,7 @@ CTS.Responsible = {
             +'       <button type="button" class="btn btn-primary" onclick="CTS.Responsible.addPadawan();">Add Padawan</button>'
             +'      </div>');
     },
-    
+
     setPadawans : function () {
         jQuery.ajax({
             type: "GET",
@@ -188,7 +188,7 @@ CTS.Responsible = {
             cache: false,
             success: function () {
                 CTS.Utils.showDialog(BootstrapDialog.TYPE_INFO,"Confirm","El Padawan fue agregado correctamente");
-                CTS.Responsible.closeModalAddPadawan();
+                CTS.Utils.closeModal('modalAddPadawan');
                 CTS.Responsible.getResponsible();
             },
             error: function () {

@@ -133,7 +133,7 @@ CTS.Mentors = {
             cache: false,
             success: function (response) {
                 CTS.Utils.showDialog(BootstrapDialog.TYPE_INFO,"Confirm","El Mentor fue editado correctamente");
-                CTS.Mentors.closeModalEditMentor();
+                CTS.Utils.closeModal('modalEditMentor')
                 CTS.Mentors.getMentors();
             },
             error: function () {
@@ -166,7 +166,7 @@ CTS.Mentors = {
             cache: false,
             success: function (response) {
                 CTS.Utils.showDialog(BootstrapDialog.TYPE_INFO,"Confirm","El Mentor fue creado correctamente.");
-                CTS.Mentors.closeModalEditMentor();
+                CTS.Utils.closeModal('modalEditMentor')
                 CTS.Mentors.getMentors();
             },
             error: function () {

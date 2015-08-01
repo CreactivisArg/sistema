@@ -131,7 +131,7 @@ CTS.Project = {
             cache: false,
             success: function (response) {
                 CTS.Utils.showDialog(BootstrapDialog.TYPE_INFO,"Confirm","El Proyecto fue editado correctamente");
-                CTS.Project.closeModalEditProject();
+                CTS.Utils.closeModal('modalEditProject');
                 CTS.Project.getProject();
             },
             error: function () {
@@ -198,7 +198,7 @@ CTS.Project = {
             cache: false,
             success: function () {
                 CTS.Utils.showDialog(BootstrapDialog.TYPE_INFO,"Confirm","El Padawan fue agregado correctamente");
-                CTS.Project.closeModalAddPadawan();
+                CTS.Utils.closeModal('modalAddPadawan');
                 CTS.Project.getProject();
             },
             error: function () {
