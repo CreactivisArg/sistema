@@ -52,7 +52,7 @@ CTS.Project = {
                         }
                         $('#info').append(padawans +'</div>');
                     }
-                    $('#info').append('<p>Status: ' + responsible[0].status +'</p>');
+                    $('#info').append('<p>Status: ' + project[0].status +'</p>');
             },
             error: function () {
                 CTS.Utils.showDialog(BootstrapDialog.TYPE_WARNING,"Error","Ha ocurrido un error, intente nuevamente.");
