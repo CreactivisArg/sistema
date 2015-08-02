@@ -23,7 +23,7 @@ CTS.Project = {
             url: "api/project/getProject.php",
             data: 'id='+ this.id_project,
             cache: false,
-            success: function(project) {
+            success: function (project) {
                     CTS.Project.project = project[0];
                     $('#info').empty();
 
@@ -96,12 +96,12 @@ CTS.Project = {
             +'      </div>');
     },
     setProject : function () {
-        document.getElementById("name").value = this.project.name;
-        document.getElementById("description").value = this.project.description;
-        document.getElementById("target").value = this.project.target;
-        document.getElementById("why").value = this.project.why;
-        document.getElementById("who").value = this.project.who;
-        document.getElementById("scope").value = this.project.scope;
+        $("#name").val(this.project.name);
+        $("#description").val(this.project.description);
+        $("#target").val(this.project.target);
+        $("#why").val(this.project.why);
+        $("#who").val(this.project.who);
+        $("#scope").val(this.project.scope);
         CTS.Utils.setStatus(this.project.id_status,'status');
         if (this.project.categories.length==0)
             CTS.Utils.getCategories(null,'categories');
@@ -145,7 +145,7 @@ CTS.Project = {
         CTS.Utils.showModal('modalAddPadawan');
         this.setPadawans();
     },
-    setModalAddPadawan : function (title){
+    setModalAddPadawan : function (title) {
         $('#holderModal').empty().append(
             '<!-- Modal -->'
             +'<div class="modal fade" id="modalAddPadawan" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">'

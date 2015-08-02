@@ -23,7 +23,7 @@ CTS.Responsible = {
             url: "api/responsible/getResponsible.php",
             data: 'id='+ this.id_responsible,
             cache: false,
-            success: function(responsible) {
+            success: function (responsible) {
                     CTS.Responsible.responsible = responsible[0];
                     $('#info').empty();
                     $('#info').append('<p>' + responsible[0].lastname + ' ' + responsible[0].name + '</p>'
@@ -89,15 +89,15 @@ CTS.Responsible = {
             +'      </div>');
     },
     setResponsible : function () {
-        document.getElementById("name").value = this.responsible.name;
-        document.getElementById("lastname").value = this.responsible.lastname;
-        document.getElementById("dni").value = this.responsible.dni;
-        document.getElementById("phone").value = this.responsible.phone;
-        document.getElementById("mobile").value = this.responsible.mobile;
-        document.getElementById("email").value = this.responsible.email;
-        document.getElementById("facebook").value = this.responsible.facebook;
-        document.getElementById("twitter").value = this.responsible.twitter;
-        document.getElementById("address").value = this.responsible.address;
+        $("#name").val(this.responsible.name);
+        $("#lastname").val(this.responsible.lastname);
+        $("#dni").val(this.responsible.dni);
+        $("#phone").val(this.responsible.phone);
+        $("#mobile").val(this.responsible.mobile);
+        $("#email").val(this.responsible.email);
+        $("#facebook").val(this.responsible.facebook);
+        $("#twitter").val(this.responsible.twitter);
+        $("#address").val(this.responsible.address);
         CTS.Utils.setStatus(this.responsible.id_status,'status');
     },
     saveResponsible : function () {

@@ -70,7 +70,6 @@ CTS.Padawan = {
         CTS.Utils.showModal('modalEditPadawan');
         this.setPadawan();
     },
-
     setModalPadawan : function (title) {
         $('#holderModal').empty().append(
             '<!-- Modal -->'
@@ -103,20 +102,19 @@ CTS.Padawan = {
             +'        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>'
             +'        <button type="button" class="btn btn-primary" onclick="CTS.Padawan.savePadawan();">Save changes</button>'
             +'      </div>');
-
     },
     setPadawan : function () {
-        document.getElementById("name").value = this.padawan.name;
-        document.getElementById("lastname").value = this.padawan.lastname;
-        document.getElementById("dni").value = this.padawan.dni;
-        document.getElementById("birthdate").value = this.padawan.birthdate;
-        document.getElementById("phone").value = this.padawan.phone;
-        document.getElementById("mobile").value = this.padawan.mobile;
-        document.getElementById("email").value = this.padawan.email;
-        document.getElementById("facebook").value = this.padawan.facebook;
-        document.getElementById("twitter").value = this.padawan.twitter;
-        document.getElementById("school").value = this.padawan.school;
-        document.getElementById("address").value = this.padawan.address;
+        $("#name").val(this.padawan.name);
+        $("#lastname").val(this.padawan.lastname);
+        $("#dni").val(this.padawan.dni);
+        $("#birthdate").val(this.padawan.birthdate);
+        $("#phone").val(this.padawan.phone);
+        $("#mobile").val(this.padawan.mobile);
+        $("#email").val(this.padawan.email);
+        $("#facebook").val(this.padawan.facebook);
+        $("#twitter").val(this.padawan.twitter);
+        $("#school").val(this.padawan.school);
+        $("#address").val(this.padawan.address);
         CTS.Utils.setStatus(this.padawan.id_status,'status');
     },
     savePadawan : function () {

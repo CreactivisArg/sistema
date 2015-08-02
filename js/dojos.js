@@ -18,7 +18,7 @@ CTS.Dojos = {
             type: "GET",
             url: "api/dojo/getDojo.php",
             cache: false,
-            success: function(list) {
+            success: function (list) {
                 $('#listPanel').empty();
 
                 for (i; i < list.length; i++) {
@@ -47,7 +47,6 @@ CTS.Dojos = {
         CTS.Utils.showModal('modalEditDojo');
         this.setDojo(id);
     },
-
     setModalDojo : function (title,id) {
         var saveBtn = (id) ? '<button type="button" class="btn btn-primary" onclick="CTS.Dojos.saveDojo(\'' + id + '\');">Save changes</button>' : '<button type="button" class="btn btn-primary" onclick="CTS.Dojos.newDojo();">Save changes</button>';
 
@@ -79,7 +78,6 @@ CTS.Dojos = {
             +'        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>'
             +           saveBtn
             +'      </div>');
-
     },
     setDojo : function (id) {
         jQuery.ajax({
@@ -88,15 +86,15 @@ CTS.Dojos = {
             data: 'id='+ id,
             cache: false,
             success: function (atr) {
-                document.getElementById("name").value = atr[0].name;
-                document.getElementById("address").value = atr[0].address;
-                document.getElementById("city").value = atr[0].city;
-                document.getElementById("description").value = atr[0].description;
-                document.getElementById("phone").value = atr[0].phone;
-                document.getElementById("email").value = atr[0].email;
-                document.getElementById("facebook").value = atr[0].facebook;
-                document.getElementById("twitter").value = atr[0].twitter;
-                CTS.Utils.setStatus(atr[0].id_status,'status')
+                $("#name").val(atr[0].name);
+                $("#address").val(atr[0].address);
+                $("#city").val(atr[0].city);
+                $("#description").val(atr[0].description);
+                $("#phone").val(atr[0].phone);
+                $("#email").val(atr[0].email);
+                $("#facebook").val(atr[0].facebook);
+                $("#twitter").val(atr[0].twitter);
+                CTS.Utils.setStatus(atr[0].id_status,'status');
             },
             error: function () {
                 CTS.Utils.showDialog(BootstrapDialog.TYPE_WARNING,"Error","Ha ocurrido un error, intente nuevamente.");
@@ -123,7 +121,7 @@ CTS.Dojos = {
             cache: false,
             success: function (response) {
                 CTS.Utils.showDialog(BootstrapDialog.TYPE_INFO,"Confirm","El Dojo fue editado correctamente");
-                CTS.Utils.closeModal('modalEditDojo')
+                CTS.Utils.closeModal('modalEditDojo');
                 CTS.Dojos.getDojos();
             },
             error: function () {
@@ -155,7 +153,7 @@ CTS.Dojos = {
             cache: false,
             success: function (response) {
                 CTS.Utils.showDialog(BootstrapDialog.TYPE_INFO,"Confirm","El Dojo fue creado correctamente.");
-                CTS.Utils.closeModal('modalEditDojo')
+                CTS.Utils.closeModal('modalEditDojo');
                 CTS.Dojos.getDojos();
             },
             error: function () {

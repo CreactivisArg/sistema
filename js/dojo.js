@@ -78,7 +78,7 @@ CTS.Dojo = {
             url: "api/dojo/getMembers.php",
             data: 'id_dojo='+ this.id_dojo,
             cache: false,
-            success: function(dojo) {
+            success: function (dojo) {
                 $('#listPanelPadawans').empty();
                 for (var i=0;i<dojo[0].padawans.length;i++) {
                     var responsibles = '';
@@ -246,7 +246,6 @@ CTS.Dojo = {
         CTS.Utils.showModal('modalAdd');
         this.setMentors();
     },
-
     setModalAddMentor : function (title) {
         $('#holderModal').empty().append(
             '<!-- Modal -->'
@@ -314,7 +313,6 @@ CTS.Dojo = {
         CTS.Utils.showModal('modalAddEmployee');
         this.setEmployees();
     },
-
     setModalAddEmployee : function (title) {
         $('#holderModal').empty().append(
             '<!-- Modal -->'

@@ -52,7 +52,6 @@ CTS.Employee = {
         CTS.Utils.showModal('modalEditEmployee');
         this.setEmployee();
     },
-
     setModalEmployee : function (title) {
         $('#holderModal').empty().append(
             '<!-- Modal -->'
@@ -83,18 +82,17 @@ CTS.Employee = {
             +'        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>'
             +'        <button type="button" class="btn btn-primary" onclick="CTS.Employee.saveEmployee();">Save changes</button>'
             +'      </div>');
-
     },
     setEmployee : function () {
-        document.getElementById("name").value = this.employee.name;
-        document.getElementById("lastname").value = this.employee.lastname;
-        document.getElementById("dni").value = this.employee.dni;
-        document.getElementById("phone").value = this.employee.phone;
-        document.getElementById("mobile").value = this.employee.mobile;
-        document.getElementById("email").value = this.employee.email;
-        document.getElementById("facebook").value = this.employee.facebook;
-        document.getElementById("twitter").value = this.employee.twitter;
-        document.getElementById("address").value = this.employee.address;
+        $("#name").val(this.employee.name);
+        $("#lastname").val(this.employee.lastname);
+        $("#dni").val(this.employee.dni);
+        $("#phone").val(this.employee.phone);
+        $("#mobile").val(this.employee.mobile);
+        $("#email").val(this.employee.email);
+        $("#facebook").val(this.employee.facebook);
+        $("#twitter").val(this.employee.twitter);
+        $("#address").val(this.employee.address);
         CTS.Utils.setStatus(this.employee.id_status,'status');
     },
     saveEmployee : function () {

@@ -17,7 +17,7 @@ CTS.Mentors = {
             type: "GET",
             url: "api/mentor/getMentor.php",
             cache: false,
-            success: function(list) {
+            success: function (list) {
                 $('#listPanel').empty();
 
                 for (var i=0;i<list.length;i++) {
@@ -54,7 +54,6 @@ CTS.Mentors = {
         CTS.Utils.showModal('modalEditMentor');
         this.setMentor(id);
     },
-
     setModalMentor : function (title,id) {
         var saveBtn = (id) ? '<button type="button" class="btn btn-primary" onclick="CTS.Mentors.saveMentor(\'' + id + '\');">Save changes</button>' : '<button type="button" class="btn btn-primary" onclick="CTS.Mentors.newMentor();">Save changes</button>';
 
@@ -87,7 +86,6 @@ CTS.Mentors = {
             +'        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>'
             +           saveBtn
             +'      </div>');
-
     },
     setMentor : function (id) {
         jQuery.ajax({
@@ -96,16 +94,16 @@ CTS.Mentors = {
             data: 'id='+ id,
             cache: false,
             success: function (atr) {
-                document.getElementById("name").value = atr[0].name;
-                document.getElementById("lastname").value = atr[0].lastname;
-                document.getElementById("dni").value = atr[0].dni;
-                document.getElementById("phone").value = atr[0].phone;
-                document.getElementById("mobile").value = atr[0].mobile;
-                document.getElementById("email").value = atr[0].email;
-                document.getElementById("facebook").value = atr[0].facebook;
-                document.getElementById("twitter").value = atr[0].twitter;
-                document.getElementById("address").value = atr[0].address;
-                CTS.Utils.setStatus(atr[0].id_status,'status')
+                $("#name").val(atr[0].name);
+                $("#lastname").val(atr[0].lastname);
+                $("#dni").val(atr[0].dni);
+                $("#phone").val(atr[0].phone);
+                $("#mobile").val(atr[0].mobile);
+                $("#email").val(atr[0].email);
+                $("#facebook").val(atr[0].facebook);
+                $("#twitter").val(atr[0].twitter);
+                $("#address").val(atr[0].address);
+                CTS.Utils.setStatus(atr[0].id_status,'status');
             },
             error: function () {
                 CTS.Utils.showDialog(BootstrapDialog.TYPE_WARNING,"Error","Ha ocurrido un error, intente nuevamente.");
@@ -166,7 +164,7 @@ CTS.Mentors = {
             cache: false,
             success: function (response) {
                 CTS.Utils.showDialog(BootstrapDialog.TYPE_INFO,"Confirm","El Mentor fue creado correctamente.");
-                CTS.Utils.closeModal('modalEditMentor')
+                CTS.Utils.closeModal('modalEditMentor');
                 CTS.Mentors.getMentors();
             },
             error: function () {

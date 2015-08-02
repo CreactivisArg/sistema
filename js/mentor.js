@@ -52,7 +52,6 @@ CTS.Mentor = {
         CTS.Utils.showModal('modalEditMentor');
         this.setMentor();
     },
-
     setModalMentor : function (title) {
         $('#holderModal').empty().append(
             '<!-- Modal -->'
@@ -83,18 +82,17 @@ CTS.Mentor = {
             +'        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>'
             +'        <button type="button" class="btn btn-primary" onclick="CTS.Mentor.saveMentor();">Save changes</button>'
             +'      </div>');
-
     },
     setMentor : function () {
-        document.getElementById("name").value = this.mentor.name;
-        document.getElementById("lastname").value = this.mentor.lastname;
-        document.getElementById("dni").value = this.mentor.dni;
-        document.getElementById("phone").value = this.mentor.phone;
-        document.getElementById("mobile").value = this.mentor.mobile;
-        document.getElementById("email").value = this.mentor.email;
-        document.getElementById("facebook").value = this.mentor.facebook;
-        document.getElementById("twitter").value = this.mentor.twitter;
-        document.getElementById("address").value = this.mentor.address;
+        $("#name").val(this.mentor.name);
+        $("#lastname").val(this.mentor.lastname);
+        $("#dni").val(this.mentor.dni);
+        $("#phone").val(this.mentor.phone);
+        $("#mobile").val(this.mentor.mobile);
+        $("#email").val(this.mentor.email);
+        $("#facebook").val(this.mentor.facebook);
+        $("#twitter").val(this.mentor.twitter);
+        $("#address").val(this.mentor.address);
         CTS.Utils.setStatus(this.mentor.id_status,'status');
     },
     saveMentor : function () {

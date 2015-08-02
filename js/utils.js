@@ -55,13 +55,10 @@ CTS.Utils = {
     getURLParameter : function (name) {
         return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.search)||[,""])[1].replace(/\+/g, '%20'))||null;
     },
-
-    closeModal : function (id){
-      $('#'+id).modal('hide');
+    closeModal : function (id) {
+      	$('#'+id).modal('hide');
     },
-
-    showModal : function(id){
-      $('#'+id).modal('show');
+    showModal : function (id) {
+      	$('#'+id).modal('show');
     }
-
 };

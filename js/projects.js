@@ -17,7 +17,7 @@ CTS.Projects = {
             type: "GET",
             url: "api/project/getProject.php",
             cache: false,
-            success: function(list) {
+            success: function (list) {
                 $('#listPanel').empty();
 
                 for (var i=0;i<list.length;i++) {
@@ -93,7 +93,6 @@ CTS.Projects = {
             +'        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>'
             +           saveBtn
             +'      </div>');
-
     },
     setProject : function (id) {
         jQuery.ajax({
@@ -102,12 +101,12 @@ CTS.Projects = {
             data: 'id='+ id,
             cache: false,
             success: function (atr) {
-                document.getElementById("name").value = atr[0].name;
-                document.getElementById("description").value = atr[0].description;
-                document.getElementById("target").value = atr[0].target;
-                document.getElementById("why").value = atr[0].why;
-                document.getElementById("who").value = atr[0].who;
-                document.getElementById("scope").value = atr[0].scope;
+                $("#name").val(atr[0].name);
+                $("#description").val(atr[0].description);
+                $("#target").val(atr[0].target);
+                $("#why").val(atr[0].why);
+                $("#who").val(atr[0].who);
+                $("#scope").val(atr[0].scope);
                 CTS.Utils.setStatus(atr[0].id_status,'status');
                 if (atr[0].categories.length==0)
                     CTS.Utils.getCategories(null,'categories');
@@ -210,7 +209,6 @@ CTS.Projects = {
             +'       <button type="button" class="btn btn-primary" onclick="CTS.Projects.addPadawan(\'' + id_project + '\');">Add Padawan</button>'
             +'      </div>');
     },
-
     setPadawans : function () {
         jQuery.ajax({
             type: "GET",
