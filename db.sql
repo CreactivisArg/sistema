@@ -237,7 +237,7 @@ CREATE TABLE `padawan` (
 DROP TABLE IF EXISTS `payment`;
 
 CREATE TABLE `payment` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `id` char(36) NOT NULL DEFAULT '',
   `date` date NOT NULL,
   `month` int(2) NOT NULL,
   `year` int(4) NOT NULL,

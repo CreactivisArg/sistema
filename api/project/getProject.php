@@ -23,9 +23,16 @@ else if (isset($_POST['id_category']))
     $query  = sprintf("select project.id, project.name, project.description, project.target, project.why, project.who, project.scope, status.name as status, project.id_status from project_category inner join project on project.id = project_category.id_project left join status on status.id = project.id_status where project_category.id_category = '%s' order by project.name",mysql_real_escape_string($id_category));
     $result = mysql_query ($query);
 }
+else if (isset($_POST['id_padawan']))
+{
+    //si viene el $_POST['id_padawan'] muestra los proyectos del padawan
+    $id_padawan = $_POST['id_padawan'];
+    $query  = sprintf("select project.id, project.name, project.description, project.target, project.why, project.who, project.scope, status.name as status, project.id_status from project_padawan inner join project on project.id = project_padawan.id_project left join status on status.id = project.id_status where project_padawan.id_padawan = '%s' order by project.name",mysql_real_escape_string($id_padawan));
+    $result = mysql_query ($query);
+}
 else
 {
-    //si NO viene el $_POST['id'] o $_POST['id_dojo'] o $_POST['id_category'] lista todos los registros
+    //si NO viene el $_POST['id'] o $_POST['id_dojo'] o $_POST['id_category'] o $_POST['id_padawan'] lista todos los registros
     $query  = "select project.id, project.name, project.description, project.target, project.why, project.who, project.scope, status.name as status, project.id_status from project left join status on status.id = project.id_status";
     $result = mysql_query ($query);
 }
