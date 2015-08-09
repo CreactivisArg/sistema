@@ -18,7 +18,7 @@ foreach ($padawans as $padawan) {
 		$error = true;
 }
 
-if (!$error){
+if (!$error) {
 	mysql_query("COMMIT");  
     header("HTTP/1.1 200 OK");
 }

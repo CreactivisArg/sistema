@@ -22,12 +22,12 @@ $rowID = mysql_fetch_row($resultID);
 $contactID = $rowID[0];
 
 mysql_query("BEGIN"); 
-$newContact =  sprintf("INSERT INTO contact (id, name, lastname, dni, address, phone, mobile, email, facebook, twitter) VALUES ('%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s');",$contactID,mysql_real_escape_string($name),mysql_real_escape_string($lastname),mysql_real_escape_string($dni),mysql_real_escape_string($address),mysql_real_escape_string($phone),mysql_real_escape_string($mobile),mysql_real_escape_string($email),mysql_real_escape_string($facebook),mysql_real_escape_string($twitter));
+$newContact =  sprintf("INSERT INTO contact (id, name, lastname, dni, address, phone, mobile, email, facebook, twitter) VALUES ('%s', '%s', '%s', %s, '%s', '%s', '%s', '%s', '%s', '%s');",$contactID,mysql_real_escape_string(utf8_decode($name)),mysql_real_escape_string(utf8_decode($lastname)),mysql_real_escape_string($dni),mysql_real_escape_string(utf8_decode($address)),mysql_real_escape_string(utf8_decode($phone)),mysql_real_escape_string(utf8_decode($mobile)),mysql_real_escape_string(utf8_decode($email)),mysql_real_escape_string(utf8_decode($facebook)),mysql_real_escape_string(utf8_decode($twitter)));
 $resultContact = mysql_query($newContact);
-if ($resultContact){
-	$newEmployee =  sprintf("INSERT INTO employee (id, id_contact, id_status, creation_date) VALUES ((select UUID()), '%s', '%s', now());",$contactID,$id_status);
+if ($resultContact) {
+	$newEmployee = sprintf("INSERT INTO employee (id, id_contact, id_status, creation_date) VALUES ((select UUID()), '%s', '%s', now());",$contactID,$id_status);
 	$resultEmployee = mysql_query($newEmployee);
-    if ($resultEmployee){
+    if ($resultEmployee) {
     	mysql_query("COMMIT");  
     	header("HTTP/1.1 200 OK");
     }

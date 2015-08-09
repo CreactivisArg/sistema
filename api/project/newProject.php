@@ -22,8 +22,8 @@ $projectID = $rowID[0];
 $error = false;
 
 mysql_query("BEGIN"); 
-$query =  sprintf("INSERT INTO project (id, name, description, target, why, who, scope, id_status, creation_date) VALUES 
-('%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', now());",$projectID,mysql_real_escape_string($name),mysql_real_escape_string($description),mysql_real_escape_string($target),mysql_real_escape_string($why),mysql_real_escape_string($who),mysql_real_escape_string($scope),mysql_real_escape_string($id_status));
+$query = sprintf("INSERT INTO project (id, name, description, target, why, who, scope, id_status, creation_date) VALUES 
+('%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', now());",$projectID,mysql_real_escape_string(utf8_decode($name)),mysql_real_escape_string(utf8_decode($description)),mysql_real_escape_string(utf8_decode($target)),mysql_real_escape_string(utf8_decode($why)),mysql_real_escape_string(utf8_decode($who)),mysql_real_escape_string(utf8_decode($scope)),mysql_real_escape_string($id_status));
 $result = mysql_query($query);
 if (!$result)
 	$error = true;
@@ -35,7 +35,7 @@ foreach ($categories as $category) {
 		$error = true;
 }
 
-if (!$error){
+if (!$error) {
 	mysql_query("COMMIT");  
     header("HTTP/1.1 200 OK");
 }

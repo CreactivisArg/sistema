@@ -243,7 +243,7 @@ CTS.Dojo = {
     },
     addMentorDojo : function () {
         this.setModalAddMentor('Add Mentor');
-        CTS.Utils.showModal('modalAdd');
+        CTS.Utils.showModal('modalAddMentor');
         this.setMentors();
     },
     setModalAddMentor : function (title) {

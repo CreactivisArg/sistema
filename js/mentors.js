@@ -70,7 +70,7 @@ CTS.Mentors = {
             +'          <div  class="input-group-justified" style=" width:80%;">'
             +'              <input id="name" type="text" class="form-control" placeholder="name"><br>'
             +'              <input id="lastname" type="text" class="form-control" placeholder="lastname"><br>'
-            +'              <input id="dni" type="text" class="form-control" placeholder="dni"><br>'
+            +'              <input id="dni" type="number" class="form-control" placeholder="dni"><br>'
             +'              <input id="phone" type="text" class="form-control" placeholder="phone"><br>'
             +'              <input id="mobile" type="text" class="form-control" placeholder="mobile"><br>'
             +'              <input id="email" type="text" class="form-control" placeholder="email"><br>'

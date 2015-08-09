@@ -17,7 +17,7 @@ $twitter = $obj->twitter;
 $id_status = $obj->id_status; 
 
 $query = sprintf("UPDATE dojo SET name = '%s', address = '%s', city = '%s', description = '%s', phone = '%s', email = '%s', facebook = '%s', twitter = '%s', id_status = '%s' WHERE id ='%s'",
-    mysql_real_escape_string($name),mysql_real_escape_string($address),mysql_real_escape_string($city),mysql_real_escape_string($description),mysql_real_escape_string($phone),mysql_real_escape_string($email),mysql_real_escape_string($facebook),mysql_real_escape_string($twitter),mysql_real_escape_string($id_status),mysql_real_escape_string($id));
+    mysql_real_escape_string(utf8_decode($name)),mysql_real_escape_string(utf8_decode($address)),mysql_real_escape_string(utf8_decode($city)),mysql_real_escape_string(utf8_decode($description)),mysql_real_escape_string(utf8_decode($phone)),mysql_real_escape_string(utf8_decode($email)),mysql_real_escape_string(utf8_decode($facebook)),mysql_real_escape_string(utf8_decode($twitter)),mysql_real_escape_string($id_status),mysql_real_escape_string($id));
     
 $result = mysql_query($query);
 

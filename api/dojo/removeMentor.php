@@ -8,7 +8,7 @@ $obj = json_decode($rawdata);
 $id_dojo = $obj->id_dojo;
 $id_mentor = $obj->id_mentor;
 
-$query =  sprintf("delete from dojo_mentor where id_dojo = '%s' and id_mentor = '%s'",mysql_real_escape_string($id_dojo),mysql_real_escape_string($id_mentor));
+$query = sprintf("delete from dojo_mentor where id_dojo = '%s' and id_mentor = '%s'",mysql_real_escape_string($id_dojo),mysql_real_escape_string($id_mentor));
 
 $result = mysql_query($query);
 

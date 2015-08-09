@@ -13,8 +13,8 @@ $observation = $obj->observation;
 $id_dojo = $obj->id_dojo;
 $id_padawan = $obj->id_padawan;
 
-$query = sprintf("UPDATE payment SET month = '%s', year = '%s', amount = '%s', observation = '%s', id_dojo = '%s', id_padawan = '%s' WHERE id ='%s'",
-    mysql_real_escape_string($month),mysql_real_escape_string($year),mysql_real_escape_string($amount),mysql_real_escape_string($observation),mysql_real_escape_string($id_dojo),mysql_real_escape_string($id_padawan),mysql_real_escape_string($id));
+$query = sprintf("UPDATE payment SET month = %s, year = %s, amount = %s, observation = '%s', id_dojo = '%s', id_padawan = '%s' WHERE id ='%s'",
+    mysql_real_escape_string($month),mysql_real_escape_string($year),mysql_real_escape_string($amount),mysql_real_escape_string(utf8_decode($observation)),mysql_real_escape_string($id_dojo),mysql_real_escape_string($id_padawan),mysql_real_escape_string($id));
     
 $result = mysql_query($query);
 

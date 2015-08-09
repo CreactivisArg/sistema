@@ -224,6 +224,7 @@ CREATE TABLE `padawan` (
   `id` char(36) NOT NULL DEFAULT '',
   `id_contact` char(36) NOT NULL DEFAULT '',
   `id_status` char(36) NOT NULL DEFAULT '',
+  `admission_date` date DEFAULT NULL,
   `creation_date` datetime NOT NULL,
   PRIMARY KEY (`id`),
   KEY `id_status` (`id_status`)

@@ -15,8 +15,8 @@ $facebook = $obj->facebook;
 $twitter = $obj->twitter;
 $id_status = $obj->id_status; 
 
-$query =  sprintf("INSERT INTO dojo (id, name, address, city, description, phone, email, facebook, twitter, id_status, creation_date) VALUES 
-((select UUID()), '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', now());",mysql_real_escape_string($name),mysql_real_escape_string($address),mysql_real_escape_string($city),mysql_real_escape_string($description),mysql_real_escape_string($phone),mysql_real_escape_string($email),mysql_real_escape_string($facebook),mysql_real_escape_string($twitter),mysql_real_escape_string($id_status));
+$query = sprintf("INSERT INTO dojo (id, name, address, city, description, phone, email, facebook, twitter, id_status, creation_date) VALUES 
+((select UUID()), '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', now());",mysql_real_escape_string(utf8_decode($name)),mysql_real_escape_string(utf8_decode($address)),mysql_real_escape_string(utf8_decode($city)),mysql_real_escape_string(utf8_decode($description)),mysql_real_escape_string(utf8_decode($phone)),mysql_real_escape_string(utf8_decode($email)),mysql_real_escape_string(utf8_decode($facebook)),mysql_real_escape_string(utf8_decode($twitter)),mysql_real_escape_string($id_status));
 
 $result = mysql_query($query);
 

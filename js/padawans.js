@@ -53,6 +53,7 @@ CTS.Padawans = {
                         +'<div class="list-group-item small">Facebook: ' + list[i].facebook +'</div>'
                         +'<div class="list-group-item small">Twitter: ' + list[i].twitter +'</div>'
                         +'<div class="list-group-item small">School: ' + list[i].school +'</div>'
+                        +'<div class="list-group-item small">Admission Date: ' + list[i].admission_date +'</div>'
                         +'<div class="list-group-item small">Dojos: ' + dojos +'</div>'
                         +'<div class="list-group-item small">Responsibles: ' + responsibles +'</div>'
                         +'<div class="list-group-item small">Projects: ' + projects +'</div>'
@@ -88,8 +89,8 @@ CTS.Padawans = {
             +'          <div  class="input-group-justified" style=" width:80%;">'
             +'              <input id="name" type="text" class="form-control" placeholder="name"><br>'
             +'              <input id="lastname" type="text" class="form-control" placeholder="lastname"><br>'
-            +'              <input id="dni" type="text" class="form-control" placeholder="dni"><br>'
-            +'              <input id="birthdate" type="text" class="form-control" placeholder="birthdate"><br>'
+            +'              <input id="dni" type="number" class="form-control" placeholder="dni"><br>'
+            +'              <input id="birthdate" type="date" class="form-control" placeholder="birthdate"><br>'
             +'              <input id="phone" type="text" class="form-control" placeholder="phone"><br>'
             +'              <input id="mobile" type="text" class="form-control" placeholder="mobile"><br>'
             +'              <input id="email" type="text" class="form-control" placeholder="email"><br>'
@@ -97,6 +98,7 @@ CTS.Padawans = {
             +'              <input id="twitter" type="text" class="form-control" placeholder="twitter"><br>'
             +'              <input id="school" type="text" class="form-control" placeholder="school"><br>'
             +'              <input id="address" type="text" class="form-control" placeholder="address"><br>'
+            +'              <input id="admission_date" type="date" class="form-control" placeholder="admission"><br>'
             +'              <label>status:</label>'
             +'                   <select name="status" id="status">'
             +'                  </select>'
@@ -125,6 +127,7 @@ CTS.Padawans = {
                 $("#twitter").val(atr[0].twitter);
                 $("#school").val(atr[0].school);
                 $("#address").val(atr[0].address);
+                $("#admission_date").val(atr[0].admission_date);
                 CTS.Utils.setStatus(atr[0].id_status,'status');
             },
             error: function () {
@@ -146,6 +149,7 @@ CTS.Padawans = {
                 twitter: $("#twitter").val(),
                 school: $("#school").val(),
                 address: $("#address").val(),
+                admission_date: $("#admission_date").val(),
                 id_status: $("#status").val()
             };
         jQuery.ajax({
@@ -181,6 +185,7 @@ CTS.Padawans = {
                 twitter: $("#twitter").val(),
                 school: $("#school").val(),
                 address: $("#address").val(),
+                admission_date: $("#admission_date").val(),
                 id_status: $("#status").val()
             };
         jQuery.ajax({

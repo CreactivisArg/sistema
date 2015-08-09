@@ -5,7 +5,7 @@ function connect_to_db() {
     $db_password = '';
     $db_name  = "creactivis";
 
-    $dbLink  = mysql_connect($db_host,$db_username,$db_password);
+    $dbLink = mysql_connect($db_host,$db_username,$db_password);
     if (!$dbLink)
         die('ERROR DE CONEXION CON MYSQL: '.mysql_error());
 
