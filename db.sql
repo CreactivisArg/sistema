@@ -149,6 +149,22 @@ CREATE TABLE `dojo_padawan` (
 
 
 
+# Volcado de tabla dojo_question
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `dojo_question`;
+
+CREATE TABLE `dojo_question` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `id_dojo` char(36) NOT NULL DEFAULT '',
+  `id_question` char(36) NOT NULL DEFAULT '',
+  PRIMARY KEY (`id`),
+  KEY `id_dojo` (`id_dojo`),
+  KEY `id_question` (`id_question`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+
 # Volcado de tabla employee
 # ------------------------------------------------------------
 
@@ -161,6 +177,41 @@ CREATE TABLE `employee` (
   `creation_date` datetime NOT NULL,
   PRIMARY KEY (`id`),
   KEY `id_status` (`id_status`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+
+# Volcado de tabla followup
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `followup`;
+
+CREATE TABLE `followup` (
+  `id` char(36) NOT NULL DEFAULT '',
+  `id_dojo` char(36) NOT NULL DEFAULT '',
+  `id_padawan` char(36) NOT NULL DEFAULT '',
+  `date` date NOT NULL,
+  `comment` text,
+  PRIMARY KEY (`id`),
+  KEY `id_dojo` (`id_dojo`),
+  KEY `id_padawan` (`id_padawan`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+
+# Volcado de tabla followup_answer
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `followup_answer`;
+
+CREATE TABLE `followup_answer` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `id_followup` char(36) NOT NULL DEFAULT '',
+  `id_question` char(36) NOT NULL DEFAULT '',
+  `answer` tinyint(1) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `id_followup` (`id_followup`),
+  KEY `id_question` (`id_question`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
@@ -304,6 +355,31 @@ CREATE TABLE `project_padawan` (
   KEY `id_padawan` (`id_padawan`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+
+
+# Volcado de tabla question
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `question`;
+
+CREATE TABLE `question` (
+  `id` char(36) NOT NULL DEFAULT '',
+  `question` varchar(256) NOT NULL DEFAULT '',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+LOCK TABLES `question` WRITE;
+/*!40000 ALTER TABLE `question` DISABLE KEYS */;
+
+INSERT INTO `question` (`id`, `question`)
+VALUES
+  ('d0ecbcfc-3fbc-11e5-8ffa-521b8e7ab624','¿notaste un progreso en tu proyecto?'),
+  ('d741bd6e-3fbc-11e5-8ffa-521b8e7ab624','¿te divertiste?'),
+  ('dc9df156-3fbc-11e5-8ffa-521b8e7ab624','¿alguien te ayudó?'),
+  ('e1fb995a-3fbc-11e5-8ffa-521b8e7ab624','¿ayudaste a alguien?');
+
+/*!40000 ALTER TABLE `question` ENABLE KEYS */;
+UNLOCK TABLES;
 
 
 # Volcado de tabla responsible
