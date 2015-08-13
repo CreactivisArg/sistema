@@ -1,18 +1,13 @@
 <?php
-function connect_to_db() {
-    $db_host = getenv('IP');
-    $db_username = getenv('C9_USER');
-    $db_password = '';
-    $db_name  = "creactivis";
-
-    $dbLink = mysql_connect($db_host,$db_username,$db_password);
-    if (!$dbLink)
-        die('ERROR DE CONEXION CON MYSQL: '.mysql_error());
-
-    $database = mysql_select_db($db_name,$dbLink);
-    if (!$database)
-        die('ERROR CONEXION CON BD: '.mysql_error());
-
-    return $database; 
+class DBConnect {
+    private $conn;
+    function __construct() {        
+    }
+    function connect() {
+        $this->conn = new mysqli(getenv('IP'),getenv('C9_USER'),'','creactivis');
+        if (mysqli_connect_errno())
+            return NULL;
+        return $this->conn;
+    }
 }
 ?>

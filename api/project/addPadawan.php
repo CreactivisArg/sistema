@@ -1,29 +1,33 @@
 <?php
 require_once('../db.php');
-connect_to_db();
+$db = new DBConnect();
+$con = $db->connect();
+if (!is_null($con)){
+	$rawdata = file_get_contents('php://input');
+	$obj = json_decode($rawdata);
 
-$rawdata = file_get_contents('php://input');
-$obj = json_decode($rawdata);
+	$id_project = $obj->id_project;
+	$padawans = $obj->padawans;
 
-$id_project = $obj->id_project;
-$padawans = $obj->padawans;
+	$error = false;
 
-$error = false;
+	$con->begin_transaction();
+	foreach ($padawans as $padawan) {
+		$query = sprintf("INSERT INTO project_padawan (id_project, id_padawan) VALUES ('%s', '%s')",$con->real_escape_string($id_project),$con->real_escape_string($padawan));
+		$result = $con->query($query);
+		if (!$result)
+			$error = true;
+	}
 
-mysql_query("BEGIN"); 
-foreach ($padawans as $padawan) {
-	$query = sprintf("INSERT INTO project_padawan (id_project, id_padawan) VALUES ('%s', '%s')",mysql_real_escape_string($id_project),mysql_real_escape_string($padawan));
-	$result = mysql_query($query);
-	if (!$result)
-		$error = true;
+	if (!$error) {
+		$con->commit(); 
+	    header("HTTP/1.1 200 OK");
+	}
+	else {
+		$con->rollback(); 
+		header("HTTP/1.1 500 Internal Server Error");
+	}
 }
-
-if (!$error) {
-	mysql_query("COMMIT");  
-    header("HTTP/1.1 200 OK");
-}
-else {
-	mysql_query("ROLLBACK");  
+else
 	header("HTTP/1.1 500 Internal Server Error");
-}
 ?>
