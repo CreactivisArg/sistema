@@ -80,10 +80,13 @@ CTS.Dojos = {
             +'      </div>');
     },
     setDojo : function (id) {
+        var id = {
+                id_dojo: id
+            };
         jQuery.ajax({
             type: "POST",
             url: "api/dojo/getDojo.php",
-            data: 'id='+ id,
+            data: JSON.stringify(id),
             cache: false,
             success: function (atr) {
                 $("#name").val(atr[0].name);
@@ -103,7 +106,7 @@ CTS.Dojos = {
     },
     saveDojo : function (id) {
         var dojo = {
-                id: id,
+                id_dojo: id,
                 name: $("#name").val(),
                 address: $("#address").val(),
                 city: $("#city").val(),

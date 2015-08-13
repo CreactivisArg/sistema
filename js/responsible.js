@@ -18,10 +18,13 @@ CTS.Responsible = {
         });
     },
     getResponsible : function () {
+        var id = {
+                id_responsible: this.id_responsible
+            };
         jQuery.ajax({
             type: "POST",
             url: "api/responsible/getResponsible.php",
-            data: 'id='+ this.id_responsible,
+            data: JSON.stringify(id),
             cache: false,
             success: function (responsible) {
                     CTS.Responsible.responsible = responsible[0];
@@ -102,7 +105,7 @@ CTS.Responsible = {
     },
     saveResponsible : function () {
         var responsible = {
-                id: this.id_responsible,
+                id_responsible: this.id_responsible,
                 name: $("#name").val(),
                 lastname: $("#lastname").val(),
                 dni: $("#dni").val(),

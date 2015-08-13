@@ -89,10 +89,13 @@ CTS.Responsibles = {
             +'      </div>');
     },
     setResponsible : function (id) {
+        var id = {
+                id_responsible: id
+            };
         jQuery.ajax({
             type: "POST",
             url: "api/responsible/getResponsible.php",
-            data: 'id='+ id,
+            data: JSON.stringify(id),
             cache: false,
             success: function (atr) {
                 $("#name").val(atr[0].name);
@@ -113,7 +116,7 @@ CTS.Responsibles = {
     },
     saveResponsible : function (id) {
         var responsible = {
-                id: id,
+                id_responsible: id,
                 name: $("#name").val(),
                 lastname: $("#lastname").val(),
                 dni: $("#dni").val(),

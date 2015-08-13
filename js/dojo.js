@@ -73,10 +73,13 @@ CTS.Dojo = {
         $('#tabEmployees').addClass('active');
     },
     getMembers : function () {
+        var id = {
+                id_dojo: this.id_dojo
+            };
         jQuery.ajax({
             type: "POST",
             url: "api/dojo/getMembers.php",
-            data: 'id_dojo='+ this.id_dojo,
+            data: JSON.stringify(id),
             cache: false,
             success: function (dojo) {
                 $('#listPanelPadawans').empty();

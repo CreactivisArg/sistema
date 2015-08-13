@@ -88,10 +88,13 @@ CTS.Employees = {
         +'      </div>');
     },
     setEmployee : function (id) {
+        var id = {
+                id_employee: id
+            };
         jQuery.ajax({
             type: "POST",
             url: "api/employee/getEmployee.php",
-            data: 'id='+ id,
+            data: JSON.stringify(id),
             cache: false,
             success: function (atr) {
                 $("#name").val(atr[0].name);
@@ -112,7 +115,7 @@ CTS.Employees = {
     },
     saveEmployee : function (id) {
         var employee = {
-                id: id,
+                id_employee: id,
                 name: $("#name").val(),
                 lastname: $("#lastname").val(),
                 dni: $("#dni").val(),

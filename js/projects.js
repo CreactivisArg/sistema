@@ -95,10 +95,13 @@ CTS.Projects = {
             +'      </div>');
     },
     setProject : function (id) {
+        var id = {
+                id_project: id
+            };
         jQuery.ajax({
             type: "POST",
             url: "api/project/getProject.php",
-            data: 'id='+ id,
+            data: JSON.stringify(id),
             cache: false,
             success: function (atr) {
                 $("#name").val(atr[0].name);
@@ -125,7 +128,7 @@ CTS.Projects = {
     },
     saveProject : function (id) {
         var project = {
-                id: id,
+                id_project: id,
                 name: $("#name").val(),
                 categories: $("#categories").val(),
                 description: $("#description").val(),

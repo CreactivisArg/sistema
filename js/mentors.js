@@ -88,10 +88,13 @@ CTS.Mentors = {
             +'      </div>');
     },
     setMentor : function (id) {
+        var id = {
+                id_mentor: id
+            };
         jQuery.ajax({
             type: "POST",
             url: "api/mentor/getMentor.php",
-            data: 'id='+ id,
+            data: JSON.stringify(id),
             cache: false,
             success: function (atr) {
                 $("#name").val(atr[0].name);
@@ -112,7 +115,7 @@ CTS.Mentors = {
     },
     saveMentor : function (id) {
         var mentor = {
-                id: id,
+                id_mentor: id,
                 name: $("#name").val(),
                 lastname: $("#lastname").val(),
                 dni: $("#dni").val(),

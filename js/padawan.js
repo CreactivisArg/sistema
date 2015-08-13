@@ -15,10 +15,13 @@ CTS.Padawan = {
         });
     },
     getPadawan : function () {
+        var id = {
+                id_padawan: this.id_padawan
+            };
         jQuery.ajax({
             type: "POST",
             url: "api/padawan/getPadawan.php",
-            data: 'id='+ this.id_padawan,
+            data: JSON.stringify(id),
             cache: false,
             success: function(padawan) {
                     CTS.Padawan.padawan = padawan[0];
@@ -122,7 +125,7 @@ CTS.Padawan = {
     },
     savePadawan : function () {
         var padawan = {
-                id: this.id_padawan,
+                id_padawan: this.id_padawan,
                 name: $("#name").val(),
                 lastname: $("#lastname").val(),
                 dni: $("#dni").val(),
