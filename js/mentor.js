@@ -101,7 +101,7 @@ CTS.Mentor = {
                 id_mentor: this.id_mentor,
                 name: $("#name").val(),
                 lastname: $("#lastname").val(),
-                dni: $("#dni").val(),
+                dni: parseInt($("#dni").val()) ? parseInt($("#dni").val()) : 0,
                 phone: $("#phone").val(),
                 mobile: $("#mobile").val(),
                 email: $("#email").val(),

@@ -126,7 +126,7 @@ CTS.Padawan = {
                 id_padawan: this.id_padawan,
                 name: $("#name").val(),
                 lastname: $("#lastname").val(),
-                dni: $("#dni").val(),
+                dni: parseInt($("#dni").val()) ? parseInt($("#dni").val()) : 0,
                 birthdate: $("#birthdate").val(),
                 phone: $("#phone").val(),
                 mobile: $("#mobile").val(),

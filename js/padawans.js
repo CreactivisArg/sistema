@@ -141,7 +141,7 @@ CTS.Padawans = {
                 id_padawan: id,
                 name: $("#name").val(),
                 lastname: $("#lastname").val(),
-                dni: $("#dni").val(),
+                dni: parseInt($("#dni").val()) ? parseInt($("#dni").val()) : 0,
                 birthdate: $("#birthdate").val(),
                 phone: $("#phone").val(),
                 mobile: $("#mobile").val(),
@@ -177,7 +177,7 @@ CTS.Padawans = {
         var padawan = {
                 name: $("#name").val(),
                 lastname: $("#lastname").val(),
-                dni: $("#dni").val(),
+                dni: parseInt($("#dni").val()) ? parseInt($("#dni").val()) : 0,
                 birthdate: $("#birthdate").val(),
                 phone: $("#phone").val(),
                 mobile: $("#mobile").val(),

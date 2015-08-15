@@ -116,7 +116,7 @@ CTS.Employees = {
                 id_employee: id,
                 name: $("#name").val(),
                 lastname: $("#lastname").val(),
-                dni: $("#dni").val(),
+                dni: parseInt($("#dni").val()) ? parseInt($("#dni").val()) : 0,
                 phone: $("#phone").val(),
                 mobile: $("#mobile").val(),
                 email: $("#email").val(),
@@ -149,7 +149,7 @@ CTS.Employees = {
         var employee = {
                 name: $("#name").val(),
                 lastname: $("#lastname").val(),
-                dni: $("#dni").val(),
+                dni: parseInt($("#dni").val()) ? parseInt($("#dni").val()) : 0,
                 phone: $("#phone").val(),
                 mobile: $("#mobile").val(),
                 email: $("#email").val(),
