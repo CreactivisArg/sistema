@@ -31,6 +31,7 @@ CTS.Mentors = {
                     $('#listPanel').append('<a href="#" class="list-group-item" data-toggle="collapse" data-target="#' + list[i].id +'" data-parent="#menu">' + list[i].lastname + ' ' + list[i].name + '</a>'
                         +'<div id="' + list[i].id +'" class="sublinks collapse">'
                         +'<div class="list-group-item small">DNI: ' + list[i].dni +'</div>'
+                        +'<div class="list-group-item small">Birthdate: ' + list[i].birthdate +'</div>'
                         +'<div class="list-group-item small">Address: ' + list[i].address +'</div>'
                         +'<div class="list-group-item small">Phone: ' + list[i].phone +'</div>'
                         +'<div class="list-group-item small">Mobile: ' + list[i].mobile +'</div>'
@@ -71,6 +72,7 @@ CTS.Mentors = {
             +'              <div class="form-group"><label for="name" class="col-sm-2 control-label">Name</label><div class="col-sm-10"><input id="name" type="text" class="form-control"></div></div>'
             +'              <div class="form-group"><label for="lastname" class="col-sm-2 control-label">Lastname</label><div class="col-sm-10"><input id="lastname" type="text" class="form-control"></div></div>'
             +'              <div class="form-group"><label for="dni" class="col-sm-2 control-label">DNI</label><div class="col-sm-10"><input id="dni" type="number" class="form-control"></div></div>'
+            +'              <div class="form-group"><label for="birthdate" class="col-sm-2 control-label">Birthdate</label><div class="col-sm-10"><input id="birthdate" type="date" class="form-control"></div></div>'
             +'              <div class="form-group"><label for="phone" class="col-sm-2 control-label">Phone</label><div class="col-sm-10"><input id="phone" type="text" class="form-control"></div></div>'
             +'              <div class="form-group"><label for="mobile" class="col-sm-2 control-label">Mobile</label><div class="col-sm-10"><input id="mobile" type="text" class="form-control"></div></div>'
             +'              <div class="form-group"><label for="email" class="col-sm-2 control-label">Email</label><div class="col-sm-10"><input id="email" type="text" class="form-control"></div></div>'
@@ -98,6 +100,7 @@ CTS.Mentors = {
                 $("#name").val(atr[0].name);
                 $("#lastname").val(atr[0].lastname);
                 $("#dni").val(atr[0].dni);
+                $("#birthdate").val(atr[0].birthdate);
                 $("#phone").val(atr[0].phone);
                 $("#mobile").val(atr[0].mobile);
                 $("#email").val(atr[0].email);
@@ -117,6 +120,7 @@ CTS.Mentors = {
                 name: $("#name").val(),
                 lastname: $("#lastname").val(),
                 dni: parseInt($("#dni").val()) ? parseInt($("#dni").val()) : 0,
+                birthdate: $("#birthdate").val(),
                 phone: $("#phone").val(),
                 mobile: $("#mobile").val(),
                 email: $("#email").val(),
@@ -150,6 +154,7 @@ CTS.Mentors = {
                 name: $("#name").val(),
                 lastname: $("#lastname").val(),
                 dni: parseInt($("#dni").val()) ? parseInt($("#dni").val()) : 0,
+                birthdate: $("#birthdate").val(),
                 phone: $("#phone").val(),
                 mobile: $("#mobile").val(),
                 email: $("#email").val(),

@@ -10,6 +10,7 @@ if (!is_null($con)){
 	$name = $obj->name;
 	$lastname = $obj->lastname;
 	$dni = $obj->dni;
+	$birthdate = $obj->birthdate;
 	$address = $obj->address;
 	$phone = $obj->phone;
 	$mobile = $obj->mobile;
@@ -19,8 +20,8 @@ if (!is_null($con)){
 	$id_status = $obj->id_status; 
 
 	$con->begin_transaction(); 
-	$queryContact = sprintf("UPDATE contact SET name = '%s', lastname = '%s', dni = %s, address = '%s', phone = '%s', mobile = '%s', email = '%s', facebook = '%s', twitter = '%s' WHERE id in (select id_contact from mentor where id = '%s')",
-		$con->real_escape_string(utf8_decode($name)),$con->real_escape_string(utf8_decode($lastname)),$con->real_escape_string($dni),$con->real_escape_string(utf8_decode($address)),$con->real_escape_string(utf8_decode($phone)),$con->real_escape_string(utf8_decode($mobile)),$con->real_escape_string(utf8_decode($email)),$con->real_escape_string(utf8_decode($facebook)),$con->real_escape_string(utf8_decode($twitter)),$con->real_escape_string($id_mentor));
+	$queryContact = sprintf("UPDATE contact SET name = '%s', lastname = '%s', dni = %s, birthdate = '%s', address = '%s', phone = '%s', mobile = '%s', email = '%s', facebook = '%s', twitter = '%s' WHERE id in (select id_contact from mentor where id = '%s')",
+		$con->real_escape_string(utf8_decode($name)),$con->real_escape_string(utf8_decode($lastname)),$con->real_escape_string($dni),$con->real_escape_string(utf8_decode($birthdate)),$con->real_escape_string(utf8_decode($address)),$con->real_escape_string(utf8_decode($phone)),$con->real_escape_string(utf8_decode($mobile)),$con->real_escape_string(utf8_decode($email)),$con->real_escape_string(utf8_decode($facebook)),$con->real_escape_string(utf8_decode($twitter)),$con->real_escape_string($id_mentor));
 	$resultContact = $con->query($queryContact);
 	if ($resultContact) {
 		$queryMentor = sprintf("UPDATE mentor SET id_status = '%s' WHERE id ='%s'", $con->real_escape_string($id_status),$con->real_escape_string($id_mentor));

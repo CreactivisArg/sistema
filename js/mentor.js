@@ -36,6 +36,7 @@ CTS.Mentor = {
                     }
                     $('#info').append('<p>' + mentor[0].lastname + ' ' + mentor[0].name + '</p>'
                         +'<p>DNI: ' + mentor[0].dni +'</p>'
+                        +'<p>Birthdate: ' + mentor[0].birthdate +'</p>'
                         +'<p>Address: ' + mentor[0].address +'</p>'
                         +'<p>Phone: ' + mentor[0].phone +'</p>'
                         +'<p>Mobile: ' + mentor[0].mobile +'</p>'
@@ -70,6 +71,7 @@ CTS.Mentor = {
             +'              <div class="form-group"><label for="name" class="col-sm-2 control-label">Name</label><div class="col-sm-10"><input id="name" type="text" class="form-control"></div></div>'
             +'              <div class="form-group"><label for="lastname" class="col-sm-2 control-label">Lastname</label><div class="col-sm-10"><input id="lastname" type="text" class="form-control"></div></div>'
             +'              <div class="form-group"><label for="dni" class="col-sm-2 control-label">DNI</label><div class="col-sm-10"><input id="dni" type="number" class="form-control"></div></div>'
+            +'              <div class="form-group"><label for="birthdate" class="col-sm-2 control-label">Birthdate</label><div class="col-sm-10"><input id="birthdate" type="date" class="form-control"></div></div>'
             +'              <div class="form-group"><label for="phone" class="col-sm-2 control-label">Phone</label><div class="col-sm-10"><input id="phone" type="text" class="form-control"></div></div>'
             +'              <div class="form-group"><label for="mobile" class="col-sm-2 control-label">Mobile</label><div class="col-sm-10"><input id="mobile" type="text" class="form-control"></div></div>'
             +'              <div class="form-group"><label for="email" class="col-sm-2 control-label">Email</label><div class="col-sm-10"><input id="email" type="text" class="form-control"></div></div>'
@@ -88,6 +90,7 @@ CTS.Mentor = {
         $("#name").val(this.mentor.name);
         $("#lastname").val(this.mentor.lastname);
         $("#dni").val(this.mentor.dni);
+        $("#birthdate").val(this.mentor.birthdate);
         $("#phone").val(this.mentor.phone);
         $("#mobile").val(this.mentor.mobile);
         $("#email").val(this.mentor.email);
@@ -102,6 +105,7 @@ CTS.Mentor = {
                 name: $("#name").val(),
                 lastname: $("#lastname").val(),
                 dni: parseInt($("#dni").val()) ? parseInt($("#dni").val()) : 0,
+                birthdate: $("#birthdate").val(),
                 phone: $("#phone").val(),
                 mobile: $("#mobile").val(),
                 email: $("#email").val(),
