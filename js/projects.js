@@ -7,7 +7,7 @@ CTS.Projects = {
     },
     bindActions : function () {
         var self = this;
-        $('#categories').attr("href", "listCategory.html");
+        $('#listCategories').attr("href", "listCategory.html");
         // setNewProject
         $('.jumbotron .btn-primary').on('click', function () {
             self.setNewProject();
