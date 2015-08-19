@@ -19,7 +19,7 @@ CTS.Payments = {
                 id_dojo: this.id_dojo
             };
         jQuery.ajax({
-            type: "GET",
+            type: "POST",
             url: "api/payment/getPayment.php",
             data: JSON.stringify(id),
             cache: false,

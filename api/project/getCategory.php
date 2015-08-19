@@ -1,9 +1,9 @@
 <?php
-require_once('db.php');
+require_once('../db.php');
 $db = new DBConnect();
 $con = $db->connect();
 if (!is_null($con)){
-    $query = "SELECT id, name FROM category";
+    $query = "SELECT id, name FROM category order by name";
     $result = $con->query($query);
 
     if ($result) {

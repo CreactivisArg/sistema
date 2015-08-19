@@ -33,7 +33,7 @@ CTS.Utils = {
         var self = this;
         jQuery.ajax({
             type: "GET",
-            url: "api/getCategory.php",
+            url: "api/project/getCategory.php",
             cache: false,
             success: function (listCategory) {
                 $('#'+selectName).empty();
