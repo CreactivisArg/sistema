@@ -11,6 +11,7 @@ CTS.Dojo = {
     bindActions : function () {
         var self = this;
         $('#payment').attr("href", "listPayment.html?id_dojo="+self.id_dojo);
+        $('#log').attr("href", "listLog.html?id_dojo="+self.id_dojo);
         $('#addPadawan').on('click', function () {
             self.addPadawanDojo();
         });

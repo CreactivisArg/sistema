@@ -8,7 +8,7 @@
     <meta name="description" content="Creactivis">
     <meta name="author" content="Creactivis">
 
-    <title>Dojo</title>
+    <title>List Logs</title>
 
     <!-- Bootstrap core CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
@@ -48,35 +48,22 @@
       </div>
     </nav>
     <div class="container">
-  		<div class="jumbotron">
-  			<p id="nameDojo"></p>
-	  		<div class="btn-group" role="group">
-  	  		<button type="button" class="btn btn-default" id="addPadawan">Add Padawan</button>
-  				<button type="button" class="btn btn-default" id="addMentor">Add Mentor</button>
-  				<button type="button" class="btn btn-default" id="addEmployee">Add Employee</button>
-	  		</div>
-        <div class="btn-group" role="group">
-	  		  <a class="btn btn-default" href="#" role="button" id="payment">Payment</a>
-        </div>
-        <div class="btn-group" role="group">
-          <a class="btn btn-default" href="#" role="button" id="log">Log</a>
-        </div>
-	  		<br><br>
-	  		<ul class="nav nav-tabs nav-justified">
-  			  <li role="presentation" id="tabPadawans" class="active"><a id="showPadawans">Padawans</a></li>
-  			  <li role="presentation" id="tabMentors"><a id="showMentors">Mentors</a></li>
-  			  <li role="presentation" id="tabResponsibles"><a id="showResponsibles">Responsibles</a></li>
-  			  <li role="presentation" id="tabEmployees"><a id="showEmployees">Employees</a></li>
-			  </ul>
-  			<div class="panel list-group" id="listPanelPadawans">
-  			</div>
-  			<div hidden class="panel list-group" id="listPanelMentors">
-  			</div>
-  			<div hidden class="panel list-group" id="listPanelResponsibles">
-  			</div>
-  			<div hidden class="panel list-group" id="listPanelEmployees">
-  			</div>
-  		</div>
+		  <div class="jumbotron">
+      <div class="btn-group" role="group">
+  			<button type="button" class="btn btn-primary" id="newLogPadawan">New Log Padawan</button>
+      </div>
+      <div class="btn-group" role="group">
+        <button type="button" class="btn btn-primary" id="newLogMentor">New Log Mentor</button>
+      </div>
+      <br><br>
+  		<ul class="nav nav-tabs nav-justified">
+        <li role="presentation" id="tabPadawans" class="active"><a id="showPadawans">Padawans</a></li>
+        <li role="presentation" id="tabMentors"><a id="showMentors">Mentors</a></li>
+      </ul>
+      <div class="panel list-group" id="listPanelPadawans">
+      </div>
+      <div hidden class="panel list-group" id="listPanelMentors">
+      </div>
       <div id="holderModal"></div>
     </div> <!-- /container -->
 
@@ -88,6 +75,6 @@
     <script src="js/libs/bootstrap-dialog.min.js"></script>
     <script src="js/libs/select2.full.min.js"></script>
     <script src="js/utils.js"></script>
-    <script src="js/dojo.js"></script>
+    <script src="js/logs.js"></script>
     </body>
 </html>
