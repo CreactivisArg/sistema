@@ -146,11 +146,9 @@ CTS.Responsible = {
             +'        <h4 class="modal-title" id="myModalLabel">' + title + '</h4>'
             +'      </div>'
             +'      <div class="modal-body" align="center">'
-            +'          <div  class="input-group-justified" style=" width:80%;">'
-            +'              <label>Padawans:</label>'
-            +'                   <select class="padawans-multiple" multiple="multiple" style="width: 80%" name="padawans" id="padawans">'
-            +'                  </select>'
-            +'          </div>'
+            +'          <form class="form-horizontal">'
+            +'              <div class="form-group"><label for="padawans" class="col-sm-2 control-label">Padawans</label><div class="col-sm-10"><select class="form-control" multiple="multiple" style="width: 100%" name="padawans" id="padawans"></select></div></div>'
+            +'          </form>'
             +'      </div>'
             +'      <div class="modal-footer">'
             +'       <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>'
@@ -170,7 +168,7 @@ CTS.Responsible = {
                         '<option value='  + list[i].id +'>' + list[i].lastname + ' ' + list[i].name +'</option>'
                     );
                 }
-                $(".padawans-multiple").select2();
+                $("#padawans").select2();
             },
             error: function() {
                 CTS.Utils.showDialog(BootstrapDialog.TYPE_WARNING,"Error","Ha ocurrido un error, intente nuevamente.");

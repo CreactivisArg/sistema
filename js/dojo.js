@@ -2,16 +2,18 @@ var CTS = CTS || {};
 
 CTS.Dojo = {
     id_dojo : '',
+    name_dojo : '',
     init : function () {
-        $('#nameDojo').text(CTS.Utils.getURLParameter('name_dojo'));
+        this.name_dojo = CTS.Utils.getURLParameter('name_dojo');
+        $('#nameDojo').text(this.name_dojo);
         this.id_dojo = CTS.Utils.getURLParameter('id_dojo');
         this.bindActions();
         this.getMembers();
     },
     bindActions : function () {
         var self = this;
-        $('#payment').attr("href", "listPayment.html?id_dojo="+self.id_dojo);
-        $('#log').attr("href", "listLog.html?id_dojo="+self.id_dojo);
+        $('#payment').attr("href", "listPayment.html?name_dojo=" + self.name_dojo + "&id_dojo="+self.id_dojo);
+        $('#log').attr("href", "listLog.html?name_dojo=" + self.name_dojo + "&id_dojo="+self.id_dojo);
         $('#addPadawan').on('click', function () {
             self.addPadawanDojo();
         });
@@ -195,11 +197,9 @@ CTS.Dojo = {
             +'        <h4 class="modal-title" id="myModalLabel">' + title + '</h4>'
             +'      </div>'
             +'      <div class="modal-body" align="center">'
-            +'          <div  class="input-group-justified" style=" width:80%;">'
-            +'              <label>Padawans:</label>'
-            +'                   <select class="padawans-multiple" multiple="multiple" style="width: 80%" name="padawans" id="padawans">'
-            +'                  </select>'
-            +'          </div>'
+            +'          <form class="form-horizontal">'
+            +'              <div class="form-group"><label for="padawans" class="col-sm-2 control-label">Padawans</label><div class="col-sm-10"><select class="form-control" multiple="multiple" style="width: 100%" name="padawans" id="padawans"></select></div></div>'
+            +'          </form>'
             +'      </div>'
             +'      <div class="modal-footer">'
             +'       <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>'
@@ -219,7 +219,7 @@ CTS.Dojo = {
                         '<option value='  + list[i].id +'>' + list[i].lastname + ' ' + list[i].name +'</option>'
                     );
                 }
-                $(".padawans-multiple").select2();
+                $("#padawans").select2();
             },
             error: function () {
                 CTS.Utils.showDialog(BootstrapDialog.TYPE_WARNING,"Error","Ha ocurrido un error, intente nuevamente.");
@@ -262,11 +262,9 @@ CTS.Dojo = {
             +'        <h4 class="modal-title" id="myModalLabel">' + title + '</h4>'
             +'      </div>'
             +'      <div class="modal-body" align="center">'
-            +'          <div  class="input-group-justified" style=" width:80%;">'
-            +'              <label>Mentors:</label>'
-            +'                   <select class="mentors-multiple" multiple="multiple" style="width: 80%" name="mentors" id="mentors">'
-            +'                  </select>'
-            +'          </div>'
+            +'          <form class="form-horizontal">'
+            +'              <div class="form-group"><label for="mentors" class="col-sm-2 control-label">Mentors</label><div class="col-sm-10"><select class="form-control" multiple="multiple" style="width: 100%" name="mentors" id="mentors"></select></div></div>'
+            +'          </form>'
             +'      </div>'
             +'      <div class="modal-footer">'
             +'       <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>'
@@ -285,7 +283,7 @@ CTS.Dojo = {
                     $('#mentors').append(
                         '<option value='  + list[i].id +'>' + list[i].lastname + ' ' + list[i].name +'</option>'
                     );
-                    $(".mentors-multiple").select2();
+                    $("#mentors").select2();
                 }
             },
             error: function () {
@@ -329,11 +327,9 @@ CTS.Dojo = {
             +'        <h4 class="modal-title" id="myModalLabel">' + title + '</h4>'
             +'      </div>'
             +'      <div class="modal-body" align="center">'
-            +'          <div  class="input-group-justified" style=" width:80%;">'
-            +'              <label>Employees:</label>'
-            +'                   <select class="employees-multiple" multiple="multiple" style="width: 80%" name="employees" id="employees">'
-            +'                  </select>'
-            +'          </div>'
+            +'          <form class="form-horizontal">'
+            +'              <div class="form-group"><label for="employees" class="col-sm-2 control-label">Employees</label><div class="col-sm-10"><select class="form-control" multiple="multiple" style="width: 100%" name="employees" id="employees"></select></div></div>'
+            +'          </form>'
             +'      </div>'
             +'      <div class="modal-footer">'
             +'       <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>'
@@ -352,7 +348,7 @@ CTS.Dojo = {
                     $('#employees').append(
                         '<option value='  + list[i].id +'>' + list[i].lastname + ' ' + list[i].name +'</option>'
                     );
-                    $(".employees-multiple").select2();
+                    $("#employees").select2();
                 }
             },
             error: function () {

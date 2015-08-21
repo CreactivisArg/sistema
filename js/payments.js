@@ -2,7 +2,10 @@ var CTS = CTS || {};
 
 CTS.Payments = {
     id_dojo : '',
+    name_dojo : '',
     init : function () {
+        this.name_dojo = CTS.Utils.getURLParameter('name_dojo');
+        $('#nameDojo').text(this.name_dojo);
         this.id_dojo = CTS.Utils.getURLParameter('id_dojo');
         this.bindActions();
         this.getPayments();
