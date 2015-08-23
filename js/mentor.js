@@ -43,6 +43,7 @@ CTS.Mentor = {
                         +'<p>Email: ' + mentor[0].email +'</p>'
                         +'<p>Facebook: ' + mentor[0].facebook +'</p>'
                         +'<p>Twitter: ' + mentor[0].twitter +'</p>'
+                        +'<p>Admission Date: ' + mentor[0].admission_date +'</p>'
                         +'<p>Dojos: ' + dojos +'</p>'
                         +'<p>Status: ' + mentor[0].status +'</p>');
             },
@@ -78,6 +79,7 @@ CTS.Mentor = {
             +'              <div class="form-group"><label for="facebook" class="col-sm-2 control-label">Facebook</label><div class="col-sm-10"><input id="facebook" type="text" class="form-control"></div></div>'
             +'              <div class="form-group"><label for="twitter" class="col-sm-2 control-label">Twitter</label><div class="col-sm-10"><input id="twitter" type="text" class="form-control"></div></div>'
             +'              <div class="form-group"><label for="address" class="col-sm-2 control-label">Address</label><div class="col-sm-10"><input id="address" type="text" class="form-control"></div></div>'
+            +'              <div class="form-group"><label for="admission_date" class="col-sm-2 control-label">Admission</label><div class="col-sm-10"><input id="admission_date" type="date" class="form-control"></div></div>'
             +'              <div class="form-group"><label for="status" class="col-sm-2 control-label">Status</label><div class="col-sm-10"><select class="form-control" style="width: 100%" name="status" id="status"></select></div></div>'
             +'          </form>'
             +'      </div>'
@@ -97,6 +99,7 @@ CTS.Mentor = {
         $("#facebook").val(this.mentor.facebook);
         $("#twitter").val(this.mentor.twitter);
         $("#address").val(this.mentor.address);
+        $("#admission_date").val(this.mentor.admission_date);
         CTS.Utils.setStatus(this.mentor.id_status,'status');
     },
     saveMentor : function () {
@@ -112,6 +115,7 @@ CTS.Mentor = {
                 facebook: $("#facebook").val(),
                 twitter: $("#twitter").val(),
                 address: $("#address").val(),
+                admission_date: $("#admission_date").val(),
                 id_status: $("#status").val()
             };
         jQuery.ajax({

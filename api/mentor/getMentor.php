@@ -7,11 +7,11 @@ if (!is_null($con)){
     $obj = json_decode($rawdata);
 
     if (isset($obj->id_mentor))
-        $query = sprintf("select mentor.id, contact.name, contact.lastname, contact.dni, contact.birthdate, contact.address, contact.phone, contact.mobile, contact.email, contact.facebook, contact.twitter, status.name as status, mentor.id_status from mentor left join contact on contact.id = mentor.id_contact left join status on status.id = mentor.id_status WHERE mentor.id = '%s'",$con->real_escape_string($obj->id_mentor));
+        $query = sprintf("select mentor.id, contact.name, contact.lastname, contact.dni, contact.birthdate, contact.address, contact.phone, contact.mobile, contact.email, contact.facebook, contact.twitter, status.name as status, mentor.id_status, mentor.admission_date from mentor left join contact on contact.id = mentor.id_contact left join status on status.id = mentor.id_status WHERE mentor.id = '%s'",$con->real_escape_string($obj->id_mentor));
     else if (isset($obj->id_dojo))
-        $query = sprintf("select mentor.id, contact.name, contact.lastname, contact.dni, contact.birthdate, contact.address, contact.phone, contact.mobile, contact.email, contact.facebook, contact.twitter, status.name as status, mentor.id_status from mentor left join contact on contact.id = mentor.id_contact left join status on status.id = mentor.id_status inner join dojo_mentor on dojo_mentor.id_mentor = mentor.id and dojo_mentor.id_dojo = '%s' order by contact.lastname, contact.name",$con->real_escape_string($obj->id_dojo));
+        $query = sprintf("select mentor.id, contact.name, contact.lastname, contact.dni, contact.birthdate, contact.address, contact.phone, contact.mobile, contact.email, contact.facebook, contact.twitter, status.name as status, mentor.id_status, mentor.admission_date from mentor left join contact on contact.id = mentor.id_contact left join status on status.id = mentor.id_status inner join dojo_mentor on dojo_mentor.id_mentor = mentor.id and dojo_mentor.id_dojo = '%s' order by contact.lastname, contact.name",$con->real_escape_string($obj->id_dojo));
     else
-        $query = "select mentor.id, contact.name, contact.lastname, contact.dni, contact.birthdate, contact.address, contact.phone, contact.mobile, contact.email, contact.facebook, contact.twitter, status.name as status, mentor.id_status from mentor left join contact on contact.id = mentor.id_contact left join status on status.id = mentor.id_status order by contact.lastname, contact.name";
+        $query = "select mentor.id, contact.name, contact.lastname, contact.dni, contact.birthdate, contact.address, contact.phone, contact.mobile, contact.email, contact.facebook, contact.twitter, status.name as status, mentor.id_status, mentor.admission_date from mentor left join contact on contact.id = mentor.id_contact left join status on status.id = mentor.id_status order by contact.lastname, contact.name";
         
     $result = $con->query($query);
     if ($result) {
@@ -40,6 +40,7 @@ if (!is_null($con)){
                                 'twitter' => utf8_encode($row['twitter']),
                                 'status' => utf8_encode($row['status']),
                                 'id_status' => $row['id_status'],
+                                'admission_date' => $row['admission_date'],
                                 'dojos' => $dojos
                                 );
         }

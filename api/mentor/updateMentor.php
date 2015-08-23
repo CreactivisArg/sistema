@@ -17,6 +17,7 @@ if (!is_null($con)){
 	$email = $obj->email;
 	$facebook = $obj->facebook;
 	$twitter = $obj->twitter;
+	$admission_date = $obj->admission_date;
 	$id_status = $obj->id_status; 
 
 	$con->begin_transaction(); 
@@ -24,7 +25,7 @@ if (!is_null($con)){
 		$con->real_escape_string(utf8_decode($name)),$con->real_escape_string(utf8_decode($lastname)),$con->real_escape_string($dni),$con->real_escape_string(utf8_decode($birthdate)),$con->real_escape_string(utf8_decode($address)),$con->real_escape_string(utf8_decode($phone)),$con->real_escape_string(utf8_decode($mobile)),$con->real_escape_string(utf8_decode($email)),$con->real_escape_string(utf8_decode($facebook)),$con->real_escape_string(utf8_decode($twitter)),$con->real_escape_string($id_mentor));
 	$resultContact = $con->query($queryContact);
 	if ($resultContact) {
-		$queryMentor = sprintf("UPDATE mentor SET id_status = '%s' WHERE id ='%s'", $con->real_escape_string($id_status),$con->real_escape_string($id_mentor));
+		$queryMentor = sprintf("UPDATE mentor SET id_status = '%s', admission_date = '%s' WHERE id ='%s'", $con->real_escape_string($id_status),$con->real_escape_string($admission_date),$con->real_escape_string($id_mentor));
 		$resultMentor = $con->query($queryMentor);
 		if ($resultMentor) {
 	    	$con->commit();  

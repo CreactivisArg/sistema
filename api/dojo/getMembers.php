@@ -9,7 +9,7 @@ if (!is_null($con)){
     if (isset($obj->id_dojo)) {
         $members = array();
         $id_dojo = $obj->id_dojo;
-        $queryPadawans = sprintf("select padawan.id, contact.name, contact.lastname, contact.dni, contact.birthdate, contact.address, contact.phone, contact.mobile, contact.email, contact.facebook, contact.twitter, contact.school, status.name as status, padawan.id_status from padawan left join contact on contact.id = padawan.id_contact left join status on status.id = padawan.id_status inner join dojo_padawan on dojo_padawan.id_padawan = padawan.id and dojo_padawan.id_dojo = '%s' order by contact.lastname, contact.name",$con->real_escape_string($id_dojo));
+        $queryPadawans = sprintf("select padawan.id, contact.name, contact.lastname, contact.dni, contact.birthdate, contact.address, contact.phone, contact.mobile, contact.email, contact.facebook, contact.twitter, contact.school, status.name as status, padawan.id_status, padawan.admission_date from padawan left join contact on contact.id = padawan.id_contact left join status on status.id = padawan.id_status inner join dojo_padawan on dojo_padawan.id_padawan = padawan.id and dojo_padawan.id_dojo = '%s' order by contact.lastname, contact.name",$con->real_escape_string($id_dojo));
         $resultPadawans = $con->query($queryPadawans);
         $padawans = array();
         while ($rowPadawan = $resultPadawans->fetch_array(MYSQLI_ASSOC)) {
@@ -45,6 +45,7 @@ if (!is_null($con)){
                                 'facebook' => utf8_encode($rowPadawan['facebook']),
                                 'twitter' => utf8_encode($rowPadawan['twitter']),
                                 'school' => utf8_encode($rowPadawan['school']),
+                                'admission_date' => $rowPadawan['admission_date'],
                                 'status' => utf8_encode($rowPadawan['status']),
                                 'id_status' => $rowPadawan['id_status'],
                                 'responsibles' => $responsiblesAux,
@@ -52,7 +53,7 @@ if (!is_null($con)){
                                 );
         }
         $resultPadawans->free();
-        $queryMentors = sprintf("select mentor.id, contact.name, contact.lastname, contact.dni, contact.address, contact.phone, contact.mobile, contact.email, contact.facebook, contact.twitter, status.name as status, mentor.id_status from mentor left join contact on contact.id = mentor.id_contact left join status on status.id = mentor.id_status inner join dojo_mentor on dojo_mentor.id_mentor = mentor.id and dojo_mentor.id_dojo = '%s' order by contact.lastname, contact.name",$con->real_escape_string($id_dojo));
+        $queryMentors = sprintf("select mentor.id, contact.name, contact.lastname, contact.dni, contact.address, contact.phone, contact.mobile, contact.email, contact.facebook, contact.twitter, status.name as status, mentor.id_status, mentor.admission_date from mentor left join contact on contact.id = mentor.id_contact left join status on status.id = mentor.id_status inner join dojo_mentor on dojo_mentor.id_mentor = mentor.id and dojo_mentor.id_dojo = '%s' order by contact.lastname, contact.name",$con->real_escape_string($id_dojo));
         $resultMentors = $con->query($queryMentors);
         $mentors = array();
         while ($rowMentors = $resultMentors->fetch_array(MYSQLI_ASSOC)) {
@@ -66,6 +67,7 @@ if (!is_null($con)){
                                 'email' => utf8_encode($rowMentors['email']),
                                 'facebook' => utf8_encode($rowMentors['facebook']),
                                 'twitter' => utf8_encode($rowMentors['twitter']),
+                                'admission_date' => $rowMentors['admission_date'],
                                 'status' => utf8_encode($rowMentors['status']),
                                 'id_status' => $rowMentors['id_status']
                                 );

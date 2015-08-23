@@ -16,6 +16,7 @@ if (!is_null($con)){
 	$email = $obj->email;
 	$facebook = $obj->facebook;
 	$twitter = $obj->twitter;
+	$admission_date = $obj->admission_date;
 	$id_status = $obj->id_status; 
 
 	$queryID = "select UUID() as uuid";
@@ -29,7 +30,7 @@ if (!is_null($con)){
 		$id_contact,$con->real_escape_string(utf8_decode($name)),$con->real_escape_string(utf8_decode($lastname)),$con->real_escape_string($dni),$con->real_escape_string(utf8_decode($birthdate)),$con->real_escape_string(utf8_decode($address)),$con->real_escape_string(utf8_decode($phone)),$con->real_escape_string(utf8_decode($mobile)),$con->real_escape_string(utf8_decode($email)),$con->real_escape_string(utf8_decode($facebook)),$con->real_escape_string(utf8_decode($twitter)));
 	$resultContact = $con->query($newContact);
 	if ($resultContact) {
-		$newMentor = sprintf("INSERT INTO mentor (id, id_contact, id_status, creation_date) VALUES ((select UUID()), '%s', '%s', now());",$id_contact,$con->real_escape_string($id_status));
+		$newMentor = sprintf("INSERT INTO mentor (id, id_contact, id_status, admission_date, creation_date) VALUES ((select UUID()), '%s', '%s', now());",$id_contact,$con->real_escape_string($id_status),$con->real_escape_string($admission_date));
 		$resultMentor = $con->query($newMentor);
 	    if ($resultMentor) {
 	    	$con->commit();  
