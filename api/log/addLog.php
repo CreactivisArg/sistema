@@ -22,7 +22,7 @@ if (!is_null($con)){
 				$error = true;
 		}
 	}
-	else if (isset($obj->mentors)){
+	if (isset($obj->mentors)){
 		$mentors = $obj->mentors;
 		foreach ($mentors as $mentor) {
 			$query = sprintf("INSERT INTO log_mentor (date,id_dojo,id_mentor) VALUES ('%s','%s','%s')",$con->real_escape_string($date),$con->real_escape_string($id_dojo),$con->real_escape_string($mentor));
