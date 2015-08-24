@@ -7,11 +7,11 @@ if (!is_null($con)){
     $obj = json_decode($rawdata);
 
     if (isset($obj->id_padawan))
-        $query = sprintf("select padawan.id, contact.name, contact.lastname, contact.dni, contact.birthdate, contact.address, contact.phone, contact.mobile, contact.email, contact.facebook, contact.twitter, contact.school, status.name as status, padawan.id_status, padawan.admission_date from padawan left join contact on contact.id = padawan.id_contact left join status on status.id = padawan.id_status WHERE padawan.id = '%s'",$con->real_escape_string($obj->id_padawan));
+        $query = sprintf("select padawan.id, contact.name, contact.lastname, contact.dni, contact.birthdate, contact.country, contact.state, contact.city, contact.address, contact.phone, contact.mobile, contact.email, contact.facebook, contact.twitter, contact.school, status.name as status, padawan.id_status, padawan.admission_date from padawan left join contact on contact.id = padawan.id_contact left join status on status.id = padawan.id_status WHERE padawan.id = '%s'",$con->real_escape_string($obj->id_padawan));
     else if (isset($obj->id_dojo))
-        $query = sprintf("select padawan.id, contact.name, contact.lastname, contact.dni, contact.birthdate, contact.address, contact.phone, contact.mobile, contact.email, contact.facebook, contact.twitter, contact.school, status.name as status, padawan.id_status, padawan.admission_date from padawan left join contact on contact.id = padawan.id_contact left join status on status.id = padawan.id_status inner join dojo_padawan on dojo_padawan.id_padawan = padawan.id and dojo_padawan.id_dojo = '%s' order by contact.lastname, contact.name",$con->real_escape_string($obj->id_dojo));
+        $query = sprintf("select padawan.id, contact.name, contact.lastname, contact.dni, contact.birthdate, contact.country, contact.state, contact.city, contact.address, contact.phone, contact.mobile, contact.email, contact.facebook, contact.twitter, contact.school, status.name as status, padawan.id_status, padawan.admission_date from padawan left join contact on contact.id = padawan.id_contact left join status on status.id = padawan.id_status inner join dojo_padawan on dojo_padawan.id_padawan = padawan.id and dojo_padawan.id_dojo = '%s' order by contact.lastname, contact.name",$con->real_escape_string($obj->id_dojo));
     else
-        $query = "select padawan.id, contact.name, contact.lastname, contact.dni, contact.birthdate, contact.address, contact.phone, contact.mobile, contact.email, contact.facebook, contact.twitter, contact.school, status.name as status, padawan.id_status, padawan.admission_date from padawan left join contact on contact.id = padawan.id_contact left join status on status.id = padawan.id_status order by contact.lastname, contact.name";
+        $query = "select padawan.id, contact.name, contact.lastname, contact.dni, contact.birthdate, contact.country, contact.state, contact.city, contact.address, contact.phone, contact.mobile, contact.email, contact.facebook, contact.twitter, contact.school, status.name as status, padawan.id_status, padawan.admission_date from padawan left join contact on contact.id = padawan.id_contact left join status on status.id = padawan.id_status order by contact.lastname, contact.name";
 
     $result = $con->query($query);
     if ($result) {
@@ -51,6 +51,9 @@ if (!is_null($con)){
                                 'lastname' => utf8_encode($row['lastname']),
                                 'dni' => $row['dni'],
                                 'birthdate' => $row['birthdate'],
+                                'country' => utf8_encode($row['country']),
+                                'state' => utf8_encode($row['state']),
+                                'city' => utf8_encode($row['city']),
                                 'address' => utf8_encode($row['address']),
                                 'phone' => utf8_encode($row['phone']),
                                 'mobile' => utf8_encode($row['mobile']),

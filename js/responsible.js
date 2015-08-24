@@ -31,6 +31,9 @@ CTS.Responsible = {
                     $('#info').empty();
                     $('#info').append('<p>' + responsible[0].lastname + ' ' + responsible[0].name + '</p>'
                         +'<p>DNI: ' + responsible[0].dni +'</p>'
+                        +'<p>Country: ' + responsible[0].country +'</p>'
+                        +'<p>State: ' + responsible[0].state +'</p>'
+                        +'<p>City: ' + responsible[0].city +'</p>'
                         +'<p>Address: ' + responsible[0].address +'</p>'
                         +'<p>Phone: ' + responsible[0].phone +'</p>'
                         +'<p>Mobile: ' + responsible[0].mobile +'</p>'
@@ -80,6 +83,9 @@ CTS.Responsible = {
             +'              <div class="form-group"><label for="email" class="col-sm-2 control-label">Email</label><div class="col-sm-10"><input id="email" type="text" class="form-control"></div></div>'
             +'              <div class="form-group"><label for="facebook" class="col-sm-2 control-label">Facebook</label><div class="col-sm-10"><input id="facebook" type="text" class="form-control"></div></div>'
             +'              <div class="form-group"><label for="twitter" class="col-sm-2 control-label">Twitter</label><div class="col-sm-10"><input id="twitter" type="text" class="form-control"></div></div>'
+            +'              <div class="form-group"><label for="country" class="col-sm-2 control-label">Country</label><div class="col-sm-10"><input id="country" type="text" class="form-control"></div></div>'
+            +'              <div class="form-group"><label for="state" class="col-sm-2 control-label">State</label><div class="col-sm-10"><input id="state" type="text" class="form-control"></div></div>'
+            +'              <div class="form-group"><label for="city" class="col-sm-2 control-label">City</label><div class="col-sm-10"><input id="city" type="text" class="form-control"></div></div>'
             +'              <div class="form-group"><label for="address" class="col-sm-2 control-label">Address</label><div class="col-sm-10"><input id="address" type="text" class="form-control"></div></div>'
             +'              <div class="form-group"><label for="status" class="col-sm-2 control-label">Status</label><div class="col-sm-10"><select class="form-control" style="width: 100%" name="status" id="status"></select></div></div>'
             +'          </form>'
@@ -98,6 +104,9 @@ CTS.Responsible = {
         $("#email").val(this.responsible.email);
         $("#facebook").val(this.responsible.facebook);
         $("#twitter").val(this.responsible.twitter);
+        $("#country").val(this.responsible.country);
+        $("#state").val(this.responsible.state);
+        $("#city").val(this.responsible.city);
         $("#address").val(this.responsible.address);
         CTS.Utils.setStatus(this.responsible.id_status,'status');
     },
@@ -112,6 +121,9 @@ CTS.Responsible = {
                 email: $("#email").val(),
                 facebook: $("#facebook").val(),
                 twitter: $("#twitter").val(),
+                country: $("#country").val(),
+                state: $("#state").val(),
+                city: $("#city").val(),
                 address: $("#address").val(),
                 id_status: $("#status").val()
             };

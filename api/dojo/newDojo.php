@@ -7,8 +7,10 @@ if (!is_null($con)){
 	$obj = json_decode($rawdata);
 
 	$name = $obj->name;
-	$address = $obj->address;
+	$country = $obj->country;
+	$state = $obj->state;
 	$city = $obj->city;
+	$address = $obj->address;
 	$description = $obj->description;
 	$phone = $obj->phone;
 	$email = $obj->email;
@@ -16,8 +18,8 @@ if (!is_null($con)){
 	$twitter = $obj->twitter;
 	$id_status = $obj->id_status; 
 
-	$query = sprintf("INSERT INTO dojo (id, name, address, city, description, phone, email, facebook, twitter, id_status, creation_date) VALUES ((select UUID()), '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', now());",
-		$con->real_escape_string(utf8_decode($name)),$con->real_escape_string(utf8_decode($address)),$con->real_escape_string(utf8_decode($city)),$con->real_escape_string(utf8_decode($description)),$con->real_escape_string(utf8_decode($phone)),$con->real_escape_string(utf8_decode($email)),$con->real_escape_string(utf8_decode($facebook)),$con->real_escape_string(utf8_decode($twitter)),$con->real_escape_string($id_status));
+	$query = sprintf("INSERT INTO dojo (id, name, country, state, city, address, description, phone, email, facebook, twitter, id_status, creation_date) VALUES ((select UUID()), '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s',' %s', '%s', now())",
+		$con->real_escape_string(utf8_decode($name)),$con->real_escape_string(utf8_decode($country)),$con->real_escape_string(utf8_decode($state)),$con->real_escape_string(utf8_decode($city)),$con->real_escape_string(utf8_decode($address)),$con->real_escape_string(utf8_decode($description)),$con->real_escape_string(utf8_decode($phone)),$con->real_escape_string(utf8_decode($email)),$con->real_escape_string(utf8_decode($facebook)),$con->real_escape_string(utf8_decode($twitter)),$con->real_escape_string($id_status));
 
 	$result = $con->query($query);
 	if ($result)

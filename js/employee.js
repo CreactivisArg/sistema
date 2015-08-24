@@ -36,6 +36,9 @@ CTS.Employee = {
                     }
                     $('#info').append('<p>' + employee[0].lastname + ' ' + employee[0].name + '</p>'
                         +'<p>DNI: ' + employee[0].dni +'</p>'
+                        +'<p>Country: ' + employee[0].country +'</p>'
+                        +'<p>State: ' + employee[0].state +'</p>'
+                        +'<p>City: ' + employee[0].city +'</p>'
                         +'<p>Address: ' + employee[0].address +'</p>'
                         +'<p>Phone: ' + employee[0].phone +'</p>'
                         +'<p>Mobile: ' + employee[0].mobile +'</p>'
@@ -75,6 +78,9 @@ CTS.Employee = {
             +'              <div class="form-group"><label for="email" class="col-sm-2 control-label">Email</label><div class="col-sm-10"><input id="email" type="text" class="form-control"></div></div>'
             +'              <div class="form-group"><label for="facebook" class="col-sm-2 control-label">Facebook</label><div class="col-sm-10"><input id="facebook" type="text" class="form-control"></div></div>'
             +'              <div class="form-group"><label for="twitter" class="col-sm-2 control-label">Twitter</label><div class="col-sm-10"><input id="twitter" type="text" class="form-control"></div></div>'
+            +'              <div class="form-group"><label for="country" class="col-sm-2 control-label">Country</label><div class="col-sm-10"><input id="country" type="text" class="form-control"></div></div>'
+            +'              <div class="form-group"><label for="state" class="col-sm-2 control-label">State</label><div class="col-sm-10"><input id="state" type="text" class="form-control"></div></div>'
+            +'              <div class="form-group"><label for="city" class="col-sm-2 control-label">City</label><div class="col-sm-10"><input id="city" type="text" class="form-control"></div></div>'
             +'              <div class="form-group"><label for="address" class="col-sm-2 control-label">Address</label><div class="col-sm-10"><input id="address" type="text" class="form-control"></div></div>'
             +'              <div class="form-group"><label for="status" class="col-sm-2 control-label">Status</label><div class="col-sm-10"><select class="form-control" style="width: 100%" name="status" id="status"></select></div></div>'
             +'          </form>'
@@ -93,6 +99,9 @@ CTS.Employee = {
         $("#email").val(this.employee.email);
         $("#facebook").val(this.employee.facebook);
         $("#twitter").val(this.employee.twitter);
+        $("#country").val(this.employee.country);
+        $("#state").val(this.employee.state);
+        $("#city").val(this.employee.city);
         $("#address").val(this.employee.address);
         CTS.Utils.setStatus(this.employee.id_status,'status');
     },
@@ -107,6 +116,9 @@ CTS.Employee = {
                 email: $("#email").val(),
                 facebook: $("#facebook").val(),
                 twitter: $("#twitter").val(),
+                country: $("#country").val(),
+                state: $("#state").val(),
+                city: $("#city").val(),
                 address: $("#address").val(),
                 id_status: $("#status").val()
             };

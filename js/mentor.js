@@ -37,6 +37,9 @@ CTS.Mentor = {
                     $('#info').append('<p>' + mentor[0].lastname + ' ' + mentor[0].name + '</p>'
                         +'<p>DNI: ' + mentor[0].dni +'</p>'
                         +'<p>Birthdate: ' + mentor[0].birthdate +'</p>'
+                        +'<p>Country: ' + mentor[0].country +'</p>'
+                        +'<p>State: ' + mentor[0].state +'</p>'
+                        +'<p>City: ' + mentor[0].city +'</p>'
                         +'<p>Address: ' + mentor[0].address +'</p>'
                         +'<p>Phone: ' + mentor[0].phone +'</p>'
                         +'<p>Mobile: ' + mentor[0].mobile +'</p>'
@@ -78,6 +81,9 @@ CTS.Mentor = {
             +'              <div class="form-group"><label for="email" class="col-sm-2 control-label">Email</label><div class="col-sm-10"><input id="email" type="text" class="form-control"></div></div>'
             +'              <div class="form-group"><label for="facebook" class="col-sm-2 control-label">Facebook</label><div class="col-sm-10"><input id="facebook" type="text" class="form-control"></div></div>'
             +'              <div class="form-group"><label for="twitter" class="col-sm-2 control-label">Twitter</label><div class="col-sm-10"><input id="twitter" type="text" class="form-control"></div></div>'
+            +'              <div class="form-group"><label for="country" class="col-sm-2 control-label">Country</label><div class="col-sm-10"><input id="country" type="text" class="form-control"></div></div>'
+            +'              <div class="form-group"><label for="state" class="col-sm-2 control-label">State</label><div class="col-sm-10"><input id="state" type="text" class="form-control"></div></div>'
+            +'              <div class="form-group"><label for="city" class="col-sm-2 control-label">City</label><div class="col-sm-10"><input id="city" type="text" class="form-control"></div></div>'
             +'              <div class="form-group"><label for="address" class="col-sm-2 control-label">Address</label><div class="col-sm-10"><input id="address" type="text" class="form-control"></div></div>'
             +'              <div class="form-group"><label for="admission_date" class="col-sm-2 control-label">Admission</label><div class="col-sm-10"><input id="admission_date" type="date" class="form-control"></div></div>'
             +'              <div class="form-group"><label for="status" class="col-sm-2 control-label">Status</label><div class="col-sm-10"><select class="form-control" style="width: 100%" name="status" id="status"></select></div></div>'
@@ -98,6 +104,9 @@ CTS.Mentor = {
         $("#email").val(this.mentor.email);
         $("#facebook").val(this.mentor.facebook);
         $("#twitter").val(this.mentor.twitter);
+        $("#country").val(this.mentor.country);
+        $("#state").val(this.mentor.state);
+        $("#city").val(this.mentor.city);
         $("#address").val(this.mentor.address);
         $("#admission_date").val(this.mentor.admission_date);
         CTS.Utils.setStatus(this.mentor.id_status,'status');
@@ -114,6 +123,9 @@ CTS.Mentor = {
                 email: $("#email").val(),
                 facebook: $("#facebook").val(),
                 twitter: $("#twitter").val(),
+                country: $("#country").val(),
+                state: $("#state").val(),
+                city: $("#city").val(),
                 address: $("#address").val(),
                 admission_date: $("#admission_date").val(),
                 id_status: $("#status").val()

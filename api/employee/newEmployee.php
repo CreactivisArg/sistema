@@ -9,6 +9,9 @@ if (!is_null($con)){
 	$name = $obj->name;
 	$lastname = $obj->lastname;
 	$dni = $obj->dni;
+	$country = $obj->country;
+	$state = $obj->state;
+	$city = $obj->city;
 	$address = $obj->address;
 	$phone = $obj->phone;
 	$mobile = $obj->mobile;
@@ -24,11 +27,11 @@ if (!is_null($con)){
 	$resultID->free();
 
 	$con->begin_transaction();
-	$newContact =  sprintf("INSERT INTO contact (id, name, lastname, dni, address, phone, mobile, email, facebook, twitter) VALUES ('%s', '%s', '%s', %s, '%s', '%s', '%s', '%s', '%s', '%s');",
-		$id_contact,$con->real_escape_string(utf8_decode($name)),$con->real_escape_string(utf8_decode($lastname)),$con->real_escape_string($dni),$con->real_escape_string(utf8_decode($address)),$con->real_escape_string(utf8_decode($phone)),$con->real_escape_string(utf8_decode($mobile)),$con->real_escape_string(utf8_decode($email)),$con->real_escape_string(utf8_decode($facebook)),$con->real_escape_string(utf8_decode($twitter)));
+	$newContact =  sprintf("INSERT INTO contact (id, name, lastname, dni, country, state, city, address, phone, mobile, email, facebook, twitter) VALUES ('%s', '%s', '%s', %s, '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s')",
+		$id_contact,$con->real_escape_string(utf8_decode($name)),$con->real_escape_string(utf8_decode($lastname)),$con->real_escape_string($dni),$con->real_escape_string(utf8_decode($country)),$con->real_escape_string(utf8_decode($state)),$con->real_escape_string(utf8_decode($city)),$con->real_escape_string(utf8_decode($address)),$con->real_escape_string(utf8_decode($phone)),$con->real_escape_string(utf8_decode($mobile)),$con->real_escape_string(utf8_decode($email)),$con->real_escape_string(utf8_decode($facebook)),$con->real_escape_string(utf8_decode($twitter)));
 	$resultContact = $con->query($newContact);
 	if ($resultContact) {
-		$newEmployee = sprintf("INSERT INTO employee (id, id_contact, id_status, creation_date) VALUES ((select UUID()), '%s', '%s', now());",$id_contact,$con->real_escape_string($id_status));
+		$newEmployee = sprintf("INSERT INTO employee (id, id_contact, id_status, creation_date) VALUES ((select UUID()), '%s', '%s', now())",$id_contact,$con->real_escape_string($id_status));
 		$resultEmployee = $con->query($newEmployee);
 	    if ($resultEmployee) {
 	    	$con->commit(); 

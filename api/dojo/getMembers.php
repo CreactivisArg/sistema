@@ -9,7 +9,7 @@ if (!is_null($con)){
     if (isset($obj->id_dojo)) {
         $members = array();
         $id_dojo = $obj->id_dojo;
-        $queryPadawans = sprintf("select padawan.id, contact.name, contact.lastname, contact.dni, contact.birthdate, contact.address, contact.phone, contact.mobile, contact.email, contact.facebook, contact.twitter, contact.school, status.name as status, padawan.id_status, padawan.admission_date from padawan left join contact on contact.id = padawan.id_contact left join status on status.id = padawan.id_status inner join dojo_padawan on dojo_padawan.id_padawan = padawan.id and dojo_padawan.id_dojo = '%s' order by contact.lastname, contact.name",$con->real_escape_string($id_dojo));
+        $queryPadawans = sprintf("select padawan.id, contact.name, contact.lastname, contact.dni, contact.birthdate, contact.country, contact.state, contact.city, contact.address, contact.phone, contact.mobile, contact.email, contact.facebook, contact.twitter, contact.school, status.name as status, padawan.id_status, padawan.admission_date from padawan left join contact on contact.id = padawan.id_contact left join status on status.id = padawan.id_status inner join dojo_padawan on dojo_padawan.id_padawan = padawan.id and dojo_padawan.id_dojo = '%s' order by contact.lastname, contact.name",$con->real_escape_string($id_dojo));
         $resultPadawans = $con->query($queryPadawans);
         $padawans = array();
         while ($rowPadawan = $resultPadawans->fetch_array(MYSQLI_ASSOC)) {
@@ -38,6 +38,9 @@ if (!is_null($con)){
                                 'lastname' => utf8_encode($rowPadawan['lastname']),
                                 'dni' => $rowPadawan['dni'],
                                 'birthdate' => $rowPadawan['birthdate'],
+                                'country' => utf8_encode($rowPadawan['country']),
+                                'state' => utf8_encode($rowPadawan['state']),
+                                'city' => utf8_encode($rowPadawan['city']),
                                 'address' => utf8_encode($rowPadawan['address']),
                                 'phone' => utf8_encode($rowPadawan['phone']),
                                 'mobile' => utf8_encode($rowPadawan['mobile']),
@@ -53,7 +56,7 @@ if (!is_null($con)){
                                 );
         }
         $resultPadawans->free();
-        $queryMentors = sprintf("select mentor.id, contact.name, contact.lastname, contact.dni, contact.address, contact.phone, contact.mobile, contact.email, contact.facebook, contact.twitter, status.name as status, mentor.id_status, mentor.admission_date from mentor left join contact on contact.id = mentor.id_contact left join status on status.id = mentor.id_status inner join dojo_mentor on dojo_mentor.id_mentor = mentor.id and dojo_mentor.id_dojo = '%s' order by contact.lastname, contact.name",$con->real_escape_string($id_dojo));
+        $queryMentors = sprintf("select mentor.id, contact.name, contact.lastname, contact.dni, contact.country, contact.state, contact.city, contact.address, contact.phone, contact.mobile, contact.email, contact.facebook, contact.twitter, status.name as status, mentor.id_status, mentor.admission_date from mentor left join contact on contact.id = mentor.id_contact left join status on status.id = mentor.id_status inner join dojo_mentor on dojo_mentor.id_mentor = mentor.id and dojo_mentor.id_dojo = '%s' order by contact.lastname, contact.name",$con->real_escape_string($id_dojo));
         $resultMentors = $con->query($queryMentors);
         $mentors = array();
         while ($rowMentors = $resultMentors->fetch_array(MYSQLI_ASSOC)) {
@@ -61,6 +64,9 @@ if (!is_null($con)){
                                 'name' => utf8_encode($rowMentors['name']),
                                 'lastname' => utf8_encode($rowMentors['lastname']),
                                 'dni' => $rowMentors['dni'],
+                                'country' => utf8_encode($rowMentors['country']),
+                                'state' => utf8_encode($rowMentors['state']),
+                                'city' => utf8_encode($rowMentors['city']),
                                 'address' => utf8_encode($rowMentors['address']),
                                 'phone' => utf8_encode($rowMentors['phone']),
                                 'mobile' => utf8_encode($rowMentors['mobile']),
@@ -73,7 +79,7 @@ if (!is_null($con)){
                                 );
         }
         $resultMentors->free();
-        $queryResponsibles = sprintf("select responsible.id, contact.name, contact.lastname, contact.dni, contact.address, contact.phone, contact.mobile, contact.email, contact.facebook, contact.twitter, status.name as status, responsible.id_status from responsible left join contact on contact.id = responsible.id_contact left join status on status.id = responsible.id_status left join dojo_padawan on dojo_padawan.id_dojo = '%s' inner join responsible_padawan on responsible_padawan.id_padawan = dojo_padawan.id_padawan and responsible_padawan.id_responsible = responsible.id order by contact.lastname, contact.name",$con->real_escape_string($id_dojo));
+        $queryResponsibles = sprintf("select responsible.id, contact.name, contact.lastname, contact.dni, contact.country, contact.state, contact.city, contact.address, contact.phone, contact.mobile, contact.email, contact.facebook, contact.twitter, status.name as status, responsible.id_status from responsible left join contact on contact.id = responsible.id_contact left join status on status.id = responsible.id_status left join dojo_padawan on dojo_padawan.id_dojo = '%s' inner join responsible_padawan on responsible_padawan.id_padawan = dojo_padawan.id_padawan and responsible_padawan.id_responsible = responsible.id order by contact.lastname, contact.name",$con->real_escape_string($id_dojo));
         $resultResponsibles = $con->query($queryResponsibles);
         $responsibles = array();
         while ($rowResponsibles = $resultResponsibles->fetch_array(MYSQLI_ASSOC)) {
@@ -92,6 +98,9 @@ if (!is_null($con)){
                                 'name' => utf8_encode($rowResponsibles['name']),
                                 'lastname' => utf8_encode($rowResponsibles['lastname']),
                                 'dni' => $rowResponsibles['dni'],
+                                'country' => utf8_encode($rowResponsibles['country']),
+                                'state' => utf8_encode($rowResponsibles['state']),
+                                'city' => utf8_encode($rowResponsibles['city']),
                                 'address' => utf8_encode($rowResponsibles['address']),
                                 'phone' => utf8_encode($rowResponsibles['phone']),
                                 'mobile' => utf8_encode($rowResponsibles['mobile']),
@@ -104,7 +113,7 @@ if (!is_null($con)){
                                 );
         }
         $resultResponsibles->free();
-        $queryEmployees = sprintf("select employee.id, contact.name, contact.lastname, contact.dni, contact.address, contact.phone, contact.mobile, contact.email, contact.facebook, contact.twitter, status.name as status, employee.id_status from employee left join contact on contact.id = employee.id_contact left join status on status.id = employee.id_status inner join dojo_employee on dojo_employee.id_employee = employee.id and dojo_employee.id_dojo = '%s' order by contact.lastname, contact.name",$con->real_escape_string($id_dojo));
+        $queryEmployees = sprintf("select employee.id, contact.name, contact.lastname, contact.dni, contact.country, contact.state, contact.city, contact.address, contact.phone, contact.mobile, contact.email, contact.facebook, contact.twitter, status.name as status, employee.id_status from employee left join contact on contact.id = employee.id_contact left join status on status.id = employee.id_status inner join dojo_employee on dojo_employee.id_employee = employee.id and dojo_employee.id_dojo = '%s' order by contact.lastname, contact.name",$con->real_escape_string($id_dojo));
         $resultemployees = $con->query($queryEmployees);
         $employees = array();
         while ($rowEmployee = $resultemployees->fetch_array(MYSQLI_ASSOC)) {
@@ -112,6 +121,9 @@ if (!is_null($con)){
                                 'name' => utf8_encode($rowEmployee['name']),
                                 'lastname' => utf8_encode($rowEmployee['lastname']),
                                 'dni' => $rowEmployee['dni'],
+                                'country' => utf8_encode($rowEmployee['country']),
+                                'state' => utf8_encode($rowEmployee['state']),
+                                'city' => utf8_encode($rowEmployee['city']),
                                 'address' => utf8_encode($rowEmployee['address']),
                                 'phone' => utf8_encode($rowEmployee['phone']),
                                 'mobile' => utf8_encode($rowEmployee['mobile']),

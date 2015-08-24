@@ -31,6 +31,9 @@ CTS.Responsibles = {
                         $('#listPanel').append('<a href="#" class="list-group-item" data-toggle="collapse" data-target="#' + list[i].id +'" data-parent="#menu">' + list[i].lastname + ' ' + list[i].name + '</a>'
                             +'<div id="' + list[i].id +'" class="sublinks collapse">'
                             +'<div class="list-group-item small">DNI: ' + list[i].dni +'</div>'
+                            +'<div class="list-group-item small">Country: ' + list[i].country +'</div>'
+                            +'<div class="list-group-item small">State: ' + list[i].state +'</div>'
+                            +'<div class="list-group-item small">City: ' + list[i].city +'</div>'
                             +'<div class="list-group-item small">Address: ' + list[i].address +'</div>'
                             +'<div class="list-group-item small">Phone: ' + list[i].phone +'</div>'
                             +'<div class="list-group-item small">Mobile: ' + list[i].mobile +'</div>'
@@ -77,6 +80,9 @@ CTS.Responsibles = {
             +'              <div class="form-group"><label for="email" class="col-sm-2 control-label">Email</label><div class="col-sm-10"><input id="email" type="text" class="form-control"></div></div>'
             +'              <div class="form-group"><label for="facebook" class="col-sm-2 control-label">Facebook</label><div class="col-sm-10"><input id="facebook" type="text" class="form-control"></div></div>'
             +'              <div class="form-group"><label for="twitter" class="col-sm-2 control-label">Twitter</label><div class="col-sm-10"><input id="twitter" type="text" class="form-control"></div></div>'
+            +'              <div class="form-group"><label for="country" class="col-sm-2 control-label">Country</label><div class="col-sm-10"><input id="country" type="text" class="form-control"></div></div>'
+            +'              <div class="form-group"><label for="state" class="col-sm-2 control-label">State</label><div class="col-sm-10"><input id="state" type="text" class="form-control"></div></div>'
+            +'              <div class="form-group"><label for="city" class="col-sm-2 control-label">City</label><div class="col-sm-10"><input id="city" type="text" class="form-control"></div></div>'
             +'              <div class="form-group"><label for="address" class="col-sm-2 control-label">Address</label><div class="col-sm-10"><input id="address" type="text" class="form-control"></div></div>'
             +'              <div class="form-group"><label for="status" class="col-sm-2 control-label">Status</label><div class="col-sm-10"><select class="form-control" style="width: 100%" name="status" id="status"></select></div></div>'
             +'          </form>'
@@ -104,6 +110,9 @@ CTS.Responsibles = {
                 $("#email").val(atr[0].email);
                 $("#facebook").val(atr[0].facebook);
                 $("#twitter").val(atr[0].twitter);
+                $("#country").val(atr[0].country);
+                $("#state").val(atr[0].state);
+                $("#city").val(atr[0].city);
                 $("#address").val(atr[0].address);
                 CTS.Utils.setStatus(atr[0].id_status,'status');
             },
@@ -123,6 +132,9 @@ CTS.Responsibles = {
                 email: $("#email").val(),
                 facebook: $("#facebook").val(),
                 twitter: $("#twitter").val(),
+                country: $("#country").val(),
+                state: $("#state").val(),
+                city: $("#city").val(),
                 address: $("#address").val(),
                 id_status: $("#status").val()
             };
@@ -156,6 +168,9 @@ CTS.Responsibles = {
                 email: $("#email").val(),
                 facebook: $("#facebook").val(),
                 twitter: $("#twitter").val(),
+                country: $("#country").val(),
+                state: $("#state").val(),
+                city: $("#city").val(),
                 address: $("#address").val(),
                 id_status: $("#status").val()
             };

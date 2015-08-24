@@ -7,11 +7,11 @@ if (!is_null($con)){
     $obj = json_decode($rawdata);
 
     if (isset($obj->id_employee))
-        $query = sprintf("select employee.id, contact.name, contact.lastname, contact.dni, contact.address, contact.phone, contact.mobile, contact.email, contact.facebook, contact.twitter, status.name as status, employee.id_status from employee left join contact on contact.id = employee.id_contact left join status on status.id = employee.id_status WHERE employee.id = '%s'",$con->real_escape_string($obj->id_employee));
+        $query = sprintf("select employee.id, contact.name, contact.lastname, contact.dni, contact.country, contact.state, contact.city, contact.address, contact.phone, contact.mobile, contact.email, contact.facebook, contact.twitter, status.name as status, employee.id_status from employee left join contact on contact.id = employee.id_contact left join status on status.id = employee.id_status WHERE employee.id = '%s'",$con->real_escape_string($obj->id_employee));
     else if (isset($obj->id_dojo))
-        $query = sprintf("select employee.id, contact.name, contact.lastname, contact.dni, contact.address, contact.phone, contact.mobile, contact.email, contact.facebook, contact.twitter, status.name as status, employee.id_status from employee left join contact on contact.id = employee.id_contact left join status on status.id = employee.id_status inner join dojo_employee on dojo_employee.id_employee = employee.id and dojo_employee.id_dojo = '%s' order by contact.lastname, contact.name",$con->real_escape_string($obj->id_dojo));
+        $query = sprintf("select employee.id, contact.name, contact.lastname, contact.dni, contact.country, contact.state, contact.city, contact.address, contact.phone, contact.mobile, contact.email, contact.facebook, contact.twitter, status.name as status, employee.id_status from employee left join contact on contact.id = employee.id_contact left join status on status.id = employee.id_status inner join dojo_employee on dojo_employee.id_employee = employee.id and dojo_employee.id_dojo = '%s' order by contact.lastname, contact.name",$con->real_escape_string($obj->id_dojo));
     else 
-        $query = "select employee.id, contact.name, contact.lastname, contact.dni, contact.address, contact.phone, contact.mobile, contact.email, contact.facebook, contact.twitter, status.name as status, employee.id_status from employee left join contact on contact.id = employee.id_contact left join status on status.id = employee.id_status order by contact.lastname, contact.name";
+        $query = "select employee.id, contact.name, contact.lastname, contact.dni, contact.country, contact.state, contact.city, contact.address, contact.phone, contact.mobile, contact.email, contact.facebook, contact.twitter, status.name as status, employee.id_status from employee left join contact on contact.id = employee.id_contact left join status on status.id = employee.id_status order by contact.lastname, contact.name";
 
     $result = $con->query($query);
     if ($result) {
@@ -31,6 +31,9 @@ if (!is_null($con)){
                                 'name' => utf8_encode($row['name']),
                                 'lastname' => utf8_encode($row['lastname']),
                                 'dni' => $row['dni'],
+                                'country' => utf8_encode($row['country']),
+                                'state' => utf8_encode($row['state']),
+                                'city' => utf8_encode($row['city']),
                                 'address' => utf8_encode($row['address']),
                                 'phone' => utf8_encode($row['phone']),
                                 'mobile' => utf8_encode($row['mobile']),

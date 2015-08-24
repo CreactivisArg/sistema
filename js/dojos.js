@@ -24,8 +24,10 @@ CTS.Dojos = {
                 for (i; i < list.length; i++) {
                     $('#listPanel').append('<a href="#" class="list-group-item" data-toggle="collapse" data-target="#' + list[i].id +'" data-parent="#menu">' + list[i].name +' - ' + list[i].city + '</a>'
                         +'<div id="' + list[i].id +'" class="sublinks collapse">'
-                        +'<div class="list-group-item small">Address: ' + list[i].address +'</div>'
+                        +'<div class="list-group-item small">Country: ' + list[i].country +'</div>'
+                        +'<div class="list-group-item small">State: ' + list[i].state +'</div>'
                         +'<div class="list-group-item small">City: ' + list[i].city +'</div>'
+                        +'<div class="list-group-item small">Address: ' + list[i].address +'</div>'
                         +'<div class="list-group-item small">Description: ' + list[i].description +'</div>'
                         +'<div class="list-group-item small">Phone: ' + list[i].phone +'</div>'
                         +'<div class="list-group-item small">Email: ' + list[i].email +'</div>'
@@ -62,8 +64,10 @@ CTS.Dojos = {
             +'      <div class="modal-body" align="center">'
             +'          <form class="form-horizontal">'
             +'              <div class="form-group"><label for="name" class="col-sm-2 control-label">Name</label><div class="col-sm-10"><input id="name" type="text" class="form-control"></div></div>'
-            +'              <div class="form-group"><label for="address" class="col-sm-2 control-label">Address</label><div class="col-sm-10"><input id="address" type="text" class="form-control"></div></div>'
+            +'              <div class="form-group"><label for="country" class="col-sm-2 control-label">Country</label><div class="col-sm-10"><input id="country" type="text" class="form-control"></div></div>'
+            +'              <div class="form-group"><label for="state" class="col-sm-2 control-label">State</label><div class="col-sm-10"><input id="state" type="text" class="form-control"></div></div>'
             +'              <div class="form-group"><label for="city" class="col-sm-2 control-label">City</label><div class="col-sm-10"><input id="city" type="text" class="form-control"></div></div>'
+            +'              <div class="form-group"><label for="address" class="col-sm-2 control-label">Address</label><div class="col-sm-10"><input id="address" type="text" class="form-control"></div></div>'
             +'              <div class="form-group"><label for="description" class="col-sm-2 control-label">Description</label><div class="col-sm-10"><input id="description" type="text" class="form-control"></div></div>'
             +'              <div class="form-group"><label for="phone" class="col-sm-2 control-label">Phone</label><div class="col-sm-10"><input id="phone" type="text" class="form-control"></div></div>'
             +'              <div class="form-group"><label for="email" class="col-sm-2 control-label">Email</label><div class="col-sm-10"><input id="email" type="text" class="form-control"></div></div>'
@@ -88,8 +92,10 @@ CTS.Dojos = {
             cache: false,
             success: function (atr) {
                 $("#name").val(atr[0].name);
-                $("#address").val(atr[0].address);
+                $("#country").val(atr[0].country);
+                $("#state").val(atr[0].state);
                 $("#city").val(atr[0].city);
+                $("#address").val(atr[0].address);
                 $("#description").val(atr[0].description);
                 $("#phone").val(atr[0].phone);
                 $("#email").val(atr[0].email);
@@ -106,8 +112,10 @@ CTS.Dojos = {
         var dojo = {
                 id_dojo: id,
                 name: $("#name").val(),
-                address: $("#address").val(),
+                country: $("#country").val(),
+                state: $("#state").val(),
                 city: $("#city").val(),
+                address: $("#address").val(),
                 description: $("#description").val(),
                 phone: $("#phone").val(),
                 email: $("#email").val(),
@@ -138,8 +146,10 @@ CTS.Dojos = {
     newDojo : function () {
         var dojo = {
                 name: $("#name").val(),
-                address: $("#address").val(),
+                country: $("#country").val(),
+                state: $("#state").val(),
                 city: $("#city").val(),
+                address: $("#address").val(),
                 description: $("#description").val(),
                 phone: $("#phone").val(),
                 email: $("#email").val(),

@@ -46,6 +46,9 @@ CTS.Padawans = {
                         +'<div id="' + list[i].id +'" class="sublinks collapse">'
                         +'<div class="list-group-item small">DNI: ' + list[i].dni +'</div>'
                         +'<div class="list-group-item small">Birthdate: ' + list[i].birthdate +'</div>'
+                        +'<div class="list-group-item small">Country: ' + list[i].country +'</div>'
+                        +'<div class="list-group-item small">State: ' + list[i].state +'</div>'
+                        +'<div class="list-group-item small">City: ' + list[i].city +'</div>'
                         +'<div class="list-group-item small">Address: ' + list[i].address +'</div>'
                         +'<div class="list-group-item small">Phone: ' + list[i].phone +'</div>'
                         +'<div class="list-group-item small">Mobile: ' + list[i].mobile +'</div>'
@@ -97,6 +100,9 @@ CTS.Padawans = {
             +'              <div class="form-group"><label for="facebook" class="col-sm-2 control-label">Facebook</label><div class="col-sm-10"><input id="facebook" type="text" class="form-control"></div></div>'
             +'              <div class="form-group"><label for="twitter" class="col-sm-2 control-label">Twitter</label><div class="col-sm-10"><input id="twitter" type="text" class="form-control"></div></div>'
             +'              <div class="form-group"><label for="school" class="col-sm-2 control-label">School</label><div class="col-sm-10"><input id="school" type="text" class="form-control"></div></div>'
+            +'              <div class="form-group"><label for="country" class="col-sm-2 control-label">Country</label><div class="col-sm-10"><input id="country" type="text" class="form-control"></div></div>'
+            +'              <div class="form-group"><label for="state" class="col-sm-2 control-label">State</label><div class="col-sm-10"><input id="state" type="text" class="form-control"></div></div>'
+            +'              <div class="form-group"><label for="city" class="col-sm-2 control-label">City</label><div class="col-sm-10"><input id="city" type="text" class="form-control"></div></div>'
             +'              <div class="form-group"><label for="address" class="col-sm-2 control-label">Address</label><div class="col-sm-10"><input id="address" type="text" class="form-control"></div></div>'
             +'              <div class="form-group"><label for="admission_date" class="col-sm-2 control-label">Admission</label><div class="col-sm-10"><input id="admission_date" type="date" class="form-control"></div></div>'
             +'              <div class="form-group"><label for="status" class="col-sm-2 control-label">Status</label><div class="col-sm-10"><select class="form-control" style="width: 100%" name="status" id="status"></select></div></div>'
@@ -127,6 +133,9 @@ CTS.Padawans = {
                 $("#facebook").val(atr[0].facebook);
                 $("#twitter").val(atr[0].twitter);
                 $("#school").val(atr[0].school);
+                $("#country").val(atr[0].country);
+                $("#state").val(atr[0].state);
+                $("#city").val(atr[0].city);
                 $("#address").val(atr[0].address);
                 $("#admission_date").val(atr[0].admission_date);
                 CTS.Utils.setStatus(atr[0].id_status,'status');
@@ -149,6 +158,9 @@ CTS.Padawans = {
                 facebook: $("#facebook").val(),
                 twitter: $("#twitter").val(),
                 school: $("#school").val(),
+                country: $("#country").val(),
+                state: $("#state").val(),
+                city: $("#city").val(),
                 address: $("#address").val(),
                 admission_date: $("#admission_date").val(),
                 id_status: $("#status").val()
@@ -185,6 +197,9 @@ CTS.Padawans = {
                 facebook: $("#facebook").val(),
                 twitter: $("#twitter").val(),
                 school: $("#school").val(),
+                country: $("#country").val(),
+                state: $("#state").val(),
+                city: $("#city").val(),
                 address: $("#address").val(),
                 admission_date: $("#admission_date").val(),
                 id_status: $("#status").val()
