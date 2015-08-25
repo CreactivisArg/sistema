@@ -12,26 +12,32 @@ if (!is_null($con)){
 	$error = false;
 
 	$con->begin_transaction();
-
 	if (isset($obj->padawans)){
 		$padawans = $obj->padawans;
 		foreach ($padawans as $padawan) {
-			$query = sprintf("INSERT INTO log_padawan (date,id_dojo,id_padawan) VALUES ('%s','%s','%s')",$con->real_escape_string($date),$con->real_escape_string($id_dojo),$con->real_escape_string($padawan));
-			$result = $con->query($query);
-			if (!$result)
-				$error = true;
+			$querySelect = sprintf("select id from log_padawan where date = '%s' and id_dojo = '%s' and id_padawan = '%s'",$con->real_escape_string($date),$con->real_escape_string($id_dojo),$con->real_escape_string($padawan));
+			$resultSelect = $con->query($querySelect);
+			if ($resultSelect->num_rows==0) {
+				$queryInsert = sprintf("INSERT INTO log_padawan (date,id_dojo,id_padawan) VALUES ('%s','%s','%s')",$con->real_escape_string($date),$con->real_escape_string($id_dojo),$con->real_escape_string($padawan));
+				$resultInsert = $con->query($queryInsert);
+				if (!$resultInsert)
+					$error = true;
+			}
 		}
 	}
 	if (isset($obj->mentors)){
 		$mentors = $obj->mentors;
 		foreach ($mentors as $mentor) {
-			$query = sprintf("INSERT INTO log_mentor (date,id_dojo,id_mentor) VALUES ('%s','%s','%s')",$con->real_escape_string($date),$con->real_escape_string($id_dojo),$con->real_escape_string($mentor));
-			$result = $con->query($query);
-			if (!$result)
-				$error = true;
+			$querySelect = sprintf("select id from log_mentor where date = '%s' and id_dojo = '%s' and id_mentor = '%s'",$con->real_escape_string($date),$con->real_escape_string($id_dojo),$con->real_escape_string($mentor));
+			$resultSelect = $con->query($querySelect);
+			if ($resultSelect->num_rows==0) {
+				$queryInsert = sprintf("INSERT INTO log_mentor (date,id_dojo,id_mentor) VALUES ('%s','%s','%s')",$con->real_escape_string($date),$con->real_escape_string($id_dojo),$con->real_escape_string($mentor));
+				$resultInsert = $con->query($queryInsert);
+				if (!$resultInsert)
+					$error = true;
+			}
 		}
 	}
-
 	if (!$error) {
 		$con->commit();
 	    header("HTTP/1.1 200 OK");

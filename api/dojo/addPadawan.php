@@ -13,10 +13,14 @@ if (!is_null($con)){
 
 	$con->begin_transaction();
 	foreach ($padawans as $padawan) {
-	    $query = sprintf("INSERT INTO dojo_padawan (id_dojo, id_padawan) VALUES ('%s', '%s')",$con->real_escape_string($id_dojo),$con->real_escape_string($padawan));
-		$result = $con->query($query);
-		if (!$result)
-			$error = true;
+		$querySelect = sprintf("select id from dojo_padawan where id_dojo = '%s' and id_padawan = '%s'",$con->real_escape_string($id_dojo),$con->real_escape_string($padawan));
+		$resultSelect = $con->query($querySelect);
+		if ($resultSelect->num_rows==0) {
+		    $queryInsert = sprintf("INSERT INTO dojo_padawan (id_dojo, id_padawan) VALUES ('%s', '%s')",$con->real_escape_string($id_dojo),$con->real_escape_string($padawan));
+			$resultInsert = $con->query($queryInsert);
+			if (!$resultInsert)
+				$error = true;
+		}
 	}
 	if (!$error) {
 		$con->commit();  

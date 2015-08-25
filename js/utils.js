@@ -12,7 +12,7 @@ CTS.Utils = {
         var self = this;
         jQuery.ajax({
             type: "GET",
-            url: "api/getStatus.php",
+            url: "api/status/getStatus.php",
             cache: false,
             success: function (listStatus) {
                 $('#'+selectName).empty();

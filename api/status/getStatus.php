@@ -1,5 +1,5 @@
 <?php
-require_once('db.php');
+require_once('../db.php');
 $db = new DBConnect();
 $con = $db->connect();
 if (!is_null($con)){

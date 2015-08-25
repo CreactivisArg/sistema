@@ -33,6 +33,15 @@ if (!is_null($con)){
                             );
             }
             $resultProject->free();
+            $querySkill = sprintf("select skill.id, skill.name from padawan_skill inner join skill on skill.id = padawan_skill.id_skill where id_padawan = '%s' order by skill.name",$con->real_escape_string($id_padawan));
+            $resultSkill = $con->query($querySkill);
+            $skills = array();
+            while ($rowSkill = $resultSkill->fetch_array(MYSQLI_ASSOC)) {
+                $skills [] = array('id' => $rowSkill['id'],
+                                  'name' => utf8_encode($rowSkill['name'])
+                            );
+            }
+            $resultSkill->free();
             $padawans [] = array('id' => $id_padawan,
                                 'name' => utf8_encode($rowPadawan['name']),
                                 'lastname' => utf8_encode($rowPadawan['lastname']),
@@ -52,6 +61,7 @@ if (!is_null($con)){
                                 'status' => utf8_encode($rowPadawan['status']),
                                 'id_status' => $rowPadawan['id_status'],
                                 'responsibles' => $responsiblesAux,
+                                'skills' => $skills,
                                 'projects' => $projectsAux
                                 );
         }
@@ -60,7 +70,17 @@ if (!is_null($con)){
         $resultMentors = $con->query($queryMentors);
         $mentors = array();
         while ($rowMentors = $resultMentors->fetch_array(MYSQLI_ASSOC)) {
-            $mentors [] = array('id' => $rowMentors['id'],
+            $id_mentor = $rowMentors['id'];
+            $querySkill = sprintf("select skill.id, skill.name from mentor_skill inner join skill on skill.id = mentor_skill.id_skill where id_mentor = '%s' order by skill.name",$con->real_escape_string($id_mentor));
+            $resultSkill = $con->query($querySkill);
+            $skills = array();
+            while ($rowSkill = $resultSkill->fetch_array(MYSQLI_ASSOC)) {
+                $skills [] = array('id' => $rowSkill['id'],
+                                  'name' => utf8_encode($rowSkill['name'])
+                            );
+            }
+            $resultSkill->free();
+            $mentors [] = array('id' => $id_mentor,
                                 'name' => utf8_encode($rowMentors['name']),
                                 'lastname' => utf8_encode($rowMentors['lastname']),
                                 'dni' => $rowMentors['dni'],
@@ -75,11 +95,12 @@ if (!is_null($con)){
                                 'twitter' => utf8_encode($rowMentors['twitter']),
                                 'admission_date' => $rowMentors['admission_date'],
                                 'status' => utf8_encode($rowMentors['status']),
-                                'id_status' => $rowMentors['id_status']
+                                'id_status' => $rowMentors['id_status'],
+                                'skills' => $skills
                                 );
         }
         $resultMentors->free();
-        $queryResponsibles = sprintf("select responsible.id, contact.name, contact.lastname, contact.dni, contact.country, contact.state, contact.city, contact.address, contact.phone, contact.mobile, contact.email, contact.facebook, contact.twitter, status.name as status, responsible.id_status from responsible left join contact on contact.id = responsible.id_contact left join status on status.id = responsible.id_status left join dojo_padawan on dojo_padawan.id_dojo = '%s' inner join responsible_padawan on responsible_padawan.id_padawan = dojo_padawan.id_padawan and responsible_padawan.id_responsible = responsible.id order by contact.lastname, contact.name",$con->real_escape_string($id_dojo));
+        $queryResponsibles = sprintf("select distinct responsible.id, contact.name, contact.lastname, contact.dni, contact.country, contact.state, contact.city, contact.address, contact.phone, contact.mobile, contact.email, contact.facebook, contact.twitter, status.name as status, responsible.id_status from responsible left join contact on contact.id = responsible.id_contact left join status on status.id = responsible.id_status left join dojo_padawan on dojo_padawan.id_dojo = '%s' inner join responsible_padawan on responsible_padawan.id_padawan = dojo_padawan.id_padawan and responsible_padawan.id_responsible = responsible.id order by contact.lastname, contact.name",$con->real_escape_string($id_dojo));
         $resultResponsibles = $con->query($queryResponsibles);
         $responsibles = array();
         while ($rowResponsibles = $resultResponsibles->fetch_array(MYSQLI_ASSOC)) {

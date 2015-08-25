@@ -13,10 +13,14 @@ if (!is_null($con)){
 
 	$con->begin_transaction();
 	foreach ($mentors as $mentor) {
-		$query = sprintf("INSERT INTO dojo_mentor (id_dojo, id_mentor) VALUES ('%s', '%s')",$con->real_escape_string($id_dojo),$con->real_escape_string($mentor));
-		$result = $con->query($query);
-		if (!$result)
-			$error = true;
+		$querySelect = sprintf("select id from dojo_mentor where id_dojo = '%s' and id_mentor = '%s'",$con->real_escape_string($id_dojo),$con->real_escape_string($mentor));
+		$resultSelect = $con->query($querySelect);
+		if ($resultSelect->num_rows==0) {
+			$queryInsert = sprintf("INSERT INTO dojo_mentor (id_dojo, id_mentor) VALUES ('%s', '%s')",$con->real_escape_string($id_dojo),$con->real_escape_string($mentor));
+			$resultInsert = $con->query($queryInsert);
+			if (!$resultInsert)
+				$error = true;
+		}
 	}
 	if (!$error) {
 		$con->commit();

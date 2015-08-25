@@ -13,12 +13,15 @@ if (!is_null($con)){
 
 	$con->begin_transaction();
 	foreach ($skills as $skill) {
-		$query = sprintf("INSERT INTO padawan_skill (id_padawan, id_skill) VALUES ('%s', '%s')",$con->real_escape_string($id_padawan),$con->real_escape_string($skill));
-		$result = $con->query($query);
-		if (!$result)
-			$error = true;
+		$querySelect = sprintf("select id from padawan_skill where id_padawan = '%s' and id_skill = '%s'",$con->real_escape_string($id_padawan),$con->real_escape_string($skill));
+		$resultSelect = $con->query($querySelect);
+		if ($resultSelect->num_rows==0) {
+			$queryInsert = sprintf("INSERT INTO padawan_skill (id_padawan, id_skill) VALUES ('%s', '%s')",$con->real_escape_string($id_padawan),$con->real_escape_string($skill));
+			$resultInsert = $con->query($queryInsert);
+			if (!$resultInsert)
+				$error = true;
+		}
 	}
-
 	if (!$error) {
 		$con->commit();  
 	    header("HTTP/1.1 200 OK");

@@ -13,12 +13,15 @@ if (!is_null($con)){
 
 	$con->begin_transaction();
 	foreach ($padawans as $padawan) {
-		$query = sprintf("INSERT INTO responsible_padawan (id_responsible, id_padawan) VALUES ('%s', '%s')",$con->real_escape_string($id_responsible),$con->real_escape_string($padawan));
-		$result = $con->query($query);
-		if (!$result)
-			$error = true;
+		$querySelect = sprintf("select id from responsible_padawan where id_responsible = '%s' and id_padawan = '%s'",$con->real_escape_string($id_responsible),$con->real_escape_string($padawan));
+		$resultSelect = $con->query($querySelect);
+		if ($resultSelect->num_rows==0) {
+			$queryInsert = sprintf("INSERT INTO responsible_padawan (id_responsible, id_padawan) VALUES ('%s', '%s')",$con->real_escape_string($id_responsible),$con->real_escape_string($padawan));
+			$resultInsert = $con->query($queryInsert);
+			if (!$resultInsert)
+				$error = true;
+		}
 	}
-
 	if (!$error) {
 		$con->commit();  
 	    header("HTTP/1.1 200 OK");
