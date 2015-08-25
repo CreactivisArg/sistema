@@ -105,9 +105,9 @@ CTS.Dojo = {
                     var skills = '';
                     for (var j=0;j<dojo[0].padawans[i].skills.length;j++) {
                         if ((j+1)==dojo[0].padawans[i].skills.length)
-                            skills = skills + dojo[0].padawans[i].skills[j].name;
+                            skills = skills + '<a href="listSkill.html?name_skill=' + dojo[0].padawans[i].skills[j].name + '&id_skill=' + dojo[0].padawans[i].skills[j].id + '">' + dojo[0].padawans[i].skills[j].name + '</a>';
                         else
-                            skills = skills + dojo[0].padawans[i].skills[j].name + ', ';
+                            skills = skills + '<a href="listSkill.html?name_skill=' + dojo[0].padawans[i].skills[j].name + '&id_skill=' + dojo[0].padawans[i].skills[j].id + '">' + dojo[0].padawans[i].skills[j].name + '</a>, ';
                     }
                     $('#listPanelPadawans').append('<a href="#" class="list-group-item" data-toggle="collapse" data-target="#' + dojo[0].padawans[i].id +'" data-parent="#menu">' + dojo[0].padawans[i].lastname + ' ' + dojo[0].padawans[i].name + '</a>'
                         +'<div id="' + dojo[0].padawans[i].id +'" class="sublinks collapse">'
@@ -137,9 +137,9 @@ CTS.Dojo = {
                     var skills = '';
                     for (var j=0;j<dojo[0].mentors[i].skills.length;j++) {
                         if ((j+1)==dojo[0].mentors[i].skills.length)
-                            skills = skills + dojo[0].mentors[i].skills[j].name;
+                            skills = skills + '<a href="listSkill.html?name_skill=' + dojo[0].mentors[i].skills[j].name + '&id_skill=' + dojo[0].mentors[i].skills[j].id + '">' + dojo[0].mentors[i].skills[j].name + '</a>';
                         else
-                            skills = skills + dojo[0].mentors[i].skills[j].name + ', ';
+                            skills = skills + '<a href="listSkill.html?name_skill=' + dojo[0].mentors[i].skills[j].name + '&id_skill=' + dojo[0].mentors[i].skills[j].id + '">' + dojo[0].mentors[i].skills[j].name + '</a>, ';
                     }
                     $('#listPanelMentors').append('<a href="#" class="list-group-item" data-toggle="collapse" data-target="#' + dojo[0].mentors[i].id +'" data-parent="#menu">' + dojo[0].mentors[i].lastname + ' ' + dojo[0].mentors[i].name + '</a>'
                         +'<div id="' + dojo[0].mentors[i].id +'" class="sublinks collapse">'

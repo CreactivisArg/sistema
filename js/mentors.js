@@ -31,9 +31,9 @@ CTS.Mentors = {
                     var skills = '';
                     for (var j=0;j<list[i].skills.length;j++) {
                         if ((j+1)==list[i].skills.length)
-                            skills = skills + list[i].skills[j].name;
+                            skills = skills + '<a href="listSkill.html?name_skill=' + list[i].skills[j].name + '&id_skill=' + list[i].skills[j].id + '">' + list[i].skills[j].name + '</a>';
                         else
-                            skills = skills + list[i].skills[j].name + ', ';
+                            skills = skills + '<a href="listSkill.html?name_skill=' + list[i].skills[j].name + '&id_skill=' + list[i].skills[j].id + '">' + list[i].skills[j].name + '</a>, ';
                     }
                     $('#listPanel').append('<a href="#" class="list-group-item" data-toggle="collapse" data-target="#' + list[i].id +'" data-parent="#menu">' + list[i].lastname + ' ' + list[i].name + '</a>'
                         +'<div id="' + list[i].id +'" class="sublinks collapse">'
