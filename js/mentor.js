@@ -13,6 +13,9 @@ CTS.Mentor = {
         $('#editMentor').on('click', function () {
             self.editMentor();
         });
+        $('#addSkill').on('click', function () {
+            self.addSkillMentor();
+        });
     },
     getMentor : function () {
         var id = {
@@ -47,8 +50,18 @@ CTS.Mentor = {
                         +'<p>Facebook: ' + mentor[0].facebook +'</p>'
                         +'<p>Twitter: ' + mentor[0].twitter +'</p>'
                         +'<p>Admission Date: ' + mentor[0].admission_date +'</p>'
-                        +'<p>Dojos: ' + dojos +'</p>'
-                        +'<p>Status: ' + mentor[0].status +'</p>');
+                        +'<p>Dojos: ' + dojos +'</p>');
+                    if (mentor[0].skills.length>0){
+                        var skills = '<p>Skills:</p><div class="panel list-group">';
+                        for (var i=0;i<mentor[0].skills.length;i++) {
+                            skills=skills+'<a href="#" class="list-group-item" data-toggle="collapse" data-target="#' + mentor[0].skills[i].id +'" data-parent="#menu">' + mentor[0].skills[i].name + '</a>'
+                            +'<div id="' + mentor[0].skills[i].id +'" class="sublinks collapse">'
+                            +'<a class="list-group-item" onclick="CTS.Mentor.removeSkill(\'' + mentor[0].skills[i].id + '\')"><span class="glyphicon glyphicon-remove"></span> Remove Skill</a>'
+                            +'</div>';
+                        }
+                        $('#info').append(skills +'</div>');
+                    }
+                    $('#info').append('<p>Status: ' + mentor[0].status +'</p>');
             },
             error: function () {
                 CTS.Utils.showDialog(BootstrapDialog.TYPE_WARNING,"Error","Ha ocurrido un error, intente nuevamente.");
@@ -138,6 +151,70 @@ CTS.Mentor = {
             success: function () {
                 CTS.Utils.showDialog(BootstrapDialog.TYPE_INFO,"Confirm","El Mentor fue editado correctamente");
                 CTS.Utils.closeModal('modalEditMentor');
+                CTS.Mentor.getMentor();
+            },
+            error: function () {
+                CTS.Utils.showDialog(BootstrapDialog.TYPE_WARNING,"Error","Ha ocurrido un error, intente nuevamente.");
+            }
+        });
+    },
+    addSkillMentor : function () {
+        this.setModalAddSkill('Add Skill');
+        CTS.Utils.showModal('modalAddSkill');
+        CTS.Utils.getSkills(null,'skills');
+    },
+    setModalAddSkill : function (title){
+        $('#holderModal').empty().append(
+            '<!-- Modal -->'
+            +'<div class="modal fade" id="modalAddSkill" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">'
+            +'  <div class="modal-dialog">'
+            +'    <div class="modal-content">'
+            +'      <div class="modal-header">'
+            +'        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>'
+            +'        <h4 class="modal-title" id="myModalLabel">' + title + '</h4>'
+            +'      </div>'
+            +'      <div class="modal-body" align="center">'
+            +'          <form class="form-horizontal">'
+            +'              <div class="form-group"><label for="skills" class="col-sm-2 control-label">Skills</label><div class="col-sm-10"><select class="form-control" multiple="multiple" style="width: 100%" name="skills" id="skills"></select></div></div>'
+            +'          </form>'
+            +'      </div>'
+            +'      <div class="modal-footer">'
+            +'       <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>'
+            +'       <button type="button" class="btn btn-primary" onclick="CTS.Mentor.addSkill();">Add Skill</button>'
+            +'      </div>');
+    },
+    addSkill : function () {
+        var ids = {
+                id_mentor: this.id_mentor,
+                skills: $("#skills").val()
+            };
+        jQuery.ajax({
+            type: "POST",
+            url: "api/mentor/addSkill.php",
+            data: JSON.stringify(ids),
+            cache: false,
+            success: function () {
+                CTS.Utils.showDialog(BootstrapDialog.TYPE_INFO,"Confirm","La habilidad fue agregada correctamente");
+                CTS.Utils.closeModal('modalAddSkill');
+                CTS.Mentor.getMentor();
+            },
+            error: function () {
+                CTS.Utils.showDialog(BootstrapDialog.TYPE_WARNING,"Error","Ha ocurrido un error, intente nuevamente.");
+            }
+        });
+    },
+    removeSkill : function (id_skill) {
+        var ids = {
+                id_mentor: this.id_mentor,
+                id_skill: id_skill
+            };
+        jQuery.ajax({
+            type: "POST",
+            url: "api/mentor/removeSkill.php",
+            data: JSON.stringify(ids),
+            cache: false,
+            success: function () {
+                CTS.Utils.showDialog(BootstrapDialog.TYPE_INFO,"Confirm","La habilidad fue removida correctamente.");
                 CTS.Mentor.getMentor();
             },
             error: function () {

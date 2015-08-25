@@ -50,6 +50,27 @@ CTS.Utils = {
             }
         });
     },
+    getSkills : function (id,selectName) {
+        var self = this;
+        jQuery.ajax({
+            type: "GET",
+            url: "api/skill/getSkill.php",
+            cache: false,
+            success: function (listSkill) {
+                $('#'+selectName).empty();
+
+                for (var i=0;i<listSkill.length;i++) {
+                    $('#'+selectName).append('<option value='  + listSkill[i].id +'>' + listSkill[i].name +'</option>');
+                }
+                $('#'+selectName).select2();
+                if (id)
+                    $('#'+selectName).val(id).trigger("change");
+            },
+            error: function () {
+                self.showDialog(BootstrapDialog.TYPE_WARNING,"Error","Ha ocurrido un error, intente nuevamente.");
+            }
+        });
+    },
     getURLParameter : function (name) {
         return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.search)||[,""])[1].replace(/\+/g, '%20'))||null;
     },

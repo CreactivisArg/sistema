@@ -28,6 +28,13 @@ CTS.Mentors = {
                         else
                             dojos = dojos + '<a href="dojo.html?name_dojo=' + list[i].dojos[j].name + '&id_dojo=' + list[i].dojos[j].id + '">' + list[i].dojos[j].name + '</a>, ';
                     }
+                    var skills = '';
+                    for (var j=0;j<list[i].skills.length;j++) {
+                        if ((j+1)==list[i].skills.length)
+                            skills = skills + list[i].skills[j].name;
+                        else
+                            skills = skills + list[i].skills[j].name + ', ';
+                    }
                     $('#listPanel').append('<a href="#" class="list-group-item" data-toggle="collapse" data-target="#' + list[i].id +'" data-parent="#menu">' + list[i].lastname + ' ' + list[i].name + '</a>'
                         +'<div id="' + list[i].id +'" class="sublinks collapse">'
                         +'<div class="list-group-item small">DNI: ' + list[i].dni +'</div>'
@@ -42,6 +49,7 @@ CTS.Mentors = {
                         +'<div class="list-group-item small">Facebook: ' + list[i].facebook +'</div>'
                         +'<div class="list-group-item small">Twitter: ' + list[i].twitter +'</div>'
                         +'<div class="list-group-item small">Admission Date: ' + list[i].admission_date +'</div>'
+                        +'<div class="list-group-item small">Skills: ' + skills +'</div>'
                         +'<div class="list-group-item small">Dojos: ' + dojos +'</div>'
                         +'<div class="list-group-item small">Status: ' + list[i].status +'</div>'
                         +'<a class="list-group-item" href="mentor.html?id_mentor=' + list[i].id + '"><span class="glyphicon glyphicon-eye-open"></span> View</a>'

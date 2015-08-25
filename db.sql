@@ -272,6 +272,45 @@ CREATE TABLE `mentor` (
 
 
 
+# Volcado de tabla mentor_skill
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `mentor_skill`;
+
+CREATE TABLE `mentor_skill` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `id_mentor` char(36) NOT NULL DEFAULT '',
+  `id_skill` char(36) NOT NULL DEFAULT '',
+  PRIMARY KEY (`id`),
+  KEY `id_mentor` (`id_mentor`),
+  KEY `id_skill` (`id_skill`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+
+# Volcado de tabla method
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `method`;
+
+CREATE TABLE `method` (
+  `id` char(36) NOT NULL DEFAULT '',
+  `name` varchar(255) NOT NULL DEFAULT '',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+LOCK TABLES `method` WRITE;
+/*!40000 ALTER TABLE `method` DISABLE KEYS */;
+
+INSERT INTO `method` (`id`, `name`)
+VALUES
+  ('0d6c9b32-4abe-11e5-855b-272131924cc3','Efectivo'),
+  ('13fd1ff8-4abe-11e5-855b-272131924cc3','Transferencia');
+
+/*!40000 ALTER TABLE `method` ENABLE KEYS */;
+UNLOCK TABLES;
+
+
 # Volcado de tabla padawan
 # ------------------------------------------------------------
 
@@ -289,6 +328,22 @@ CREATE TABLE `padawan` (
 
 
 
+# Volcado de tabla padawan_skill
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `padawan_skill`;
+
+CREATE TABLE `padawan_skill` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `id_padawan` char(36) NOT NULL DEFAULT '',
+  `id_skill` char(36) NOT NULL DEFAULT '',
+  PRIMARY KEY (`id`),
+  KEY `id_padawan` (`id_padawan`),
+  KEY `id_skill` (`id_skill`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+
 # Volcado de tabla payment
 # ------------------------------------------------------------
 
@@ -302,10 +357,12 @@ CREATE TABLE `payment` (
   `id_dojo` char(36) NOT NULL,
   `id_padawan` char(36) NOT NULL DEFAULT '',
   `amount` double NOT NULL,
+  `id_method` char(36) NOT NULL,
   `observation` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `id_dojo` (`id_dojo`),
-  KEY `id_padawan` (`id_padawan`)
+  KEY `id_padawan` (`id_padawan`),
+  KEY `id_method` (`id_method`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
@@ -418,6 +475,41 @@ CREATE TABLE `responsible_padawan` (
   KEY `id_padawan` (`id_padawan`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+
+
+# Volcado de tabla skill
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `skill`;
+
+CREATE TABLE `skill` (
+  `id` char(36) NOT NULL DEFAULT '',
+  `name` varchar(255) NOT NULL DEFAULT '',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+LOCK TABLES `skill` WRITE;
+/*!40000 ALTER TABLE `skill` DISABLE KEYS */;
+
+INSERT INTO `skill` (`id`, `name`)
+VALUES
+  ('03215662-4aba-11e5-855b-272131924cc3','Unity'),
+  ('075cdd3c-4aba-11e5-855b-272131924cc3','PHP'),
+  ('0bc101b4-4aba-11e5-855b-272131924cc3','Scratch'),
+  ('2bf2b4cc-4abb-11e5-855b-272131924cc3','Ruby'),
+  ('52baf548-4aba-11e5-855b-272131924cc3','Python'),
+  ('63e18044-4aba-11e5-855b-272131924cc3','Node.js'),
+  ('86f4b5a6-4aba-11e5-855b-272131924cc3','SQL'),
+  ('9028435e-4aba-11e5-855b-272131924cc3','C'),
+  ('9cbe857e-4aba-11e5-855b-272131924cc3','Processing'),
+  ('ab15e98c-4aba-11e5-855b-272131924cc3','Java'),
+  ('ee81ba1c-4ab9-11e5-855b-272131924cc3','HTML'),
+  ('f5a0f4c0-4ab9-11e5-855b-272131924cc3','Javascript'),
+  ('f9e86626-4ab9-11e5-855b-272131924cc3','CSS'),
+  ('fe0064c0-4ab9-11e5-855b-272131924cc3','Arduino');
+
+/*!40000 ALTER TABLE `skill` ENABLE KEYS */;
+UNLOCK TABLES;
 
 
 # Volcado de tabla status

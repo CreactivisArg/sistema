@@ -46,6 +46,15 @@ if (!is_null($con)){
                             );
             }
             $resultProject->free();
+            $querySkill = sprintf("select skill.id, skill.name from padawan_skill inner join skill on skill.id = padawan_skill.id_skill where id_padawan = '%s' order by skill.name",$con->real_escape_string($id_padawan));
+            $resultSkill = $con->query($querySkill);
+            $skills = array();
+            while ($rowSkill = $resultSkill->fetch_array(MYSQLI_ASSOC)) {
+                $skills [] = array('id' => $rowSkill['id'],
+                                  'name' => utf8_encode($rowSkill['name'])
+                            );
+            }
+            $resultSkill->free();
             $padawans [] = array('id' => $id_padawan,
                                 'name' => utf8_encode($row['name']),
                                 'lastname' => utf8_encode($row['lastname']),
@@ -64,6 +73,7 @@ if (!is_null($con)){
                                 'status' => utf8_encode($row['status']),
                                 'id_status' => $row['id_status'],
                                 'admission_date' => $row['admission_date'],
+                                'skills' => $skills,
                                 'dojos' => $dojos,
                                 'responsibles' => $responsibles,
                                 'projects' => $projects

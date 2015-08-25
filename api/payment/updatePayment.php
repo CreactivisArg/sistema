@@ -10,12 +10,13 @@ if (!is_null($con)){
 	$month = $obj->month;
 	$year = $obj->year;
 	$amount = $obj->amount;
+	$id_method = $obj->id_method;
 	$observation = $obj->observation;
 	$id_dojo = $obj->id_dojo;
 	$id_padawan = $obj->id_padawan;
 
-	$query = sprintf("UPDATE payment SET month = %s, year = %s, amount = %s, observation = '%s', id_dojo = '%s', id_padawan = '%s' WHERE id ='%s'",
-	    $con->real_escape_string($month),$con->real_escape_string($year),$con->real_escape_string($amount),$con->real_escape_string(utf8_decode($observation)),$con->real_escape_string($id_dojo),$con->real_escape_string($id_padawan),$con->real_escape_string($id_payment));
+	$query = sprintf("UPDATE payment SET month = %s, year = %s, amount = %s, id_method = '%s', observation = '%s', id_dojo = '%s', id_padawan = '%s' WHERE id ='%s'",
+	    $con->real_escape_string($month),$con->real_escape_string($year),$con->real_escape_string($amount),$con->real_escape_string($id_method),$con->real_escape_string(utf8_decode($observation)),$con->real_escape_string($id_dojo),$con->real_escape_string($id_padawan),$con->real_escape_string($id_payment));
 	    
 	$result = $con->query($query);
 	if ($result)

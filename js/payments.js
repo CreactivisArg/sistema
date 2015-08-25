@@ -36,6 +36,7 @@ CTS.Payments = {
                         +'<div class="list-group-item small">Month: ' + list[i].month + '/' +  list[i].year +'</div>'
                         +'<div class="list-group-item small">Date: ' + list[i].date +'</div>'
                         +'<div class="list-group-item small">Amount: ' + list[i].amount +'</div>'
+                        +'<div class="list-group-item small">Method: ' + list[i].method +'</div>'
                         +'<div class="list-group-item small">Observation: ' + list[i].observation +'</div>'
                         +'<a class="list-group-item" onclick="CTS.Payments.editPayment(\'' + list[i].id + '\')"><span class="glyphicon glyphicon-pencil"></span> Edit</a>'
                         +'<a class="list-group-item" onclick="CTS.Payments.deletePayment(\'' + list[i].id + '\')"><span class="glyphicon glyphicon-remove"></span> Delete</a>'
@@ -70,6 +71,7 @@ CTS.Payments = {
             +'              <div class="form-group"><label for="month" class="col-sm-2 control-label">Month</label><div class="col-sm-10"><input id="month" type="number" class="form-control"></div></div>'
             +'              <div class="form-group"><label for="year" class="col-sm-2 control-label">Year</label><div class="col-sm-10"><input id="year" type="number" class="form-control"></div></div>'
             +'              <div class="form-group"><label for="amount" class="col-sm-2 control-label">Amount</label><div class="col-sm-10"><input id="amount" type="number" step="any" class="form-control"></div></div>'
+            +'              <div class="form-group"><label for="method" class="col-sm-2 control-label">Method</label><div class="col-sm-10"><select class="form-control" style="width: 100%" name="method" id="method"></select></div></div>'
             +'              <div class="form-group"><label for="observation" class="col-sm-2 control-label">Observation</label><div class="col-sm-10"><input id="observation" type="text" class="form-control"></div></div>'
             +'          </form>'
             +'      </div>'
@@ -92,7 +94,8 @@ CTS.Payments = {
                 $("#year").val(atr[0].year);
                 $("#amount").val(atr[0].amount);
                 $("#observation").val(atr[0].observation);
-                CTS.Payments.setPadawans(atr[0].id_padawan);
+                CTS.Payments.setMethod(atr[0].id_method);
+                CTS.Payments.setPadawan(atr[0].id_padawan);
             },
             error: function () {
                 CTS.Utils.showDialog(BootstrapDialog.TYPE_WARNING,"Error","Ha ocurrido un error, intente nuevamente.");
@@ -105,6 +108,7 @@ CTS.Payments = {
                 month: parseInt($("#month").val()) ? parseInt($("#month").val()) : 0,
                 year: parseInt($("#year").val()) ? parseInt($("#year").val()) : 0,
                 amount: parseFloat($("#amount").val()) ? parseFloat($("#amount").val()) : 0.0,
+                id_method: $("#method").val(),
                 observation: $("#observation").val(),
                 id_dojo: this.id_dojo,
                 id_padawan: $("#padawan").val()
@@ -127,13 +131,15 @@ CTS.Payments = {
     setNewPayment : function () {
         this.setModalPayment('New Payment', null);
         CTS.Utils.showModal('modalEditPayment');
-        this.setPadawans();
+        this.setPadawan();
+        this.setMethod();
     },
     newPayment : function () {
         var payment = {
                 month: parseInt($("#month").val()) ? parseInt($("#month").val()) : 0,
                 year: parseInt($("#year").val()) ? parseInt($("#year").val()) : 0,
                 amount: parseFloat($("#amount").val()) ? parseFloat($("#amount").val()) : 0.0,
+                id_method: $("#method").val(),
                 observation: $("#observation").val(),
                 id_dojo: this.id_dojo,
                 id_padawan: $("#padawan").val()
@@ -171,7 +177,7 @@ CTS.Payments = {
             }
         });
     },
-    setPadawans : function (id_padawan) {
+    setPadawan : function (id_padawan) {
         var id = {
                 id_dojo: this.id_dojo
             };
@@ -191,6 +197,28 @@ CTS.Payments = {
                 $("#padawan").select2();
                 if (id_padawan)
                     $('#padawan').val(id_padawan).trigger("change");
+            },
+            error: function () {
+                CTS.Utils.showDialog(BootstrapDialog.TYPE_WARNING,"Error","Ha ocurrido un error, intente nuevamente.");
+            }
+        });
+    },
+    setMethod : function (id_method) {
+        jQuery.ajax({
+            type: "GET",
+            url: "api/payment/getMethod.php",
+            cache: false,
+            success: function (list) {
+                $('#method').empty();
+
+                for (var i=0;i<list.length;i++) {
+                    $('#method').append(
+                        '<option value='  + list[i].id +'>' + list[i].name +'</option>'
+                    );
+                }
+                $("#method").select2();
+                if (id_method)
+                    $('#method').val(id_method).trigger("change");
             },
             error: function () {
                 CTS.Utils.showDialog(BootstrapDialog.TYPE_WARNING,"Error","Ha ocurrido un error, intente nuevamente.");
