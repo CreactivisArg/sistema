@@ -9,6 +9,7 @@ CTS.Dojo = {
         this.id_dojo = CTS.Utils.getURLParameter('id_dojo');
         this.bindActions();
         this.getMembers();
+        this.getProjects();
     },
     bindActions : function () {
         var self = this;
@@ -35,46 +36,69 @@ CTS.Dojo = {
         $('#showEmployees').on('click', function () {
             self.showEmployees();
         });
+        $('#showProjects').on('click', function () {
+            self.showProjects();
+        });
     },
     showPadawans : function () {
         $('#listPanelPadawans').show();
         $('#listPanelMentors').hide();
         $('#listPanelResponsibles').hide();
         $('#listPanelEmployees').hide();
+        $('#listPanelProjects').hide();
         $('#tabPadawans').addClass('active');;
         $('#tabMentors').removeClass('active');
         $('#tabResponsibles').removeClass('active');
         $('#tabEmployees').removeClass('active');
+        $('#tabProjects').removeClass('active');
     },
     showMentors : function () {
         $('#listPanelPadawans').hide();
         $('#listPanelMentors').show();
         $('#listPanelResponsibles').hide();
         $('#listPanelEmployees').hide();
+        $('#listPanelProjects').hide();
         $('#tabPadawans').removeClass('active');;
         $('#tabMentors').addClass('active');
         $('#tabResponsibles').removeClass('active');
         $('#tabEmployees').removeClass('active');
+        $('#tabProjects').removeClass('active');
     },
     showResponsibles : function () {
         $('#listPanelPadawans').hide();
         $('#listPanelMentors').hide();
         $('#listPanelResponsibles').show();
         $('#listPanelEmployees').hide();
+        $('#listPanelProjects').hide();
         $('#tabPadawans').removeClass('active');;
         $('#tabMentors').removeClass('active');
         $('#tabResponsibles').addClass('active');
         $('#tabEmployees').removeClass('active');
+        $('#tabProjects').removeClass('active');
     },
     showEmployees : function () {
         $('#listPanelPadawans').hide();
         $('#listPanelMentors').hide();
         $('#listPanelResponsibles').hide();
         $('#listPanelEmployees').show();
+        $('#listPanelProjects').hide();
         $('#tabPadawans').removeClass('active');;
         $('#tabMentors').removeClass('active');
         $('#tabResponsibles').removeClass('active');
         $('#tabEmployees').addClass('active');
+        $('#tabProjects').removeClass('active');
+    },
+    showProjects : function () {
+        $('#listPanelPadawans').hide();
+        $('#listPanelMentors').hide();
+        $('#listPanelResponsibles').hide();
+        $('#listPanelEmployees').hide();
+        $('#listPanelProjects').show();
+        $('#tabPadawans').removeClass('active');;
+        $('#tabMentors').removeClass('active');
+        $('#tabResponsibles').removeClass('active');
+        $('#tabEmployees').removeClass('active');
+        $('#tabProjects').addClass('active');
     },
     getMembers : function () {
         var id = {
@@ -203,6 +227,51 @@ CTS.Dojo = {
                         +'<div class="list-group-item small">Status: ' + dojo[0].employees[i].status +'</div>'
                         +'<a class="list-group-item" href="employee.html?id_employee=' + dojo[0].employees[i].id + '"><span class="glyphicon glyphicon-eye-open"></span> View</a>'
                         +'<a class="list-group-item" onclick="CTS.Dojo.removeEmployee(\'' + dojo[0].employees[i].id + '\')"><span class="glyphicon glyphicon-remove"></span> Remove Employee</a>'
+                        +'</div>');
+                }
+            },
+            error: function () {
+                CTS.Utils.showDialog(BootstrapDialog.TYPE_WARNING,"Error","Ha ocurrido un error, intente nuevamente.");
+            }
+        });
+    },
+    getProjects : function () {
+        var id = {
+                id_dojo: this.id_dojo
+            };
+        jQuery.ajax({
+            type: "GET",
+            url: "api/project/getProject.php",
+            data: JSON.stringify(id),
+            cache: false,
+            success: function (list) {
+                $('#listPanelProjects').empty();
+                for (var i=0;i<list.length;i++) {
+                    var categories = '';
+                    for (var j=0;j<list[i].categories.length;j++) {
+                        if ((j+1)==list[i].categories.length)
+                            categories = categories + list[i].categories[j].name;
+                        else
+                            categories = categories + list[i].categories[j].name + ', ';
+                    }
+                    var padawans = '';
+                    for (var j=0;j<list[i].padawans.length;j++) {
+                        if ((j+1)==list[i].padawans.length)
+                            padawans = padawans + '<a href="padawan.html?id_padawan=' + list[i].padawans[j].id + '">' + list[i].padawans[j].lastname + ' ' + list[i].padawans[j].name + '</a>';
+                        else
+                            padawans = padawans + '<a href="padawan.html?id_padawan=' + list[i].padawans[j].id + '">' + list[i].padawans[j].lastname + ' ' + list[i].padawans[j].name + '</a>, ';
+                    }
+                    $('#listPanelProjects').append('<a href="#" class="list-group-item" data-toggle="collapse" data-target="#' + list[i].id +'" data-parent="#menu">' + list[i].name + '</a>'
+                        +'<div id="' + list[i].id +'" class="sublinks collapse">'
+                        +'<div class="list-group-item small">Category: ' + categories +'</div>'
+                        +'<div class="list-group-item small">Description: ' + list[i].description +'</div>'
+                        +'<div class="list-group-item small">Target: ' + list[i].target +'</div>'
+                        +'<div class="list-group-item small">Why: ' + list[i].why +'</div>'
+                        +'<div class="list-group-item small">Who: ' + list[i].who +'</div>'
+                        +'<div class="list-group-item small">Scope: ' + list[i].scope +'</div>'
+                        +'<div class="list-group-item small">Padawans: ' + padawans +'</div>'
+                        +'<div class="list-group-item small">Status: ' + list[i].status +'</div>'
+                        +'<a class="list-group-item" href="project.html?id_project=' + list[i].id + '"><span class="glyphicon glyphicon-eye-open"></span> View</a>'
                         +'</div>');
                 }
             },

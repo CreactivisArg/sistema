@@ -5,8 +5,8 @@ CTS.Payments = {
     name_dojo : '',
     init : function () {
         this.name_dojo = CTS.Utils.getURLParameter('name_dojo');
-        $('#nameDojo').text(this.name_dojo);
         this.id_dojo = CTS.Utils.getURLParameter('id_dojo');
+        $('#nameDojo').append('<a href="dojo.html?name_dojo=' + this.name_dojo + '&id_dojo=' + this.id_dojo + '">'+this.name_dojo+'</a>');
         this.bindActions();
         this.getPayments();
     },
