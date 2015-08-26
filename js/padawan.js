@@ -7,6 +7,8 @@ CTS.Padawan = {
         this.id_padawan = CTS.Utils.getURLParameter('id_padawan');
         this.bindActions();
         this.getPadawan();
+        this.getLogs();
+        this.getPayments();
     },
     bindActions : function () {
         var self = this;
@@ -16,6 +18,39 @@ CTS.Padawan = {
         $('#addSkill').on('click', function () {
             self.addSkillPadawan();
         });
+        $('#showInfo').on('click', function () {
+            self.showInfo();
+        });
+        $('#showLogs').on('click', function () {
+            self.showLogs();
+        });
+        $('#showPayments').on('click', function () {
+            self.showPayments();
+        });
+    },
+    showInfo : function () {
+        $('#info').show();
+        $('#listLogs').hide();
+        $('#listPayments').hide();
+        $('#tabInfo').addClass('active');;
+        $('#tabLogs').removeClass('active');
+        $('#tabPayments').removeClass('active');
+    },
+    showLogs : function () {
+        $('#info').hide();
+        $('#listLogs').show();
+        $('#listPayments').hide();
+        $('#tabInfo').removeClass('active');;
+        $('#tabLogs').addClass('active');
+        $('#tabPayments').removeClass('active');
+    },
+    showPayments : function () {
+        $('#info').hide();
+        $('#listLogs').hide();
+        $('#listPayments').show();
+        $('#tabInfo').removeClass('active');;
+        $('#tabLogs').removeClass('active');
+        $('#tabPayments').addClass('active');
     },
     getPadawan : function () {
         var id = {
@@ -29,7 +64,6 @@ CTS.Padawan = {
             success: function(padawan) {
                     CTS.Padawan.padawan = padawan[0];
                     $('#info').empty();
-
                     var dojos = '';
                     for (var i=0;i<padawan[0].dojos.length;i++) {
                         if ((i+1)==padawan[0].dojos.length)
@@ -51,7 +85,7 @@ CTS.Padawan = {
                         else
                             projects = projects + '<a href="project.html?id_project=' + padawan[0].projects[i].id + '">' + padawan[0].projects[i].name + '</a>, ';
                     }
-                    $('#info').append('<p>' + padawan[0].lastname + ' ' + padawan[0].name + '</p>'
+                    $('#info').append('<br><p>' + padawan[0].lastname + ' ' + padawan[0].name + '</p>'
                         +'<p>DNI: ' + padawan[0].dni +'</p>'
                         +'<p>Birthdate: ' + padawan[0].birthdate +'</p>'
                         +'<p>Country: ' + padawan[0].country +'</p>'
@@ -79,6 +113,55 @@ CTS.Padawan = {
                         $('#info').append(skills +'</div>');
                     }
                     $('#info').append('<p>Status: ' + padawan[0].status +'</p>');
+            },
+            error: function () {
+                CTS.Utils.showDialog(BootstrapDialog.TYPE_WARNING,"Error","Ha ocurrido un error, intente nuevamente.");
+            }
+        });
+    },
+    getLogs : function () {
+        var id = {
+                id_padawan: this.id_padawan
+            };
+        jQuery.ajax({
+            type: "POST",
+            url: "api/log/getLog.php",
+            data: JSON.stringify(id),
+            cache: false,
+            success: function (logs) {
+                $('#listLogs').empty();
+                for (var i=0;i<logs.length;i++) {
+                    $('#listLogs').append('<a href="#" class="list-group-item" data-toggle="collapse" data-target="#' + logs[i].id +'" data-parent="#menu">' + logs[i].date + '</a>'
+                        +'<div id="' + logs[i].id +'" class="sublinks collapse">'
+                        +'<div class="list-group-item small">Dojo: ' + logs[i].dojo_name +'</div>'
+                        +'</div>');
+                }
+            },
+            error: function () {
+                CTS.Utils.showDialog(BootstrapDialog.TYPE_WARNING,"Error","Ha ocurrido un error, intente nuevamente.");
+            }
+        });
+    },
+    getPayments : function () {
+        var id = {
+                id_padawan: this.id_padawan
+            };
+        jQuery.ajax({
+            type: "POST",
+            url: "api/payment/getPayment.php",
+            data: JSON.stringify(id),
+            cache: false,
+            success: function (list) {
+                $('#listPayments').empty();
+                for (var i=0;i<list.length;i++) {
+                    $('#listPayments').append('<a href="#" class="list-group-item" data-toggle="collapse" data-target="#' + list[i].id +'" data-parent="#menu">'  + list[i].month + '/' +  list[i].year + '</a>'
+                        +'<div id="' + list[i].id +'" class="sublinks collapse">'
+                        +'<div class="list-group-item small">Date: ' + list[i].date +'</div>'
+                        +'<div class="list-group-item small">Amount: ' + list[i].amount +'</div>'
+                        +'<div class="list-group-item small">Method: ' + list[i].method +'</div>'
+                        +'<div class="list-group-item small">Observation: ' + list[i].observation +'</div>'
+                        +'</div>');
+                }
             },
             error: function () {
                 CTS.Utils.showDialog(BootstrapDialog.TYPE_WARNING,"Error","Ha ocurrido un error, intente nuevamente.");

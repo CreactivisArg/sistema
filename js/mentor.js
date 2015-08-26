@@ -7,6 +7,7 @@ CTS.Mentor = {
         this.id_mentor = CTS.Utils.getURLParameter('id_mentor');
         this.bindActions();
         this.getMentor();
+        this.getLogs();
     },
     bindActions : function () {
         var self = this;
@@ -16,6 +17,24 @@ CTS.Mentor = {
         $('#addSkill').on('click', function () {
             self.addSkillMentor();
         });
+        $('#showInfo').on('click', function () {
+            self.showInfo();
+        });
+        $('#showLogs').on('click', function () {
+            self.showLogs();
+        });
+    },
+    showInfo : function () {
+        $('#info').show();
+        $('#listLogs').hide();
+        $('#tabInfo').addClass('active');;
+        $('#tabLogs').removeClass('active');
+    },
+    showLogs : function () {
+        $('#info').hide();
+        $('#listLogs').show();
+        $('#tabInfo').removeClass('active');;
+        $('#tabLogs').addClass('active');
     },
     getMentor : function () {
         var id = {
@@ -37,7 +56,7 @@ CTS.Mentor = {
                         else
                             dojos = dojos + '<a href="dojo.html?name_dojo=' + mentor[0].dojos[i].name + '&id_dojo=' + mentor[0].dojos[i].id + '">' + mentor[0].dojos[i].name + '</a>, ';
                     }
-                    $('#info').append('<p>' + mentor[0].lastname + ' ' + mentor[0].name + '</p>'
+                    $('#info').append('<br><p>' + mentor[0].lastname + ' ' + mentor[0].name + '</p>'
                         +'<p>DNI: ' + mentor[0].dni +'</p>'
                         +'<p>Birthdate: ' + mentor[0].birthdate +'</p>'
                         +'<p>Country: ' + mentor[0].country +'</p>'
@@ -62,6 +81,29 @@ CTS.Mentor = {
                         $('#info').append(skills +'</div>');
                     }
                     $('#info').append('<p>Status: ' + mentor[0].status +'</p>');
+            },
+            error: function () {
+                CTS.Utils.showDialog(BootstrapDialog.TYPE_WARNING,"Error","Ha ocurrido un error, intente nuevamente.");
+            }
+        });
+    },
+    getLogs : function () {
+        var id = {
+                id_mentor: this.id_mentor
+            };
+        jQuery.ajax({
+            type: "POST",
+            url: "api/log/getLog.php",
+            data: JSON.stringify(id),
+            cache: false,
+            success: function (logs) {
+                $('#listLogs').empty();
+                for (var i=0;i<logs.length;i++) {
+                    $('#listLogs').append('<a href="#" class="list-group-item" data-toggle="collapse" data-target="#' + logs[i].id +'" data-parent="#menu">' + logs[i].date + '</a>'
+                        +'<div id="' + logs[i].id +'" class="sublinks collapse">'
+                        +'<div class="list-group-item small">Dojo: ' + logs[i].dojo_name +'</div>'
+                        +'</div>');
+                }
             },
             error: function () {
                 CTS.Utils.showDialog(BootstrapDialog.TYPE_WARNING,"Error","Ha ocurrido un error, intente nuevamente.");

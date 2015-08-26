@@ -46,15 +46,15 @@ CTS.Logs = {
             success: function (dojo) {
                 $('#listPanelPadawans').empty();
                 for (var i=0;i<dojo[0].padawans.length;i++) {
-                    $('#listPanelPadawans').append('<a href="#" class="list-group-item" data-toggle="collapse" data-target="#' + dojo[0].padawans[i].id +'" data-parent="#menu">' + dojo[0].padawans[i].padawan_lastname + ' ' + dojo[0].padawans[i].padawan_name + ' - ' + dojo[0].padawans[i].date + '</a>'
-                        +'<div id="' + dojo[0].padawans[i].id +'" class="sublinks collapse">'
+                    $('#listPanelPadawans').append('<a href="#" class="list-group-item" data-toggle="collapse" data-target="#padawan_' + dojo[0].padawans[i].id +'" data-parent="#menu">' + dojo[0].padawans[i].padawan_lastname + ' ' + dojo[0].padawans[i].padawan_name + ' - ' + dojo[0].padawans[i].date + '</a>'
+                        +'<div id="padawan_' + dojo[0].padawans[i].id +'" class="sublinks collapse">'
                         +'<a class="list-group-item" onclick="CTS.Logs.deleteLog('+ dojo[0].padawans[i].id + ',null)"><span class="glyphicon glyphicon-remove"></span> Delete</a>'
                         +'</div>');
                 }
                 $('#listPanelMentors').empty();
                 for (var i=0;i<dojo[0].mentors.length;i++) {
-                    $('#listPanelMentors').append('<a href="#" class="list-group-item" data-toggle="collapse" data-target="#' + dojo[0].mentors[i].id +'" data-parent="#menu">' + dojo[0].mentors[i].mentor_lastname + ' ' + dojo[0].mentors[i].mentor_name + ' - ' + dojo[0].mentors[i].date + '</a>'
-                        +'<div id="' + dojo[0].mentors[i].id +'" class="sublinks collapse">'
+                    $('#listPanelMentors').append('<a href="#" class="list-group-item" data-toggle="collapse" data-target="#mentor_' + dojo[0].mentors[i].id +'" data-parent="#menu">' + dojo[0].mentors[i].mentor_lastname + ' ' + dojo[0].mentors[i].mentor_name + ' - ' + dojo[0].mentors[i].date + '</a>'
+                        +'<div id="mentor_' + dojo[0].mentors[i].id +'" class="sublinks collapse">'
                         +'<a class="list-group-item" onclick="CTS.Logs.deleteLog(null,' + dojo[0].mentors[i].id + ')"><span class="glyphicon glyphicon-remove"></span> Delete</a>'
                         +'</div>');
                 }
