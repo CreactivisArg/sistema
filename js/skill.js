@@ -50,7 +50,7 @@ CTS.Logs = {
                 }
                 $('#listPanelMentors').empty();
                 for (var i=0;i<members[0].mentors.length;i++) {
-                    $('#listPanelPadawans').append('<a href="#" class="list-group-item" data-toggle="collapse" data-target="#' + members[0].mentors[i].id +'" data-parent="#menu">' + members[0].mentors[i].lastname + ' ' + members[0].mentors[i].name + '</a>'
+                    $('#listPanelMentors').append('<a href="#" class="list-group-item" data-toggle="collapse" data-target="#' + members[0].mentors[i].id +'" data-parent="#menu">' + members[0].mentors[i].lastname + ' ' + members[0].mentors[i].name + '</a>'
                         +'<div id="' + members[0].mentors[i].id +'" class="sublinks collapse">'
                         +'<a class="list-group-item" href="mentor.html?id_mentor=' + members[0].mentors[i].id + '"><span class="glyphicon glyphicon-eye-open"></span> View</a>'
                         +'</div>');
