@@ -15,6 +15,7 @@ CTS.Dojo = {
         var self = this;
         $('#payment').attr("href", "listPayment.html?name_dojo=" + self.name_dojo + "&id_dojo="+self.id_dojo);
         $('#log').attr("href", "listLog.html?name_dojo=" + self.name_dojo + "&id_dojo="+self.id_dojo);
+        $('#diary').attr("href", "listDiary.html?name_dojo=" + self.name_dojo + "&id_dojo="+self.id_dojo);
         $('#addPadawan').on('click', function () {
             self.addPadawanDojo();
         });

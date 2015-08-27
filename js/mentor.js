@@ -27,13 +27,13 @@ CTS.Mentor = {
     showInfo : function () {
         $('#info').show();
         $('#listLogs').hide();
-        $('#tabInfo').addClass('active');;
+        $('#tabInfo').addClass('active');
         $('#tabLogs').removeClass('active');
     },
     showLogs : function () {
         $('#info').hide();
         $('#listLogs').show();
-        $('#tabInfo').removeClass('active');;
+        $('#tabInfo').removeClass('active');
         $('#tabLogs').addClass('active');
     },
     getMentor : function () {

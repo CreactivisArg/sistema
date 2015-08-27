@@ -8,6 +8,7 @@ CTS.Padawan = {
         this.bindActions();
         this.getPadawan();
         this.getLogs();
+        this.getDiaries();
         this.getPayments();
     },
     bindActions : function () {
@@ -24,6 +25,9 @@ CTS.Padawan = {
         $('#showLogs').on('click', function () {
             self.showLogs();
         });
+        $('#showDiaries').on('click', function () {
+            self.showDiaries();
+        });
         $('#showPayments').on('click', function () {
             self.showPayments();
         });
@@ -31,25 +35,41 @@ CTS.Padawan = {
     showInfo : function () {
         $('#info').show();
         $('#listLogs').hide();
+        $('#listDiaries').hide();
         $('#listPayments').hide();
-        $('#tabInfo').addClass('active');;
+        $('#tabInfo').addClass('active');
         $('#tabLogs').removeClass('active');
+        $('#tabDiaries').removeClass('active');
         $('#tabPayments').removeClass('active');
     },
     showLogs : function () {
         $('#info').hide();
         $('#listLogs').show();
+        $('#listDiaries').hide();
         $('#listPayments').hide();
-        $('#tabInfo').removeClass('active');;
+        $('#tabInfo').removeClass('active');
         $('#tabLogs').addClass('active');
+        $('#tabDiaries').removeClass('active');
+        $('#tabPayments').removeClass('active');
+    },
+    showDiaries : function () {
+        $('#info').hide();
+        $('#listLogs').hide();
+        $('#listDiaries').show();
+        $('#listPayments').hide();
+        $('#tabInfo').removeClass('active');
+        $('#tabLogs').removeClass('active');
+        $('#tabDiaries').addClass('active');
         $('#tabPayments').removeClass('active');
     },
     showPayments : function () {
         $('#info').hide();
         $('#listLogs').hide();
+        $('#listDiaries').hide();
         $('#listPayments').show();
-        $('#tabInfo').removeClass('active');;
+        $('#tabInfo').removeClass('active');
         $('#tabLogs').removeClass('active');
+        $('#tabDiaries').removeClass('active');
         $('#tabPayments').addClass('active');
     },
     getPadawan : function () {
@@ -134,6 +154,35 @@ CTS.Padawan = {
                     $('#listLogs').append('<a href="#" class="list-group-item" data-toggle="collapse" data-target="#' + logs[i].id +'" data-parent="#menu">' + logs[i].date + '</a>'
                         +'<div id="' + logs[i].id +'" class="sublinks collapse">'
                         +'<div class="list-group-item small">Dojo: ' + logs[i].dojo_name +'</div>'
+                        +'</div>');
+                }
+            },
+            error: function () {
+                CTS.Utils.showDialog(BootstrapDialog.TYPE_WARNING,"Error","Ha ocurrido un error, intente nuevamente.");
+            }
+        });
+    },
+    getDiaries : function () {
+        var id = {
+                id_padawan: this.id_padawan
+            };
+        jQuery.ajax({
+            type: "POST",
+            url: "api/diary/getDiary.php",
+            data: JSON.stringify(id),
+            cache: false,
+            success: function (list) {
+                $('#listDiaries').empty();
+                for (var i=0;i<list.length;i++) {
+                    $('#listDiaries').append('<a href="#" class="list-group-item" data-toggle="collapse" data-target="#' + list[i].id +'" data-parent="#menu">' + list[i].date + ' - ' + list[i].project_name + '</a>'
+                        +'<div id="' + list[i].id +'" class="sublinks collapse">'
+                        +'<div class="list-group-item small">Project: <a href="project.html?id_project=' + list[i].id_project + '">' + list[i].project_name + '</a></div>'
+                        +'<div class="list-group-item small">Date: ' + list[i].date +'</div>'
+                        +'<div class="list-group-item small">Last Week: ' + list[i].last_week +'</div>'
+                        +'<div class="list-group-item small">Daily Target: ' + list[i].daily_target +'</div>'
+                        +'<div class="list-group-item small">Tools: ' + list[i].tools +'</div>'
+                        +'<div class="list-group-item small">Observations: ' + list[i].observations +'</div>'
+                        +'<div class="list-group-item small">Attitude: ' + list[i].attitude +'</div>'
                         +'</div>');
                 }
             },

@@ -7,6 +7,7 @@ CTS.Project = {
         this.id_project = CTS.Utils.getURLParameter('id_project');
         this.bindActions();
         this.getProject();
+        this.getDiaries();
     },
     bindActions : function () {
         var self = this;
@@ -16,6 +17,24 @@ CTS.Project = {
         $('#addPadawan').on('click', function () {
             self.addPadawanProject();
         });
+        $('#showInfo').on('click', function () {
+            self.showInfo();
+        });
+        $('#showDiaries').on('click', function () {
+            self.showDiaries();
+        });
+    },
+    showInfo : function () {
+        $('#info').show();
+        $('#listDiaries').hide();
+        $('#tabInfo').addClass('active');
+        $('#tabDiaries').removeClass('active');
+    },
+    showDiaries : function () {
+        $('#info').hide();
+        $('#listDiaries').show();
+        $('#tabInfo').removeClass('active');
+        $('#tabDiaries').addClass('active');
     },
     getProject : function () {
         var id = {
@@ -37,7 +56,7 @@ CTS.Project = {
                         else
                             categories = categories + project[0].categories[i].name + ', ';
                     }
-                    $('#info').append('<p>' + project[0].name + '</p>'
+                    $('#info').append('<br><p>' + project[0].name + '</p>'
                         +'<p>Category: ' + categories +'</p>'
                         +'<p>Description: ' + project[0].description +'</p>'
                         +'<p>Target: ' + project[0].target +'</p>'
@@ -56,6 +75,35 @@ CTS.Project = {
                         $('#info').append(padawans +'</div>');
                     }
                     $('#info').append('<p>Status: ' + project[0].status +'</p>');
+            },
+            error: function () {
+                CTS.Utils.showDialog(BootstrapDialog.TYPE_WARNING,"Error","Ha ocurrido un error, intente nuevamente.");
+            }
+        });
+    },
+    getDiaries : function () {
+        var id = {
+                id_project: this.id_project
+            };
+        jQuery.ajax({
+            type: "POST",
+            url: "api/diary/getDiary.php",
+            data: JSON.stringify(id),
+            cache: false,
+            success: function (list) {
+                $('#listDiaries').empty();
+                for (var i=0;i<list.length;i++) {
+                    $('#listDiaries').append('<a href="#" class="list-group-item" data-toggle="collapse" data-target="#' + list[i].id +'" data-parent="#menu">' + list[i].date + ' - ' + list[i].padawan_lastname + ' ' + list[i].padawan_name + '</a>'
+                        +'<div id="' + list[i].id +'" class="sublinks collapse">'
+                        +'<div class="list-group-item small">Padawan: <a href="padawan.html?id_padawan=' + list[i].id_padawan + '">' + list[i].padawan_lastname + ' ' + list[i].padawan_name + '</a></div>'
+                        +'<div class="list-group-item small">Date: ' + list[i].date +'</div>'
+                        +'<div class="list-group-item small">Last Week: ' + list[i].last_week +'</div>'
+                        +'<div class="list-group-item small">Daily Target: ' + list[i].daily_target +'</div>'
+                        +'<div class="list-group-item small">Tools: ' + list[i].tools +'</div>'
+                        +'<div class="list-group-item small">Observations: ' + list[i].observations +'</div>'
+                        +'<div class="list-group-item small">Attitude: ' + list[i].attitude +'</div>'
+                        +'</div>');
+                }
             },
             error: function () {
                 CTS.Utils.showDialog(BootstrapDialog.TYPE_WARNING,"Error","Ha ocurrido un error, intente nuevamente.");
