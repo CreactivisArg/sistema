@@ -17,6 +17,9 @@ CTS.Mentor = {
         $('#addSkill').on('click', function () {
             self.addSkillMentor();
         });
+        $('#addPhoto').on('click', function () {
+            self.addPhoto();
+        });
         $('#showInfo').on('click', function () {
             self.showInfo();
         });
@@ -56,7 +59,11 @@ CTS.Mentor = {
                         else
                             dojos = dojos + '<a href="dojo.html?name_dojo=' + mentor[0].dojos[i].name + '&id_dojo=' + mentor[0].dojos[i].id + '">' + mentor[0].dojos[i].name + '</a>, ';
                     }
-                    $('#info').append('<br><p>' + mentor[0].lastname + ' ' + mentor[0].name + '</p>'
+                    var picture = '';
+                    if (mentor[0].path_picture) {
+                        picture = '<img src="'+mentor[0].path_picture+'" height="200" width="200"><br><br>'
+                    }
+                    $('#info').append('<br>'+picture+'<p>' + mentor[0].lastname + ' ' + mentor[0].name + '</p>'
                         +'<p>DNI: ' + mentor[0].dni +'</p>'
                         +'<p>Birthdate: ' + mentor[0].birthdate +'</p>'
                         +'<p>Country: ' + mentor[0].country +'</p>'
@@ -263,6 +270,57 @@ CTS.Mentor = {
                 CTS.Utils.showDialog(BootstrapDialog.TYPE_WARNING,"Error","Ha ocurrido un error, intente nuevamente.");
             }
         });
+    },
+    addPhoto : function () {
+        this.setModalAddPhoto('Add Photo');
+        CTS.Utils.showModal('modalAddPhoto');
+    },
+    setModalAddPhoto : function (title){
+        $('#holderModal').empty().append(
+            '<!-- Modal -->'
+            +'<div class="modal fade" id="modalAddPhoto" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">'
+            +'  <div class="modal-dialog">'
+            +'    <div class="modal-content">'
+            +'      <div class="modal-header">'
+            +'        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>'
+            +'        <h4 class="modal-title" id="myModalLabel">' + title + '</h4>'
+            +'      </div>'
+            +'      <div class="modal-body" align="center">'
+            +'          <form class="form-horizontal">'
+            +'              <div class="form-group"><label for="photo" class="col-sm-2 control-label">Photo</label><div class="col-sm-10"><input type="file" name="photo" id="photo"/></div></div>'
+            +'          </form>'
+            +'      </div>'
+            +'      <div class="modal-footer">'
+            +'       <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>'
+            +'       <button type="button" class="btn btn-primary" onclick="CTS.Mentor.savePhoto();">Add Photo</button>'
+            +'      </div>');
+    },
+    savePhoto : function () {
+        var photo = $('#photo')[0].files[0];
+        if (photo.size>1048576){
+            CTS.Utils.showDialog(BootstrapDialog.TYPE_WARNING,"Error","La foto debe pesar menos de 1 MB.");
+        } else {
+            var data = new FormData();
+            data.append('photo', photo);
+            data.append("id_contact", this.mentor.id_contact);
+            jQuery.ajax({
+                type: "POST",
+                url: "api/photoUpload.php",
+                data: data,
+                cache: false,
+                contentType: false,
+                processData: false,
+                type: 'POST',
+                success: function () {
+                    CTS.Utils.showDialog(BootstrapDialog.TYPE_INFO,"Confirm","La foto fue agregada correctamente");
+                    CTS.Utils.closeModal('modalAddPhoto');
+                    CTS.Mentor.getMentor();
+                },
+                error: function () {
+                    CTS.Utils.showDialog(BootstrapDialog.TYPE_WARNING,"Error","Ha ocurrido un error, intente nuevamente.");
+                }
+            });
+        }   
     }
 };
 

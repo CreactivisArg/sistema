@@ -7,11 +7,11 @@ if (!is_null($con)){
     $obj = json_decode($rawdata);
 
     if (isset($obj->id_padawan))
-        $query = sprintf("select padawan.id, contact.name, contact.lastname, contact.dni, contact.birthdate, contact.country, contact.state, contact.city, contact.address, contact.phone, contact.mobile, contact.email, contact.facebook, contact.twitter, contact.school, status.name as status, padawan.id_status, padawan.admission_date from padawan left join contact on contact.id = padawan.id_contact left join status on status.id = padawan.id_status WHERE padawan.id = '%s'",$con->real_escape_string($obj->id_padawan));
+        $query = sprintf("select padawan.id, contact.id as id_contact, contact.name, contact.lastname, contact.dni, contact.birthdate, contact.country, contact.state, contact.city, contact.address, contact.phone, contact.mobile, contact.email, contact.facebook, contact.twitter, contact.school, contact.path_picture, status.name as status, padawan.id_status, padawan.admission_date from padawan left join contact on contact.id = padawan.id_contact left join status on status.id = padawan.id_status WHERE padawan.id = '%s'",$con->real_escape_string($obj->id_padawan));
     else if (isset($obj->id_dojo))
-        $query = sprintf("select padawan.id, contact.name, contact.lastname, contact.dni, contact.birthdate, contact.country, contact.state, contact.city, contact.address, contact.phone, contact.mobile, contact.email, contact.facebook, contact.twitter, contact.school, status.name as status, padawan.id_status, padawan.admission_date from padawan left join contact on contact.id = padawan.id_contact left join status on status.id = padawan.id_status inner join dojo_padawan on dojo_padawan.id_padawan = padawan.id and dojo_padawan.id_dojo = '%s' order by contact.lastname, contact.name",$con->real_escape_string($obj->id_dojo));
+        $query = sprintf("select padawan.id, contact.id as id_contact, contact.name, contact.lastname, contact.dni, contact.birthdate, contact.country, contact.state, contact.city, contact.address, contact.phone, contact.mobile, contact.email, contact.facebook, contact.twitter, contact.school, contact.path_picture, status.name as status, padawan.id_status, padawan.admission_date from padawan left join contact on contact.id = padawan.id_contact left join status on status.id = padawan.id_status inner join dojo_padawan on dojo_padawan.id_padawan = padawan.id and dojo_padawan.id_dojo = '%s' order by contact.lastname, contact.name",$con->real_escape_string($obj->id_dojo));
     else
-        $query = "select padawan.id, contact.name, contact.lastname, contact.dni, contact.birthdate, contact.country, contact.state, contact.city, contact.address, contact.phone, contact.mobile, contact.email, contact.facebook, contact.twitter, contact.school, status.name as status, padawan.id_status, padawan.admission_date from padawan left join contact on contact.id = padawan.id_contact left join status on status.id = padawan.id_status order by contact.lastname, contact.name";
+        $query = "select padawan.id, contact.id as id_contact, contact.name, contact.lastname, contact.dni, contact.birthdate, contact.country, contact.state, contact.city, contact.address, contact.phone, contact.mobile, contact.email, contact.facebook, contact.twitter, contact.school, contact.path_picture, status.name as status, padawan.id_status, padawan.admission_date from padawan left join contact on contact.id = padawan.id_contact left join status on status.id = padawan.id_status order by contact.lastname, contact.name";
 
     $result = $con->query($query);
     if ($result) {
@@ -56,6 +56,7 @@ if (!is_null($con)){
             }
             $resultSkill->free();
             $padawans [] = array('id' => $id_padawan,
+                                'id_contact' => $row['id_contact'],
                                 'name' => utf8_encode($row['name']),
                                 'lastname' => utf8_encode($row['lastname']),
                                 'dni' => $row['dni'],
@@ -70,6 +71,7 @@ if (!is_null($con)){
                                 'facebook' => utf8_encode($row['facebook']),
                                 'twitter' => utf8_encode($row['twitter']),
                                 'school' => utf8_encode($row['school']),
+                                'path_picture' => $row['path_picture'],
                                 'status' => utf8_encode($row['status']),
                                 'id_status' => $row['id_status'],
                                 'admission_date' => $row['admission_date'],

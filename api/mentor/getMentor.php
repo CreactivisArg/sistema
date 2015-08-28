@@ -7,11 +7,11 @@ if (!is_null($con)){
     $obj = json_decode($rawdata);
 
     if (isset($obj->id_mentor))
-        $query = sprintf("select mentor.id, contact.name, contact.lastname, contact.dni, contact.birthdate, contact.country, contact.state, contact.city, contact.address, contact.phone, contact.mobile, contact.email, contact.facebook, contact.twitter, status.name as status, mentor.id_status, mentor.admission_date from mentor left join contact on contact.id = mentor.id_contact left join status on status.id = mentor.id_status WHERE mentor.id = '%s'",$con->real_escape_string($obj->id_mentor));
+        $query = sprintf("select mentor.id, contact.id as id_contact, contact.name, contact.lastname, contact.dni, contact.birthdate, contact.country, contact.state, contact.city, contact.address, contact.phone, contact.mobile, contact.email, contact.facebook, contact.twitter, contact.path_picture, status.name as status, mentor.id_status, mentor.admission_date from mentor left join contact on contact.id = mentor.id_contact left join status on status.id = mentor.id_status WHERE mentor.id = '%s'",$con->real_escape_string($obj->id_mentor));
     else if (isset($obj->id_dojo))
-        $query = sprintf("select mentor.id, contact.name, contact.lastname, contact.dni, contact.birthdate, contact.country, contact.state, contact.city, contact.address, contact.phone, contact.mobile, contact.email, contact.facebook, contact.twitter, status.name as status, mentor.id_status, mentor.admission_date from mentor left join contact on contact.id = mentor.id_contact left join status on status.id = mentor.id_status inner join dojo_mentor on dojo_mentor.id_mentor = mentor.id and dojo_mentor.id_dojo = '%s' order by contact.lastname, contact.name",$con->real_escape_string($obj->id_dojo));
+        $query = sprintf("select mentor.id, contact.id as id_contact, contact.name, contact.lastname, contact.dni, contact.birthdate, contact.country, contact.state, contact.city, contact.address, contact.phone, contact.mobile, contact.email, contact.facebook, contact.twitter, contact.path_picture, status.name as status, mentor.id_status, mentor.admission_date from mentor left join contact on contact.id = mentor.id_contact left join status on status.id = mentor.id_status inner join dojo_mentor on dojo_mentor.id_mentor = mentor.id and dojo_mentor.id_dojo = '%s' order by contact.lastname, contact.name",$con->real_escape_string($obj->id_dojo));
     else
-        $query = "select mentor.id, contact.name, contact.lastname, contact.dni, contact.birthdate, contact.country, contact.state, contact.city, contact.address, contact.phone, contact.mobile, contact.email, contact.facebook, contact.twitter, status.name as status, mentor.id_status, mentor.admission_date from mentor left join contact on contact.id = mentor.id_contact left join status on status.id = mentor.id_status order by contact.lastname, contact.name";
+        $query = "select mentor.id, contact.id as id_contact, contact.name, contact.lastname, contact.dni, contact.birthdate, contact.country, contact.state, contact.city, contact.address, contact.phone, contact.mobile, contact.email, contact.facebook, contact.twitter, contact.path_picture, status.name as status, mentor.id_status, mentor.admission_date from mentor left join contact on contact.id = mentor.id_contact left join status on status.id = mentor.id_status order by contact.lastname, contact.name";
         
     $result = $con->query($query);
     if ($result) {
@@ -37,6 +37,7 @@ if (!is_null($con)){
             }
             $resultSkill->free();
             $mentors [] = array('id' => $id_mentor,
+                                'id_contact' => $row['id_contact'],
                                 'name' => utf8_encode($row['name']),
                                 'lastname' => utf8_encode($row['lastname']),
                                 'dni' => $row['dni'],
@@ -50,6 +51,7 @@ if (!is_null($con)){
                                 'email' => utf8_encode($row['email']),
                                 'facebook' => utf8_encode($row['facebook']),
                                 'twitter' => utf8_encode($row['twitter']),
+                                'path_picture' => $row['path_picture'],
                                 'status' => utf8_encode($row['status']),
                                 'id_status' => $row['id_status'],
                                 'admission_date' => $row['admission_date'],

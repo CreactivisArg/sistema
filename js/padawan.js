@@ -19,6 +19,9 @@ CTS.Padawan = {
         $('#addSkill').on('click', function () {
             self.addSkillPadawan();
         });
+        $('#addPhoto').on('click', function () {
+            self.addPhoto();
+        });
         $('#showInfo').on('click', function () {
             self.showInfo();
         });
@@ -105,7 +108,11 @@ CTS.Padawan = {
                         else
                             projects = projects + '<a href="project.html?id_project=' + padawan[0].projects[i].id + '">' + padawan[0].projects[i].name + '</a>, ';
                     }
-                    $('#info').append('<br><p>' + padawan[0].lastname + ' ' + padawan[0].name + '</p>'
+                    var picture = '';
+                    if (padawan[0].path_picture) {
+                        picture = '<img src="'+padawan[0].path_picture+'" height="200" width="200"><br><br>'
+                    }
+                    $('#info').append('<br>'+picture+'<p>' + padawan[0].lastname + ' ' + padawan[0].name + '</p>'
                         +'<p>DNI: ' + padawan[0].dni +'</p>'
                         +'<p>Birthdate: ' + padawan[0].birthdate +'</p>'
                         +'<p>Country: ' + padawan[0].country +'</p>'
@@ -373,6 +380,57 @@ CTS.Padawan = {
                 CTS.Utils.showDialog(BootstrapDialog.TYPE_WARNING,"Error","Ha ocurrido un error, intente nuevamente.");
             }
         });
+    },
+    addPhoto : function () {
+        this.setModalAddPhoto('Add Photo');
+        CTS.Utils.showModal('modalAddPhoto');
+    },
+    setModalAddPhoto : function (title){
+        $('#holderModal').empty().append(
+            '<!-- Modal -->'
+            +'<div class="modal fade" id="modalAddPhoto" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">'
+            +'  <div class="modal-dialog">'
+            +'    <div class="modal-content">'
+            +'      <div class="modal-header">'
+            +'        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>'
+            +'        <h4 class="modal-title" id="myModalLabel">' + title + '</h4>'
+            +'      </div>'
+            +'      <div class="modal-body" align="center">'
+            +'          <form class="form-horizontal">'
+            +'              <div class="form-group"><label for="photo" class="col-sm-2 control-label">Photo</label><div class="col-sm-10"><input type="file" name="photo" id="photo"/></div></div>'
+            +'          </form>'
+            +'      </div>'
+            +'      <div class="modal-footer">'
+            +'       <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>'
+            +'       <button type="button" class="btn btn-primary" onclick="CTS.Padawan.savePhoto();">Add Photo</button>'
+            +'      </div>');
+    },
+    savePhoto : function () {
+        var photo = $('#photo')[0].files[0];
+        if (photo.size>1048576){
+            CTS.Utils.showDialog(BootstrapDialog.TYPE_WARNING,"Error","La foto debe pesar menos de 1 MB.");
+        } else {
+            var data = new FormData();
+            data.append('photo', photo);
+            data.append("id_contact", this.padawan.id_contact);
+            jQuery.ajax({
+                type: "POST",
+                url: "api/photoUpload.php",
+                data: data,
+                cache: false,
+                contentType: false,
+                processData: false,
+                type: 'POST',
+                success: function () {
+                    CTS.Utils.showDialog(BootstrapDialog.TYPE_INFO,"Confirm","La foto fue agregada correctamente");
+                    CTS.Utils.closeModal('modalAddPhoto');
+                    CTS.Padawan.getPadawan();
+                },
+                error: function () {
+                    CTS.Utils.showDialog(BootstrapDialog.TYPE_WARNING,"Error","Ha ocurrido un error, intente nuevamente.");
+                }
+            });
+        }   
     }
 };
 
