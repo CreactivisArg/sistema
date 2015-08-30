@@ -114,7 +114,7 @@ CTS.Padawan = {
                     }
                     $('#info').append('<br>'+picture+'<p>' + padawan[0].lastname + ' ' + padawan[0].name + '</p>'
                         +'<p>DNI: ' + padawan[0].dni +'</p>'
-                        +'<p>Birthdate: ' + padawan[0].birthdate +'</p>'
+                        +'<p>Birthdate: ' + padawan[0].birthdate + ' (' + CTS.Utils.calculateAge(padawan[0].birthdate) + ')</p>'
                         +'<p>Country: ' + padawan[0].country +'</p>'
                         +'<p>State: ' + padawan[0].state +'</p>'
                         +'<p>City: ' + padawan[0].city +'</p>'

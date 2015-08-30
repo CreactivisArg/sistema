@@ -3,7 +3,7 @@ require_once('../db.php');
 $db = new DBConnect();
 $con = $db->connect();
 if (!is_null($con)){
-    $query = "SELECT id, name FROM payment_method order by name";
+    $query = "SELECT id, name FROM environment order by name";
     $result = $con->query($query);
 
     if ($result) {

@@ -8,7 +8,7 @@ if (!is_null($con)){
 
 	$name = $obj->name;
 
-	$query = sprintf("INSERT INTO payment_method (id, name) VALUES ((select UUID()), '%s')",
+	$query = sprintf("INSERT INTO environment (id, name) VALUES ((select UUID()), '%s')",
 		$con->real_escape_string(utf8_decode($name)));
 
 	$result = $con->query($query);

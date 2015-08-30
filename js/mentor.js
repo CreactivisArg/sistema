@@ -65,7 +65,7 @@ CTS.Mentor = {
                     }
                     $('#info').append('<br>'+picture+'<p>' + mentor[0].lastname + ' ' + mentor[0].name + '</p>'
                         +'<p>DNI: ' + mentor[0].dni +'</p>'
-                        +'<p>Birthdate: ' + mentor[0].birthdate +'</p>'
+                        +'<p>Birthdate: ' + mentor[0].birthdate + ' (' + CTS.Utils.calculateAge(mentor[0].birthdate) + ')</p>'
                         +'<p>Country: ' + mentor[0].country +'</p>'
                         +'<p>State: ' + mentor[0].state +'</p>'
                         +'<p>City: ' + mentor[0].city +'</p>'

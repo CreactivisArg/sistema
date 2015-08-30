@@ -7,15 +7,19 @@ if (!is_null($con)){
     $obj = json_decode($rawdata);
 
     if (isset($obj->id_dojo))
-        $query = sprintf("select dojo.id, dojo.name, dojo.country, dojo.state, dojo.city, dojo.address, dojo.description, dojo.phone, dojo.email, dojo.facebook, dojo.twitter, status.name as status, dojo.id_status from dojo left join status on status.id = dojo.id_status WHERE dojo.id = '%s'",$con->real_escape_string($obj->id_dojo));
+        $query = sprintf("select dojo.id, dojo.id_environment, environment.name as environment, dojo.name, contact.country, contact.state, contact.city, contact.address, dojo.description, contact.phone, contact.email, contact.facebook, contact.twitter, status.name as status, dojo.id_status from dojo inner join contact on contact.id = dojo.id_contact left join environment on environment.id = dojo.id_environment left join status on status.id = dojo.id_status where dojo.id = '%s'",$con->real_escape_string($obj->id_dojo));
+    else if (isset($obj->id_environment))
+        $query = sprintf("select dojo.id, dojo.id_environment, environment.name as environment, dojo.name, contact.country, contact.state, contact.city, contact.address, dojo.description, contact.phone, contact.email, contact.facebook, contact.twitter, status.name as status, dojo.id_status from dojo inner join contact on contact.id = dojo.id_contact left join environment on environment.id = dojo.id_environment left join status on status.id = dojo.id_status where dojo.id_environment = '%s' order by dojo.name",$con->real_escape_string($obj->id_environment));
     else
-        $query = "select dojo.id, dojo.name, dojo.country, dojo.state, dojo.city, dojo.address, dojo.description, dojo.phone, dojo.email, dojo.facebook, dojo.twitter, status.name as status, dojo.id_status from dojo left join status on status.id = dojo.id_status order by dojo.name";
+        $query = "select dojo.id, dojo.id_environment, environment.name as environment, dojo.name, contact.country, contact.state, contact.city, contact.address, dojo.description, contact.phone, contact.email, contact.facebook, contact.twitter, status.name as status, dojo.id_status from dojo inner join contact on contact.id = dojo.id_contact left join environment on environment.id = dojo.id_environment left join status on status.id = dojo.id_status order by dojo.name";
 
     $result = $con->query($query);
     if ($result) {
         $json = array();
         while ($row = $result->fetch_array(MYSQLI_ASSOC)) {
             $json [] = array(   'id' => $row['id'],
+                                'id_environment' => utf8_encode($row['id_environment']),
+                                'environment' => utf8_encode($row['environment']),
                                 'name' => utf8_encode($row['name']),
                                 'country' => utf8_encode($row['country']),
                                 'state' => utf8_encode($row['state']),

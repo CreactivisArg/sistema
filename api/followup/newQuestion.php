@@ -6,10 +6,10 @@ if (!is_null($con)){
 	$rawdata = file_get_contents('php://input');
 	$obj = json_decode($rawdata);
 
-	$name = $obj->name;
+	$question = $obj->question;
 
-	$query = sprintf("INSERT INTO payment_method (id, name) VALUES ((select UUID()), '%s')",
-		$con->real_escape_string(utf8_decode($name)));
+	$query = sprintf("INSERT INTO question (id, question) VALUES ((select UUID()), '%s')",
+		$con->real_escape_string(utf8_decode($question)));
 
 	$result = $con->query($query);
 	if ($result)

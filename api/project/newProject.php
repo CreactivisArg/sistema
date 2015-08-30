@@ -11,7 +11,7 @@ if (!is_null($con)){
 	$description = $obj->description;
 	$target = $obj->target;
 	$why = $obj->why;
-	$who = $obj->who;
+	$objective = $obj->objective;
 	$scope = $obj->scope;
 	$id_status = $obj->id_status;
 
@@ -24,8 +24,8 @@ if (!is_null($con)){
 	$error = false;
 
 	$con->begin_transaction();
-	$query = sprintf("INSERT INTO project (id, name, description, target, why, who, scope, id_status, creation_date) VALUES ('%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', now());",
-		$id_project,$con->real_escape_string(utf8_decode($name)),$con->real_escape_string(utf8_decode($description)),$con->real_escape_string(utf8_decode($target)),$con->real_escape_string(utf8_decode($why)),$con->real_escape_string(utf8_decode($who)),$con->real_escape_string(utf8_decode($scope)),$con->real_escape_string($id_status));
+	$query = sprintf("INSERT INTO project (id, name, description, target, why, objective, scope, id_status, creation_date) VALUES ('%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', now());",
+		$id_project,$con->real_escape_string(utf8_decode($name)),$con->real_escape_string(utf8_decode($description)),$con->real_escape_string(utf8_decode($target)),$con->real_escape_string(utf8_decode($why)),$con->real_escape_string(utf8_decode($objective)),$con->real_escape_string(utf8_decode($scope)),$con->real_escape_string($id_status));
 	$result = $con->query($query);
 	if (!$result)
 		$error = true;

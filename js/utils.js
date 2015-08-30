@@ -14,11 +14,11 @@ CTS.Utils = {
             type: "GET",
             url: "api/status/getStatus.php",
             cache: false,
-            success: function (listStatus) {
+            success: function (list) {
                 $('#'+selectName).empty();
 
-                for (var i=0;i<listStatus.length;i++) {
-                    $('#'+selectName).append('<option value='  + listStatus[i].id +'>' + listStatus[i].name +'</option>');
+                for (var i=0;i<list.length;i++) {
+                    $('#'+selectName).append('<option value='  + list[i].id +'>' + list[i].name +'</option>');
                 }
                 $('#'+selectName).select2();
                 if (id)
@@ -35,11 +35,11 @@ CTS.Utils = {
             type: "GET",
             url: "api/project/getCategory.php",
             cache: false,
-            success: function (listCategory) {
+            success: function (list) {
                 $('#'+selectName).empty();
 
-                for (var i=0;i<listCategory.length;i++) {
-                    $('#'+selectName).append('<option value='  + listCategory[i].id +'>' + listCategory[i].name +'</option>');
+                for (var i=0;i<list.length;i++) {
+                    $('#'+selectName).append('<option value='  + list[i].id +'>' + list[i].name +'</option>');
                 }
                 $('#'+selectName).select2();
                 if (id)
@@ -56,11 +56,32 @@ CTS.Utils = {
             type: "GET",
             url: "api/skill/getSkill.php",
             cache: false,
-            success: function (listSkill) {
+            success: function (list) {
                 $('#'+selectName).empty();
 
-                for (var i=0;i<listSkill.length;i++) {
-                    $('#'+selectName).append('<option value='  + listSkill[i].id +'>' + listSkill[i].name +'</option>');
+                for (var i=0;i<list.length;i++) {
+                    $('#'+selectName).append('<option value='  + list[i].id +'>' + list[i].name +'</option>');
+                }
+                $('#'+selectName).select2();
+                if (id)
+                    $('#'+selectName).val(id).trigger("change");
+            },
+            error: function () {
+                self.showDialog(BootstrapDialog.TYPE_WARNING,"Error","Ha ocurrido un error, intente nuevamente.");
+            }
+        });
+    },
+    getEnvironment : function (id,selectName) {
+        var self = this;
+        jQuery.ajax({
+            type: "GET",
+            url: "api/dojo/getEnvironment.php",
+            cache: false,
+            success: function (list) {
+                $('#'+selectName).empty();
+
+                for (var i=0;i<list.length;i++) {
+                    $('#'+selectName).append('<option value='  + list[i].id +'>' + list[i].name +'</option>');
                 }
                 $('#'+selectName).select2();
                 if (id)
@@ -79,5 +100,20 @@ CTS.Utils = {
     },
     showModal : function (id) {
       	$('#'+id).modal('show');
+    },
+    calculateAge : function (birthDate) {
+        birthDate = new Date(birthDate);
+        otherDate = new Date();
+        var years = (otherDate.getFullYear() - birthDate.getFullYear());
+        if (otherDate.getMonth() < birthDate.getMonth() || 
+            otherDate.getMonth() == birthDate.getMonth() && otherDate.getDate() < birthDate.getDate()) {
+            years--;
+        }
+        return years;
+    },
+    getAvg : function (values) {
+      return values.reduce(function (p, c) {
+        return p + c;
+      }) / values.length;
     }
 };

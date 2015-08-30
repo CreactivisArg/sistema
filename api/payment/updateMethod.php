@@ -9,7 +9,7 @@ if (!is_null($con)){
 	$id_method = $obj->id_method;
 	$name = $obj->name;
 
-	$query = sprintf("UPDATE method SET name = '%s' WHERE id ='%s'",
+	$query = sprintf("UPDATE payment_method SET name = '%s' WHERE id ='%s'",
 	    $con->real_escape_string(utf8_decode($name)),$con->real_escape_string($id_method));
 	    
 	$result = $con->query($query);

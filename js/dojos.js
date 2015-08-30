@@ -22,8 +22,10 @@ CTS.Dojos = {
                 $('#listPanel').empty();
 
                 for (i; i < list.length; i++) {
-                    $('#listPanel').append('<a href="#" class="list-group-item" data-toggle="collapse" data-target="#' + list[i].id +'" data-parent="#menu">' + list[i].name +' - ' + list[i].city + '</a>'
+                    $('#listPanel').append('<a href="#" class="list-group-item" data-toggle="collapse" data-target="#' + list[i].id +'" data-parent="#menu">' + list[i].environment + ' - ' + list[i].name + ' - ' + list[i].city + '</a>'
                         +'<div id="' + list[i].id +'" class="sublinks collapse">'
+                        +'<div class="list-group-item small">Environment: ' + list[i].environment +'</div>'
+                        +'<div class="list-group-item small">Name: ' + list[i].name +'</div>'
                         +'<div class="list-group-item small">Country: ' + list[i].country +'</div>'
                         +'<div class="list-group-item small">State: ' + list[i].state +'</div>'
                         +'<div class="list-group-item small">City: ' + list[i].city +'</div>'
@@ -63,6 +65,7 @@ CTS.Dojos = {
             +'      </div>'
             +'      <div class="modal-body" align="center">'
             +'          <form class="form-horizontal">'
+            +'              <div class="form-group"><label for="environment" class="col-sm-2 control-label">Environment</label><div class="col-sm-10"><select class="form-control" style="width: 100%" name="environment" id="environment"></select></div></div>'
             +'              <div class="form-group"><label for="name" class="col-sm-2 control-label">Name</label><div class="col-sm-10"><input id="name" type="text" class="form-control"></div></div>'
             +'              <div class="form-group"><label for="country" class="col-sm-2 control-label">Country</label><div class="col-sm-10"><input id="country" type="text" class="form-control"></div></div>'
             +'              <div class="form-group"><label for="state" class="col-sm-2 control-label">State</label><div class="col-sm-10"><input id="state" type="text" class="form-control"></div></div>'
@@ -91,6 +94,7 @@ CTS.Dojos = {
             data: JSON.stringify(id),
             cache: false,
             success: function (atr) {
+                CTS.Utils.getEnvironment(atr[0].id_environment,'environment');
                 $("#name").val(atr[0].name);
                 $("#country").val(atr[0].country);
                 $("#state").val(atr[0].state);
@@ -111,6 +115,7 @@ CTS.Dojos = {
     saveDojo : function (id) {
         var dojo = {
                 id_dojo: id,
+                id_environment: $("#environment").val(),
                 name: $("#name").val(),
                 country: $("#country").val(),
                 state: $("#state").val(),
@@ -141,10 +146,12 @@ CTS.Dojos = {
     setNewDojo : function () {
         this.setModalDojo('New Dojo', null);
         CTS.Utils.showModal('modalEditDojo');
+        CTS.Utils.getEnvironment(null,'environment');
         CTS.Utils.setStatus(null,'status');
     },
     newDojo : function () {
         var dojo = {
+                id_environment: $("#environment").val(),
                 name: $("#name").val(),
                 country: $("#country").val(),
                 state: $("#state").val(),

@@ -12,15 +12,15 @@ if (!is_null($con)){
 	$description = $obj->description;
 	$target = $obj->target;
 	$why = $obj->why;
-	$who = $obj->who;
+	$objective = $obj->objective;
 	$scope = $obj->scope;
 	$id_status = $obj->id_status;
 
 	$error = false;
 
 	$con->begin_transaction();
-	$queryUpdate = sprintf("UPDATE project SET name = '%s', description = '%s', target = '%s', why = '%s', who = '%s', scope = '%s', id_status = '%s' WHERE id ='%s'",
-	    $con->real_escape_string(utf8_decode($name)),$con->real_escape_string(utf8_decode($description)),$con->real_escape_string(utf8_decode($target)),$con->real_escape_string(utf8_decode($why)),$con->real_escape_string(utf8_decode($who)),$con->real_escape_string(utf8_decode($scope)),$con->real_escape_string($id_status),$con->real_escape_string($id_project));
+	$queryUpdate = sprintf("UPDATE project SET name = '%s', description = '%s', target = '%s', why = '%s', objective = '%s', scope = '%s', id_status = '%s' WHERE id ='%s'",
+	    $con->real_escape_string(utf8_decode($name)),$con->real_escape_string(utf8_decode($description)),$con->real_escape_string(utf8_decode($target)),$con->real_escape_string(utf8_decode($why)),$con->real_escape_string(utf8_decode($objective)),$con->real_escape_string(utf8_decode($scope)),$con->real_escape_string($id_status),$con->real_escape_string($id_project));
 	$resultUpdate = $con->query($queryUpdate);
 	if (!$resultUpdate)
 		$error = true;

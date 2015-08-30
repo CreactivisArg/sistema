@@ -39,9 +39,9 @@ DROP TABLE IF EXISTS `contact`;
 
 CREATE TABLE `contact` (
   `id` char(36) NOT NULL DEFAULT '',
-  `name` varchar(255) NOT NULL DEFAULT '',
-  `lastname` varchar(255) NOT NULL DEFAULT '',
-  `dni` int(10) NOT NULL,
+  `name` varchar(255) DEFAULT NULL,
+  `lastname` varchar(255) DEFAULT NULL,
+  `dni` int(10) DEFAULT '0',
   `birthdate` date DEFAULT NULL,
   `country` varchar(255) NOT NULL DEFAULT '',
   `state` varchar(255) NOT NULL DEFAULT '',
@@ -88,19 +88,15 @@ DROP TABLE IF EXISTS `dojo`;
 
 CREATE TABLE `dojo` (
   `id` char(36) NOT NULL DEFAULT '',
+  `id_environment` char(36) NOT NULL,
   `name` varchar(255) NOT NULL,
-  `country` varchar(255) NOT NULL,
-  `state` varchar(255) NOT NULL,
-  `city` varchar(255) NOT NULL,
-  `address` varchar(255) NOT NULL,
+  `id_contact` char(36) NOT NULL,
   `description` text,
-  `phone` varchar(255) DEFAULT NULL,
-  `email` varchar(255) DEFAULT NULL,
-  `facebook` varchar(255) DEFAULT NULL,
-  `twitter` varchar(255) DEFAULT NULL,
   `id_status` char(36) NOT NULL DEFAULT '',
   `creation_date` datetime NOT NULL,
   PRIMARY KEY (`id`),
+  KEY `id_environment` (`id_environment`),
+  KEY `id_contact` (`id_contact`),
   KEY `id_status` (`id_status`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -184,6 +180,29 @@ CREATE TABLE `employee` (
   KEY `id_status` (`id_status`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+
+
+# Volcado de tabla environment
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `environment`;
+
+CREATE TABLE `environment` (
+  `id` char(36) NOT NULL DEFAULT '',
+  `name` varchar(255) NOT NULL DEFAULT '',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+LOCK TABLES `environment` WRITE;
+/*!40000 ALTER TABLE `environment` DISABLE KEYS */;
+
+INSERT INTO `environment` (`id`, `name`)
+VALUES
+  ('9e4dc1a0-4ebd-11e5-bf2e-1490953b695c','Coworking'),
+  ('a4e82906-4ebd-11e5-bf2e-1490953b695c','Escuela');
+
+/*!40000 ALTER TABLE `environment` ENABLE KEYS */;
+UNLOCK TABLES;
 
 
 # Volcado de tabla followup
@@ -288,29 +307,6 @@ CREATE TABLE `mentor_skill` (
 
 
 
-# Volcado de tabla method
-# ------------------------------------------------------------
-
-DROP TABLE IF EXISTS `method`;
-
-CREATE TABLE `method` (
-  `id` char(36) NOT NULL DEFAULT '',
-  `name` varchar(255) NOT NULL DEFAULT '',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-LOCK TABLES `method` WRITE;
-/*!40000 ALTER TABLE `method` DISABLE KEYS */;
-
-INSERT INTO `method` (`id`, `name`)
-VALUES
-  ('0d6c9b32-4abe-11e5-855b-272131924cc3','Efectivo'),
-  ('13fd1ff8-4abe-11e5-855b-272131924cc3','Transferencia');
-
-/*!40000 ALTER TABLE `method` ENABLE KEYS */;
-UNLOCK TABLES;
-
-
 # Volcado de tabla padawan
 # ------------------------------------------------------------
 
@@ -367,6 +363,29 @@ CREATE TABLE `payment` (
 
 
 
+# Volcado de tabla payment_method
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `payment_method`;
+
+CREATE TABLE `payment_method` (
+  `id` char(36) NOT NULL DEFAULT '',
+  `name` varchar(255) NOT NULL DEFAULT '',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+LOCK TABLES `payment_method` WRITE;
+/*!40000 ALTER TABLE `payment_method` DISABLE KEYS */;
+
+INSERT INTO `payment_method` (`id`, `name`)
+VALUES
+  ('0d6c9b32-4abe-11e5-855b-272131924cc3','Efectivo'),
+  ('13fd1ff8-4abe-11e5-855b-272131924cc3','Transferencia');
+
+/*!40000 ALTER TABLE `payment_method` ENABLE KEYS */;
+UNLOCK TABLES;
+
+
 # Volcado de tabla project
 # ------------------------------------------------------------
 
@@ -376,9 +395,9 @@ CREATE TABLE `project` (
   `id` char(36) NOT NULL DEFAULT '',
   `name` varchar(255) NOT NULL DEFAULT '',
   `description` text NOT NULL,
+  `objective` varchar(255) NOT NULL,
+  `why` varchar(255) NOT NULL,
   `target` varchar(255) NOT NULL DEFAULT '',
-  `why` varchar(255) NOT NULL DEFAULT '',
-  `who` varchar(255) NOT NULL DEFAULT '',
   `scope` varchar(255) NOT NULL DEFAULT '',
   `id_status` char(36) NOT NULL DEFAULT '',
   `creation_date` datetime NOT NULL,
@@ -530,7 +549,7 @@ INSERT INTO `status` (`id`, `name`)
 VALUES
   ('0547367a-2d80-11e5-8741-2bb60d1f72e2','activo'),
   ('f9d8fb5c-2d7f-11e5-8741-2bb60d1f72e2','pendiente'),
-  ('ff0de0c4-2d7f-11e5-8741-2bb60d1f72e2','lost');
+  ('ff0de0c4-2d7f-11e5-8741-2bb60d1f72e2','inactivo');
 
 /*!40000 ALTER TABLE `status` ENABLE KEYS */;
 UNLOCK TABLES;

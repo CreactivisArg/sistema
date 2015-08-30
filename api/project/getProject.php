@@ -7,15 +7,15 @@ if (!is_null($con)){
     $obj = json_decode($rawdata);
 
     if (isset($obj->id_project))
-        $query = sprintf("select project.id, project.name, project.description, project.target, project.why, project.who, project.scope, status.name as status, project.id_status from project left join status on status.id = project.id_status where project.id = '%s'",$con->real_escape_string($obj->id_project));
+        $query = sprintf("select project.id, project.name, project.description, project.target, project.why, project.objective, project.scope, status.name as status, project.id_status from project left join status on status.id = project.id_status where project.id = '%s'",$con->real_escape_string($obj->id_project));
     else if (isset($obj->id_dojo))
-        $query = sprintf("select distinct project.id, project.name, project.description, project.target, project.why, project.who, project.scope, status.name as status, project.id_status from dojo_padawan inner join project_padawan on project_padawan.id_padawan = dojo_padawan.id_padawan inner join project on project.id = project_padawan.id_project left join status on status.id = project.id_status where dojo_padawan.id_dojo = '%s' order by project.name",$con->real_escape_string($obj->id_dojo));
+        $query = sprintf("select distinct project.id, project.name, project.description, project.target, project.why, project.objective, project.scope, status.name as status, project.id_status from dojo_padawan inner join project_padawan on project_padawan.id_padawan = dojo_padawan.id_padawan inner join project on project.id = project_padawan.id_project left join status on status.id = project.id_status where dojo_padawan.id_dojo = '%s' order by project.name",$con->real_escape_string($obj->id_dojo));
     else if (isset($obj->id_category))
-        $query = sprintf("select project.id, project.name, project.description, project.target, project.why, project.who, project.scope, status.name as status, project.id_status from project_category inner join project on project.id = project_category.id_project left join status on status.id = project.id_status where project_category.id_category = '%s' order by project.name",$con->real_escape_string($obj->id_category));
+        $query = sprintf("select project.id, project.name, project.description, project.target, project.why, project.objective, project.scope, status.name as status, project.id_status from project_category inner join project on project.id = project_category.id_project left join status on status.id = project.id_status where project_category.id_category = '%s' order by project.name",$con->real_escape_string($obj->id_category));
     else if (isset($obj->id_padawan))
-        $query = sprintf("select project.id, project.name, project.description, project.target, project.why, project.who, project.scope, status.name as status, project.id_status from project_padawan inner join project on project.id = project_padawan.id_project left join status on status.id = project.id_status where project_padawan.id_padawan = '%s' order by project.name",$con->real_escape_string($obj->id_padawan));
+        $query = sprintf("select project.id, project.name, project.description, project.target, project.why, project.objective, project.scope, status.name as status, project.id_status from project_padawan inner join project on project.id = project_padawan.id_project left join status on status.id = project.id_status where project_padawan.id_padawan = '%s' order by project.name",$con->real_escape_string($obj->id_padawan));
     else 
-        $query = "select project.id, project.name, project.description, project.target, project.why, project.who, project.scope, status.name as status, project.id_status from project left join status on status.id = project.id_status";
+        $query = "select project.id, project.name, project.description, project.target, project.why, project.objective, project.scope, status.name as status, project.id_status from project left join status on status.id = project.id_status";
 
     $result = $con->query($query);
     if ($result) {
@@ -47,7 +47,7 @@ if (!is_null($con)){
                                 'description' => utf8_encode($row['description']),
                                 'target' => utf8_encode($row['target']),
                                 'why' => utf8_encode($row['why']),
-                                'who' => utf8_encode($row['who']),
+                                'objective' => utf8_encode($row['objective']),
                                 'scope' => utf8_encode($row['scope']),
                                 'status' => utf8_encode($row['status']),
                                 'id_status' => $row['id_status'],

@@ -7,6 +7,7 @@ if (!is_null($con)){
 	$obj = json_decode($rawdata);
 
 	$id_dojo = $obj->id_dojo;
+	$id_environment = $obj->id_environment;
 	$name = $obj->name;
 	$country = $obj->country;
 	$state = $obj->state;
@@ -19,14 +20,26 @@ if (!is_null($con)){
 	$twitter = $obj->twitter;
 	$id_status = $obj->id_status; 
 
-	$query = sprintf("UPDATE dojo SET name = '%s', country = '%s', state = '%s', city = '%s', address = '%s', description = '%s', phone = '%s', email = '%s', facebook = '%s', twitter = '%s', id_status = '%s' WHERE id ='%s'",
-	    $con->real_escape_string(utf8_decode($name)),$con->real_escape_string(utf8_decode($country)),$con->real_escape_string(utf8_decode($state)),$con->real_escape_string(utf8_decode($city)),$con->real_escape_string(utf8_decode($address)),$con->real_escape_string(utf8_decode($description)),$con->real_escape_string(utf8_decode($phone)),$con->real_escape_string(utf8_decode($email)),$con->real_escape_string(utf8_decode($facebook)),$con->real_escape_string(utf8_decode($twitter)),$con->real_escape_string($id_status),$con->real_escape_string($id_dojo));
-	    
-	$result = $con->query($query);
-	if ($result)
-	    header("HTTP/1.1 200 OK");
-	else 
+	$con->begin_transaction();
+	$queryContact = sprintf("UPDATE contact SET country = '%s', state = '%s', city = '%s', address = '%s', phone = '%s', email = '%s', facebook = '%s', twitter = '%s' WHERE id in (select id_contact from dojo where id = '%s')",
+		$con->real_escape_string(utf8_decode($country)),$con->real_escape_string(utf8_decode($state)),$con->real_escape_string(utf8_decode($city)),$con->real_escape_string(utf8_decode($address)),$con->real_escape_string(utf8_decode($phone)),$con->real_escape_string(utf8_decode($email)),$con->real_escape_string(utf8_decode($facebook)),$con->real_escape_string(utf8_decode($twitter)),$con->real_escape_string($id_dojo));
+	$resultContact = $con->query($queryContact);
+	if ($resultContact) {
+		$queryDojo = sprintf("UPDATE dojo SET id_environment = '%s', name = '%s', description = '%s', id_status = '%s' WHERE id = '%s'", $con->real_escape_string($id_environment),$con->real_escape_string(utf8_decode($name)),$con->real_escape_string(utf8_decode($description)),$con->real_escape_string($id_status),$con->real_escape_string($id_dojo));
+		$resultDojo = $con->query($queryDojo);
+		if ($resultDojo) {
+	    	$con->commit(); 
+	    	header("HTTP/1.1 200 OK");
+	    }
+	    else {
+			$con->rollback();  
+			header("HTTP/1.1 500 Internal Server Error");
+		}
+	}
+	else {
+		$con->rollback();
 		header("HTTP/1.1 500 Internal Server Error");
+	}
 }
 else
 	header("HTTP/1.1 500 Internal Server Error");

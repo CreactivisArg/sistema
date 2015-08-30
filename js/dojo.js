@@ -112,6 +112,7 @@ CTS.Dojo = {
             cache: false,
             success: function (dojo) {
                 $('#listPanelPadawans').empty();
+                var ages = [];
                 for (var i=0;i<dojo[0].padawans.length;i++) {
                     var responsibles = '';
                     for (var j=0;j<dojo[0].padawans[i].responsibles.length;j++) {
@@ -134,10 +135,11 @@ CTS.Dojo = {
                         else
                             skills = skills + '<a href="listSkill.html?name_skill=' + dojo[0].padawans[i].skills[j].name + '&id_skill=' + dojo[0].padawans[i].skills[j].id + '">' + dojo[0].padawans[i].skills[j].name + '</a>, ';
                     }
+                    var age = CTS.Utils.calculateAge(dojo[0].padawans[i].birthdate);
                     $('#listPanelPadawans').append('<a href="#" class="list-group-item" data-toggle="collapse" data-target="#' + dojo[0].padawans[i].id +'" data-parent="#menu">' + dojo[0].padawans[i].lastname + ' ' + dojo[0].padawans[i].name + '</a>'
                         +'<div id="' + dojo[0].padawans[i].id +'" class="sublinks collapse">'
                         +'<div class="list-group-item small">DNI: ' + dojo[0].padawans[i].dni +'</div>'
-                        +'<div class="list-group-item small">Birthdate: ' + dojo[0].padawans[i].birthdate +'</div>'
+                        +'<div class="list-group-item small">Birthdate: ' + dojo[0].padawans[i].birthdate + ' (' + age + ')</div>'
                         +'<div class="list-group-item small">Country: ' + dojo[0].padawans[i].country +'</div>'
                         +'<div class="list-group-item small">State: ' + dojo[0].padawans[i].state +'</div>'
                         +'<div class="list-group-item small">City: ' + dojo[0].padawans[i].city +'</div>'
@@ -156,8 +158,12 @@ CTS.Dojo = {
                         +'<a class="list-group-item" href="padawan.html?id_padawan=' + dojo[0].padawans[i].id + '"><span class="glyphicon glyphicon-eye-open"></span> View</a>'
                         +'<a class="list-group-item" onclick="CTS.Dojo.removePadawan(\'' + dojo[0].padawans[i].id + '\')"><span class="glyphicon glyphicon-remove"></span> Remove Padawan</a>'
                         +'</div>');
+                    ages.push(age);
                 }
+                var average = ages.length ? CTS.Utils.getAvg(ages) : 0;
+                $('#infoPadawans').text('Padawans: '+dojo[0].padawans.length + ' Average Age: ' + average);
                 $('#listPanelMentors').empty();
+                $('#infoMentors').text('Mentors: '+dojo[0].mentors.length);
                 for (var i=0;i<dojo[0].mentors.length;i++) {
                     var skills = '';
                     for (var j=0;j<dojo[0].mentors[i].skills.length;j++) {
@@ -241,12 +247,13 @@ CTS.Dojo = {
                 id_dojo: this.id_dojo
             };
         jQuery.ajax({
-            type: "GET",
+            type: "POST",
             url: "api/project/getProject.php",
             data: JSON.stringify(id),
             cache: false,
             success: function (list) {
                 $('#listPanelProjects').empty();
+                $('#infoProjects').text('Projects: '+list.length);
                 for (var i=0;i<list.length;i++) {
                     var categories = '';
                     for (var j=0;j<list[i].categories.length;j++) {
@@ -266,9 +273,9 @@ CTS.Dojo = {
                         +'<div id="' + list[i].id +'" class="sublinks collapse">'
                         +'<div class="list-group-item small">Category: ' + categories +'</div>'
                         +'<div class="list-group-item small">Description: ' + list[i].description +'</div>'
-                        +'<div class="list-group-item small">Target: ' + list[i].target +'</div>'
+                        +'<div class="list-group-item small">Objective: ' + list[i].objective +'</div>'
                         +'<div class="list-group-item small">Why: ' + list[i].why +'</div>'
-                        +'<div class="list-group-item small">Who: ' + list[i].who +'</div>'
+                        +'<div class="list-group-item small">Target: ' + list[i].target +'</div>'
                         +'<div class="list-group-item small">Scope: ' + list[i].scope +'</div>'
                         +'<div class="list-group-item small">Padawans: ' + padawans +'</div>'
                         +'<div class="list-group-item small">Status: ' + list[i].status +'</div>'

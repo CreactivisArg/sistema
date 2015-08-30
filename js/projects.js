@@ -40,9 +40,9 @@ CTS.Projects = {
                         +'<div id="' + list[i].id +'" class="sublinks collapse">'
                         +'<div class="list-group-item small">Category: ' + categories +'</div>'
                         +'<div class="list-group-item small">Description: ' + list[i].description +'</div>'
-                        +'<div class="list-group-item small">Target: ' + list[i].target +'</div>'
+                        +'<div class="list-group-item small">Objective: ' + list[i].objective +'</div>'
                         +'<div class="list-group-item small">Why: ' + list[i].why +'</div>'
-                        +'<div class="list-group-item small">Who: ' + list[i].who +'</div>'
+                        +'<div class="list-group-item small">Target: ' + list[i].target +'</div>'
                         +'<div class="list-group-item small">Scope: ' + list[i].scope +'</div>'
                         +'<div class="list-group-item small">Padawans: ' + padawans +'</div>'
                         +'<div class="list-group-item small">Status: ' + list[i].status +'</div>'
@@ -79,9 +79,9 @@ CTS.Projects = {
             +'              <div class="form-group"><label for="name" class="col-sm-2 control-label">Name</label><div class="col-sm-10"><input id="name" type="text" class="form-control"></div></div>'
             +'              <div class="form-group"><label for="categories" class="col-sm-2 control-label">Category</label><div class="col-sm-10"><select class="categories-multiple" multiple="multiple" style="width: 100%" name="categories" id="categories"></select></div></div>'
             +'              <div class="form-group"><label for="description" class="col-sm-2 control-label">Description</label><div class="col-sm-10"><input id="description" type="text" class="form-control"></div></div>'
-            +'              <div class="form-group"><label for="target" class="col-sm-2 control-label">Target</label><div class="col-sm-10"><input id="target" type="text" class="form-control"></div></div>'
+            +'              <div class="form-group"><label for="objective" class="col-sm-2 control-label">Objective</label><div class="col-sm-10"><input id="objective" type="text" class="form-control"></div></div>'
             +'              <div class="form-group"><label for="why" class="col-sm-2 control-label">Why</label><div class="col-sm-10"><input id="why" type="text" class="form-control"></div></div>'
-            +'              <div class="form-group"><label for="who" class="col-sm-2 control-label">Who</label><div class="col-sm-10"><input id="who" type="text" class="form-control"></div></div>'
+            +'              <div class="form-group"><label for="target" class="col-sm-2 control-label">Target</label><div class="col-sm-10"><input id="target" type="text" class="form-control"></div></div>'
             +'              <div class="form-group"><label for="scope" class="col-sm-2 control-label">Scope</label><div class="col-sm-10"><input id="scope" type="text" class="form-control"></div></div>'
             +'              <div class="form-group"><label for="status" class="col-sm-2 control-label">Status</label><div class="col-sm-10"><select class="form-control" style="width: 100%" name="status" id="status"></select></div></div>'
             +'          </form>'
@@ -105,7 +105,7 @@ CTS.Projects = {
                 $("#description").val(atr[0].description);
                 $("#target").val(atr[0].target);
                 $("#why").val(atr[0].why);
-                $("#who").val(atr[0].who);
+                $("#objective").val(atr[0].objective);
                 $("#scope").val(atr[0].scope);
                 CTS.Utils.setStatus(atr[0].id_status,'status');
                 if (atr[0].categories.length==0)
@@ -131,7 +131,7 @@ CTS.Projects = {
                 description: $("#description").val(),
                 target: $("#target").val(),
                 why: $("#why").val(),
-                who: $("#who").val(),
+                objective: $("#objective").val(),
                 scope: $("#scope").val(),
                 id_status: $("#status").val()
             };
@@ -163,7 +163,7 @@ CTS.Projects = {
                 description: $("#description").val(),
                 target: $("#target").val(),
                 why: $("#why").val(),
-                who: $("#who").val(),
+                objective: $("#objective").val(),
                 scope: $("#scope").val(),
                 id_status: $("#status").val()
             };

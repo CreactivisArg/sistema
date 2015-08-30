@@ -19,7 +19,7 @@ CTS.Padawans = {
             cache: false,
             success: function (list) {
                 $('#listPanel').empty();
-
+                var ages = [];
                 for (var i=0;i<list.length;i++) {
                     var dojos = '';
                     for (var j=0;j<list[i].dojos.length;j++) {
@@ -49,10 +49,11 @@ CTS.Padawans = {
                         else
                             skills = skills + '<a href="listSkill.html?name_skill=' + list[i].skills[j].name + '&id_skill=' + list[i].skills[j].id + '">' + list[i].skills[j].name + '</a>, ';
                     }
+                    var age = CTS.Utils.calculateAge(list[i].birthdate);
                     $('#listPanel').append('<a href="#" class="list-group-item" data-toggle="collapse" data-target="#' + list[i].id +'" data-parent="#menu">' + list[i].lastname + ' ' + list[i].name + '</a>'
                         +'<div id="' + list[i].id +'" class="sublinks collapse">'
                         +'<div class="list-group-item small">DNI: ' + list[i].dni +'</div>'
-                        +'<div class="list-group-item small">Birthdate: ' + list[i].birthdate +'</div>'
+                        +'<div class="list-group-item small">Birthdate: ' + list[i].birthdate + ' (' + age + ')</div>'
                         +'<div class="list-group-item small">Country: ' + list[i].country +'</div>'
                         +'<div class="list-group-item small">State: ' + list[i].state +'</div>'
                         +'<div class="list-group-item small">City: ' + list[i].city +'</div>'
@@ -72,7 +73,10 @@ CTS.Padawans = {
                         +'<a class="list-group-item" href="padawan.html?id_padawan=' + list[i].id + '"><span class="glyphicon glyphicon-eye-open"></span> View</a>'
                         +'<a class="list-group-item" onclick="CTS.Padawans.editPadawan(\'' + list[i].id + '\')"><span class="glyphicon glyphicon-pencil"></span> Edit</a>'
                         +'</div>');
+                    ages.push(age);
                 }
+                var average = ages.length ? CTS.Utils.getAvg(ages) : 0;
+                $('#infoPadawans').text('Padawans: '+list.length + ' Average Age: ' + average);
             },
             error: function () {
                 CTS.Utils.showDialog(BootstrapDialog.TYPE_WARNING,"Error","Ha ocurrido un error, intente nuevamente.");

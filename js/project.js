@@ -59,9 +59,9 @@ CTS.Project = {
                     $('#info').append('<br><p>' + project[0].name + '</p>'
                         +'<p>Category: ' + categories +'</p>'
                         +'<p>Description: ' + project[0].description +'</p>'
-                        +'<p>Target: ' + project[0].target +'</p>'
+                        +'<p>Objective: ' + project[0].Objective +'</p>'
                         +'<p>Why: ' + project[0].why +'</p>'
-                        +'<p>Who: ' + project[0].who +'</p>'
+                        +'<p>Target: ' + project[0].target +'</p>'
                         +'<p>Scope: ' + project[0].scope +'</p>');
                     if (project[0].padawans.length>0){
                         var padawans = '<p>Padawans:</p><div class="panel list-group">';
@@ -130,9 +130,9 @@ CTS.Project = {
             +'              <div class="form-group"><label for="name" class="col-sm-2 control-label">Name</label><div class="col-sm-10"><input id="name" type="text" class="form-control"></div></div>'
             +'              <div class="form-group"><label for="categories" class="col-sm-2 control-label">Category</label><div class="col-sm-10"><select class="categories-multiple" multiple="multiple" style="width: 100%" name="categories" id="categories"></select></div></div>'
             +'              <div class="form-group"><label for="description" class="col-sm-2 control-label">Description</label><div class="col-sm-10"><input id="description" type="text" class="form-control"></div></div>'
-            +'              <div class="form-group"><label for="target" class="col-sm-2 control-label">Target</label><div class="col-sm-10"><input id="target" type="text" class="form-control"></div></div>'
+            +'              <div class="form-group"><label for="objective" class="col-sm-2 control-label">Objective</label><div class="col-sm-10"><input id="objective" type="text" class="form-control"></div></div>'
             +'              <div class="form-group"><label for="why" class="col-sm-2 control-label">Why</label><div class="col-sm-10"><input id="why" type="text" class="form-control"></div></div>'
-            +'              <div class="form-group"><label for="who" class="col-sm-2 control-label">Who</label><div class="col-sm-10"><input id="who" type="text" class="form-control"></div></div>'
+            +'              <div class="form-group"><label for="target" class="col-sm-2 control-label">Target</label><div class="col-sm-10"><input id="target" type="text" class="form-control"></div></div>'
             +'              <div class="form-group"><label for="scope" class="col-sm-2 control-label">Scope</label><div class="col-sm-10"><input id="scope" type="text" class="form-control"></div></div>'
             +'              <div class="form-group"><label for="status" class="col-sm-2 control-label">Status</label><div class="col-sm-10"><select class="form-control" style="width: 100%" name="status" id="status"></select></div></div>'
             +'          </form>'
@@ -147,7 +147,7 @@ CTS.Project = {
         $("#description").val(this.project.description);
         $("#target").val(this.project.target);
         $("#why").val(this.project.why);
-        $("#who").val(this.project.who);
+        $("#objective").val(this.project.objective);
         $("#scope").val(this.project.scope);
         CTS.Utils.setStatus(this.project.id_status,'status');
         if (this.project.categories.length==0)
@@ -168,7 +168,7 @@ CTS.Project = {
                 description: $("#description").val(),
                 target: $("#target").val(),
                 why: $("#why").val(),
-                who: $("#who").val(),
+                objective: $("#objective").val(),
                 scope: $("#scope").val(),
                 id_status: $("#status").val()
             };

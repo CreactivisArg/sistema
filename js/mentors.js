@@ -38,7 +38,7 @@ CTS.Mentors = {
                     $('#listPanel').append('<a href="#" class="list-group-item" data-toggle="collapse" data-target="#' + list[i].id +'" data-parent="#menu">' + list[i].lastname + ' ' + list[i].name + '</a>'
                         +'<div id="' + list[i].id +'" class="sublinks collapse">'
                         +'<div class="list-group-item small">DNI: ' + list[i].dni +'</div>'
-                        +'<div class="list-group-item small">Birthdate: ' + list[i].birthdate +'</div>'
+                        +'<div class="list-group-item small">Birthdate: ' + list[i].birthdate + ' (' + CTS.Utils.calculateAge(list[i].birthdate) + ')</div>'
                         +'<div class="list-group-item small">Country: ' + list[i].country +'</div>'
                         +'<div class="list-group-item small">State: ' + list[i].state +'</div>'
                         +'<div class="list-group-item small">City: ' + list[i].city +'</div>'
