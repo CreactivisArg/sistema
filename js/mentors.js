@@ -19,7 +19,7 @@ CTS.Mentors = {
             cache: false,
             success: function (list) {
                 $('#listPanel').empty();
-
+                $('#infoMentors').text('Mentors: '+list.length);
                 for (var i=0;i<list.length;i++) {
                     var dojos = '';
                     for (var j=0;j<list[i].dojos.length;j++) {

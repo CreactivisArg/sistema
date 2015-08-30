@@ -61,7 +61,7 @@ CTS.Mentor = {
                     }
                     var picture = '';
                     if (mentor[0].path_picture) {
-                        picture = '<img src="'+mentor[0].path_picture+'" height="200" width="200"><br><br>'
+                        picture = '<img src="'+mentor[0].path_picture+'" height="200" width="200" class="circular-image"><br><br>'
                     }
                     $('#info').append('<br>'+picture+'<p>' + mentor[0].lastname + ' ' + mentor[0].name + '</p>'
                         +'<p>DNI: ' + mentor[0].dni +'</p>'

@@ -3,11 +3,13 @@ var CTS = CTS || {};
 CTS.Dojo = {
     id_dojo : '',
     name_dojo : '',
+    dojo : {},
     init : function () {
         this.name_dojo = CTS.Utils.getURLParameter('name_dojo');
-        $('#nameDojo').text(this.name_dojo);
+        $('#infoDojo').append('<p>'+this.name_dojo+'</p>');
         this.id_dojo = CTS.Utils.getURLParameter('id_dojo');
         this.bindActions();
+        this.getDojo();
         this.getMembers();
         this.getProjects();
     },
@@ -16,6 +18,9 @@ CTS.Dojo = {
         $('#payment').attr("href", "listPayment.html?name_dojo=" + self.name_dojo + "&id_dojo="+self.id_dojo);
         $('#log').attr("href", "listLog.html?name_dojo=" + self.name_dojo + "&id_dojo="+self.id_dojo);
         $('#diary').attr("href", "listDiary.html?name_dojo=" + self.name_dojo + "&id_dojo="+self.id_dojo);
+        $('#addPhoto').on('click', function () {
+            self.addPhoto();
+        });
         $('#addPadawan').on('click', function () {
             self.addPadawanDojo();
         });
@@ -101,6 +106,29 @@ CTS.Dojo = {
         $('#tabEmployees').removeClass('active');
         $('#tabProjects').addClass('active');
     },
+    getDojo : function () {
+        var id = {
+                id_dojo: this.id_dojo
+            };
+        jQuery.ajax({
+            type: "POST",
+            url: "api/dojo/getDojo.php",
+            data: JSON.stringify(id),
+            cache: false,
+            success: function (dojo) {
+                CTS.Dojo.dojo=dojo[0];
+                $('#infoDojo').empty();
+                var picture = '';
+                if (dojo[0].path_picture) {
+                    picture = '<img src="'+dojo[0].path_picture+'" height="100" width="100" style="float:left;">'
+                }
+                $('#infoDojo').append(picture+'<p style="float:rigth;">'+dojo[0].name+'</p>');
+            },
+            error: function () {
+                CTS.Utils.showDialog(BootstrapDialog.TYPE_WARNING,"Error","Ha ocurrido un error, intente nuevamente.");
+            }
+        });
+    },
     getMembers : function () {
         var id = {
                 id_dojo: this.id_dojo
@@ -150,6 +178,7 @@ CTS.Dojo = {
                         +'<div class="list-group-item small">Facebook: ' + dojo[0].padawans[i].facebook +'</div>'
                         +'<div class="list-group-item small">Twitter: ' + dojo[0].padawans[i].twitter +'</div>'
                         +'<div class="list-group-item small">School: ' + dojo[0].padawans[i].school +'</div>'
+                        +'<div class="list-group-item small">Scholarship: ' + dojo[0].padawans[i].scholarship +'</div>'
                         +'<div class="list-group-item small">Admission Date: ' + dojo[0].padawans[i].admission_date +'</div>'
                         +'<div class="list-group-item small">Responsibles: ' + responsibles +'</div>'
                         +'<div class="list-group-item small">Skills: ' + skills +'</div>'
@@ -539,6 +568,57 @@ CTS.Dojo = {
                 CTS.Utils.showDialog(BootstrapDialog.TYPE_WARNING,"Error","Ha ocurrido un error, intente nuevamente.");
             }
         });
+    },
+    addPhoto : function () {
+        this.setModalAddPhoto('Add Photo');
+        CTS.Utils.showModal('modalAddPhoto');
+    },
+    setModalAddPhoto : function (title){
+        $('#holderModal').empty().append(
+            '<!-- Modal -->'
+            +'<div class="modal fade" id="modalAddPhoto" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">'
+            +'  <div class="modal-dialog">'
+            +'    <div class="modal-content">'
+            +'      <div class="modal-header">'
+            +'        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>'
+            +'        <h4 class="modal-title" id="myModalLabel">' + title + '</h4>'
+            +'      </div>'
+            +'      <div class="modal-body" align="center">'
+            +'          <form class="form-horizontal">'
+            +'              <div class="form-group"><label for="photo" class="col-sm-2 control-label">Photo</label><div class="col-sm-10"><input type="file" name="photo" id="photo"/></div></div>'
+            +'          </form>'
+            +'      </div>'
+            +'      <div class="modal-footer">'
+            +'       <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>'
+            +'       <button type="button" class="btn btn-primary" onclick="CTS.Dojo.savePhoto();">Add Photo</button>'
+            +'      </div>');
+    },
+    savePhoto : function () {
+        var photo = $('#photo')[0].files[0];
+        if (photo.size>1048576){
+            CTS.Utils.showDialog(BootstrapDialog.TYPE_WARNING,"Error","La foto debe pesar menos de 1 MB.");
+        } else {
+            var data = new FormData();
+            data.append('photo', photo);
+            data.append("id_contact", CTS.Dojo.dojo.id_contact);
+            jQuery.ajax({
+                type: "POST",
+                url: "api/photoUpload.php",
+                data: data,
+                cache: false,
+                contentType: false,
+                processData: false,
+                type: 'POST',
+                success: function () {
+                    CTS.Utils.showDialog(BootstrapDialog.TYPE_INFO,"Confirm","La foto fue agregada correctamente");
+                    CTS.Utils.closeModal('modalAddPhoto');
+                    CTS.Dojo.getDojo();
+                },
+                error: function () {
+                    CTS.Utils.showDialog(BootstrapDialog.TYPE_WARNING,"Error","Ha ocurrido un error, intente nuevamente.");
+                }
+            });
+        }   
     }
 };
 

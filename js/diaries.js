@@ -195,13 +195,13 @@ CTS.Diaries = {
             cache: false,
             success: function (list) {
                 $('#padawan').empty();
-
+                $('#padawan').append('<option></option>');
                 for (var i=0;i<list.length;i++) {
                     $('#padawan').append(
                         '<option value='  + list[i].id +'>' + list[i].lastname + ' ' + list[i].name +'</option>'
                     );
                 }
-                $("#padawan").select2();
+                $("#padawan").select2({placeholder: "Select a padawan"});
                 if (id_padawan)
                     $('#padawan').val(id_padawan).trigger("change");
             },

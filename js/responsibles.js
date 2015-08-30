@@ -19,7 +19,7 @@ CTS.Responsibles = {
             cache: false,
             success: function (list) {
                     $('#listPanel').empty();
-
+                    $('#infoResponsibles').text('Responsibles: '+list.length);
                     for (var i=0;i<list.length;i++) {
                         var padawans = '';
                         for (var j=0;j<list[i].padawans.length;j++) {

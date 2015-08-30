@@ -7,11 +7,11 @@ if (!is_null($con)){
     $obj = json_decode($rawdata);
 
     if (isset($obj->id_dojo))
-        $query = sprintf("select dojo.id, dojo.id_environment, environment.name as environment, dojo.name, contact.country, contact.state, contact.city, contact.address, dojo.description, contact.phone, contact.email, contact.facebook, contact.twitter, status.name as status, dojo.id_status from dojo inner join contact on contact.id = dojo.id_contact left join environment on environment.id = dojo.id_environment left join status on status.id = dojo.id_status where dojo.id = '%s'",$con->real_escape_string($obj->id_dojo));
+        $query = sprintf("select dojo.id, dojo.id_environment, environment.name as environment, dojo.name, dojo.id_contact, contact.country, contact.state, contact.city, contact.address, dojo.description, contact.phone, contact.email, contact.facebook, contact.twitter, contact.path_picture, status.name as status, dojo.id_status, dojo.opening_date from dojo inner join contact on contact.id = dojo.id_contact left join environment on environment.id = dojo.id_environment left join status on status.id = dojo.id_status where dojo.id = '%s'",$con->real_escape_string($obj->id_dojo));
     else if (isset($obj->id_environment))
-        $query = sprintf("select dojo.id, dojo.id_environment, environment.name as environment, dojo.name, contact.country, contact.state, contact.city, contact.address, dojo.description, contact.phone, contact.email, contact.facebook, contact.twitter, status.name as status, dojo.id_status from dojo inner join contact on contact.id = dojo.id_contact left join environment on environment.id = dojo.id_environment left join status on status.id = dojo.id_status where dojo.id_environment = '%s' order by dojo.name",$con->real_escape_string($obj->id_environment));
+        $query = sprintf("select dojo.id, dojo.id_environment, environment.name as environment, dojo.name, dojo.id_contact, contact.country, contact.state, contact.city, contact.address, dojo.description, contact.phone, contact.email, contact.facebook, contact.twitter, contact.path_picture, status.name as status, dojo.id_status, dojo.opening_date from dojo inner join contact on contact.id = dojo.id_contact left join environment on environment.id = dojo.id_environment left join status on status.id = dojo.id_status where dojo.id_environment = '%s' order by dojo.name",$con->real_escape_string($obj->id_environment));
     else
-        $query = "select dojo.id, dojo.id_environment, environment.name as environment, dojo.name, contact.country, contact.state, contact.city, contact.address, dojo.description, contact.phone, contact.email, contact.facebook, contact.twitter, status.name as status, dojo.id_status from dojo inner join contact on contact.id = dojo.id_contact left join environment on environment.id = dojo.id_environment left join status on status.id = dojo.id_status order by dojo.name";
+        $query = "select dojo.id, dojo.id_environment, environment.name as environment, dojo.name, dojo.id_contact, contact.country, contact.state, contact.city, contact.address, dojo.description, contact.phone, contact.email, contact.facebook, contact.twitter, contact.path_picture, status.name as status, dojo.id_status, dojo.opening_date from dojo inner join contact on contact.id = dojo.id_contact left join environment on environment.id = dojo.id_environment left join status on status.id = dojo.id_status order by dojo.name";
 
     $result = $con->query($query);
     if ($result) {
@@ -21,6 +21,7 @@ if (!is_null($con)){
                                 'id_environment' => utf8_encode($row['id_environment']),
                                 'environment' => utf8_encode($row['environment']),
                                 'name' => utf8_encode($row['name']),
+                                'id_contact' => utf8_encode($row['id_contact']),
                                 'country' => utf8_encode($row['country']),
                                 'state' => utf8_encode($row['state']),
                                 'city' => utf8_encode($row['city']),
@@ -30,6 +31,8 @@ if (!is_null($con)){
                                 'email' => utf8_encode($row['email']),
                                 'facebook' => utf8_encode($row['facebook']),
                                 'twitter' => utf8_encode($row['twitter']),
+                                'opening_date' => $row['opening_date'],
+                                'path_picture' => $row['path_picture'],
                                 'status' => utf8_encode($row['status']),
                                 'id_status' => $row['id_status']
                                 );

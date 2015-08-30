@@ -19,7 +19,7 @@ CTS.Employees = {
             cache: false,
             success: function (list) {
                 $('#listPanel').empty();
-
+                $('#infoEmployees').text('Employees: '+list.length);
                 for (var i=0;i<list.length;i++) {
                     var dojos = '';
                     for (var j=0;j<list[i].dojos.length;j++) {

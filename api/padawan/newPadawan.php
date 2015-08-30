@@ -20,6 +20,7 @@ if (!is_null($con)){
 	$facebook = $obj->facebook;
 	$twitter = $obj->twitter;
 	$school = $obj->school;
+	$scholarship = $obj->scholarship;
 	$admission_date = $obj->admission_date;
 	$id_status = $obj->id_status; 
 
@@ -34,7 +35,7 @@ if (!is_null($con)){
 		$id_contact,$con->real_escape_string(utf8_decode($name)),$con->real_escape_string(utf8_decode($lastname)),$con->real_escape_string($dni),$con->real_escape_string(utf8_decode($birthdate)),$con->real_escape_string(utf8_decode($country)),$con->real_escape_string(utf8_decode($state)),$con->real_escape_string(utf8_decode($city)),$con->real_escape_string(utf8_decode($address)),$con->real_escape_string(utf8_decode($phone)),$con->real_escape_string(utf8_decode($mobile)),$con->real_escape_string(utf8_decode($email)),$con->real_escape_string(utf8_decode($facebook)),$con->real_escape_string(utf8_decode($twitter)),$con->real_escape_string(utf8_decode($school)));
 	$resultContact = $con->query($newContact);
 	if ($resultContact) {
-		$newPadawan = sprintf("INSERT INTO padawan (id, id_contact, id_status, admission_date, creation_date) VALUES ((select UUID()), '%s', '%s', '%s', now())",$id_contact,$con->real_escape_string($id_status),$con->real_escape_string($admission_date));
+		$newPadawan = sprintf("INSERT INTO padawan (id, id_contact, id_status, admission_date, scholarship, creation_date) VALUES ((select UUID()), '%s', '%s', '%s', %s, now())",$id_contact,$con->real_escape_string($id_status),$con->real_escape_string($admission_date),$con->real_escape_string($scholarship));
 		$resultPadawan = $con->query($newPadawan);
 	    if ($resultPadawan) {
 	    	$con->commit(); 

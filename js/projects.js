@@ -20,7 +20,7 @@ CTS.Projects = {
             cache: false,
             success: function (list) {
                 $('#listPanel').empty();
-
+                $('#infoProjects').text('Projects: '+list.length);
                 for (var i=0;i<list.length;i++) {
                     var categories = '';
                     for (var j=0;j<list[i].categories.length;j++) {

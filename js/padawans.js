@@ -64,6 +64,7 @@ CTS.Padawans = {
                         +'<div class="list-group-item small">Facebook: ' + list[i].facebook +'</div>'
                         +'<div class="list-group-item small">Twitter: ' + list[i].twitter +'</div>'
                         +'<div class="list-group-item small">School: ' + list[i].school +'</div>'
+                        +'<div class="list-group-item small">Scholarship: ' + list[i].scholarship +'</div>'
                         +'<div class="list-group-item small">Admission Date: ' + list[i].admission_date +'</div>'
                         +'<div class="list-group-item small">Skills: ' + skills +'</div>'
                         +'<div class="list-group-item small">Dojos: ' + dojos +'</div>'
@@ -112,6 +113,7 @@ CTS.Padawans = {
             +'              <div class="form-group"><label for="facebook" class="col-sm-2 control-label">Facebook</label><div class="col-sm-10"><input id="facebook" type="text" class="form-control"></div></div>'
             +'              <div class="form-group"><label for="twitter" class="col-sm-2 control-label">Twitter</label><div class="col-sm-10"><input id="twitter" type="text" class="form-control"></div></div>'
             +'              <div class="form-group"><label for="school" class="col-sm-2 control-label">School</label><div class="col-sm-10"><input id="school" type="text" class="form-control"></div></div>'
+            +'              <div class="form-group"><label for="scholarship" class="col-sm-2 control-label">Scholarship</label><div class="col-sm-10"><input id="scholarship" type="number" min="0" max="100" step="any" class="form-control"></div></div>'
             +'              <div class="form-group"><label for="country" class="col-sm-2 control-label">Country</label><div class="col-sm-10"><input id="country" type="text" class="form-control"></div></div>'
             +'              <div class="form-group"><label for="state" class="col-sm-2 control-label">State</label><div class="col-sm-10"><input id="state" type="text" class="form-control"></div></div>'
             +'              <div class="form-group"><label for="city" class="col-sm-2 control-label">City</label><div class="col-sm-10"><input id="city" type="text" class="form-control"></div></div>'
@@ -145,6 +147,7 @@ CTS.Padawans = {
                 $("#facebook").val(atr[0].facebook);
                 $("#twitter").val(atr[0].twitter);
                 $("#school").val(atr[0].school);
+                $("#scholarship").val(atr[0].scholarship);
                 $("#country").val(atr[0].country);
                 $("#state").val(atr[0].state);
                 $("#city").val(atr[0].city);
@@ -170,6 +173,7 @@ CTS.Padawans = {
                 facebook: $("#facebook").val(),
                 twitter: $("#twitter").val(),
                 school: $("#school").val(),
+                scholarship: $("#scholarship").val(),
                 country: $("#country").val(),
                 state: $("#state").val(),
                 city: $("#city").val(),
@@ -209,6 +213,7 @@ CTS.Padawans = {
                 facebook: $("#facebook").val(),
                 twitter: $("#twitter").val(),
                 school: $("#school").val(),
+                scholarship: $("#scholarship").val(),
                 country: $("#country").val(),
                 state: $("#state").val(),
                 city: $("#city").val(),

@@ -23,10 +23,10 @@ LOCK TABLES `category` WRITE;
 
 INSERT INTO `category` (`id`, `name`)
 VALUES
-  ('67c480be-3703-11e5-823c-22cb9381cb76','web'),
-  ('6f2dd58a-3703-11e5-823c-22cb9381cb76','app'),
-  ('74f729bc-3703-11e5-823c-22cb9381cb76','game'),
-  ('7aca5454-3703-11e5-823c-22cb9381cb76','maker');
+	('67c480be-3703-11e5-823c-22cb9381cb76','web'),
+	('6f2dd58a-3703-11e5-823c-22cb9381cb76','app'),
+	('74f729bc-3703-11e5-823c-22cb9381cb76','game'),
+	('7aca5454-3703-11e5-823c-22cb9381cb76','maker');
 
 /*!40000 ALTER TABLE `category` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -92,6 +92,7 @@ CREATE TABLE `dojo` (
   `name` varchar(255) NOT NULL,
   `id_contact` char(36) NOT NULL,
   `description` text,
+  `opening_date` date NOT NULL,
   `id_status` char(36) NOT NULL DEFAULT '',
   `creation_date` datetime NOT NULL,
   PRIMARY KEY (`id`),
@@ -198,8 +199,8 @@ LOCK TABLES `environment` WRITE;
 
 INSERT INTO `environment` (`id`, `name`)
 VALUES
-  ('9e4dc1a0-4ebd-11e5-bf2e-1490953b695c','Coworking'),
-  ('a4e82906-4ebd-11e5-bf2e-1490953b695c','Escuela');
+	('9e4dc1a0-4ebd-11e5-bf2e-1490953b695c','Coworking'),
+	('a4e82906-4ebd-11e5-bf2e-1490953b695c','Escuela');
 
 /*!40000 ALTER TABLE `environment` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -317,6 +318,7 @@ CREATE TABLE `padawan` (
   `id_contact` char(36) NOT NULL DEFAULT '',
   `id_status` char(36) NOT NULL DEFAULT '',
   `admission_date` date DEFAULT NULL,
+  `scholarship` double DEFAULT '0',
   `creation_date` datetime NOT NULL,
   PRIMARY KEY (`id`),
   KEY `id_status` (`id_status`)
@@ -379,8 +381,8 @@ LOCK TABLES `payment_method` WRITE;
 
 INSERT INTO `payment_method` (`id`, `name`)
 VALUES
-  ('0d6c9b32-4abe-11e5-855b-272131924cc3','Efectivo'),
-  ('13fd1ff8-4abe-11e5-855b-272131924cc3','Transferencia');
+	('0d6c9b32-4abe-11e5-855b-272131924cc3','Efectivo'),
+	('13fd1ff8-4abe-11e5-855b-272131924cc3','Transferencia');
 
 /*!40000 ALTER TABLE `payment_method` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -455,10 +457,10 @@ LOCK TABLES `question` WRITE;
 
 INSERT INTO `question` (`id`, `question`)
 VALUES
-  ('d0ecbcfc-3fbc-11e5-8ffa-521b8e7ab624','¿notaste un progreso en tu proyecto?'),
-  ('d741bd6e-3fbc-11e5-8ffa-521b8e7ab624','¿te divertiste?'),
-  ('dc9df156-3fbc-11e5-8ffa-521b8e7ab624','¿alguien te ayudó?'),
-  ('e1fb995a-3fbc-11e5-8ffa-521b8e7ab624','¿ayudaste a alguien?');
+	('d0ecbcfc-3fbc-11e5-8ffa-521b8e7ab624','¿notaste un progreso en tu proyecto?'),
+	('d741bd6e-3fbc-11e5-8ffa-521b8e7ab624','¿te divertiste?'),
+	('dc9df156-3fbc-11e5-8ffa-521b8e7ab624','¿alguien te ayudó?'),
+	('e1fb995a-3fbc-11e5-8ffa-521b8e7ab624','¿ayudaste a alguien?');
 
 /*!40000 ALTER TABLE `question` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -512,20 +514,20 @@ LOCK TABLES `skill` WRITE;
 
 INSERT INTO `skill` (`id`, `name`)
 VALUES
-  ('03215662-4aba-11e5-855b-272131924cc3','Unity'),
-  ('075cdd3c-4aba-11e5-855b-272131924cc3','PHP'),
-  ('0bc101b4-4aba-11e5-855b-272131924cc3','Scratch'),
-  ('2bf2b4cc-4abb-11e5-855b-272131924cc3','Ruby'),
-  ('52baf548-4aba-11e5-855b-272131924cc3','Python'),
-  ('63e18044-4aba-11e5-855b-272131924cc3','Node.js'),
-  ('86f4b5a6-4aba-11e5-855b-272131924cc3','SQL'),
-  ('9028435e-4aba-11e5-855b-272131924cc3','C'),
-  ('9cbe857e-4aba-11e5-855b-272131924cc3','Processing'),
-  ('ab15e98c-4aba-11e5-855b-272131924cc3','Java'),
-  ('ee81ba1c-4ab9-11e5-855b-272131924cc3','HTML'),
-  ('f5a0f4c0-4ab9-11e5-855b-272131924cc3','Javascript'),
-  ('f9e86626-4ab9-11e5-855b-272131924cc3','CSS'),
-  ('fe0064c0-4ab9-11e5-855b-272131924cc3','Arduino');
+	('03215662-4aba-11e5-855b-272131924cc3','Unity'),
+	('075cdd3c-4aba-11e5-855b-272131924cc3','PHP'),
+	('0bc101b4-4aba-11e5-855b-272131924cc3','Scratch'),
+	('2bf2b4cc-4abb-11e5-855b-272131924cc3','Ruby'),
+	('52baf548-4aba-11e5-855b-272131924cc3','Python'),
+	('63e18044-4aba-11e5-855b-272131924cc3','Node.js'),
+	('86f4b5a6-4aba-11e5-855b-272131924cc3','SQL'),
+	('9028435e-4aba-11e5-855b-272131924cc3','C'),
+	('9cbe857e-4aba-11e5-855b-272131924cc3','Processing'),
+	('ab15e98c-4aba-11e5-855b-272131924cc3','Java'),
+	('ee81ba1c-4ab9-11e5-855b-272131924cc3','HTML'),
+	('f5a0f4c0-4ab9-11e5-855b-272131924cc3','Javascript'),
+	('f9e86626-4ab9-11e5-855b-272131924cc3','CSS'),
+	('fe0064c0-4ab9-11e5-855b-272131924cc3','Arduino');
 
 /*!40000 ALTER TABLE `skill` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -547,9 +549,9 @@ LOCK TABLES `status` WRITE;
 
 INSERT INTO `status` (`id`, `name`)
 VALUES
-  ('0547367a-2d80-11e5-8741-2bb60d1f72e2','activo'),
-  ('f9d8fb5c-2d7f-11e5-8741-2bb60d1f72e2','pendiente'),
-  ('ff0de0c4-2d7f-11e5-8741-2bb60d1f72e2','inactivo');
+	('0547367a-2d80-11e5-8741-2bb60d1f72e2','activo'),
+	('f9d8fb5c-2d7f-11e5-8741-2bb60d1f72e2','pendiente'),
+	('ff0de0c4-2d7f-11e5-8741-2bb60d1f72e2','inactivo');
 
 /*!40000 ALTER TABLE `status` ENABLE KEYS */;
 UNLOCK TABLES;

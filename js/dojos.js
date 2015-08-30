@@ -20,7 +20,7 @@ CTS.Dojos = {
             cache: false,
             success: function (list) {
                 $('#listPanel').empty();
-
+                $('#infoDojos').text('Dojos: '+list.length);
                 for (i; i < list.length; i++) {
                     $('#listPanel').append('<a href="#" class="list-group-item" data-toggle="collapse" data-target="#' + list[i].id +'" data-parent="#menu">' + list[i].environment + ' - ' + list[i].name + ' - ' + list[i].city + '</a>'
                         +'<div id="' + list[i].id +'" class="sublinks collapse">'
@@ -35,6 +35,7 @@ CTS.Dojos = {
                         +'<div class="list-group-item small">Email: ' + list[i].email +'</div>'
                         +'<div class="list-group-item small">Facebook: ' + list[i].facebook +'</div>'
                         +'<div class="list-group-item small">Twitter: ' + list[i].twitter +'</div>'
+                        +'<div class="list-group-item small">Opening: ' + list[i].opening_date +'</div>'
                         +'<div class="list-group-item small">Status: ' + list[i].status +'</div>'
                         +'<a class="list-group-item" href="dojo.html?name_dojo=' + list[i].name + '&id_dojo=' + list[i].id + '"><span class="glyphicon glyphicon-eye-open"></span> View</a>'
                         +'<a class="list-group-item" onclick="CTS.Dojos.editDojo(\'' + list[i].id + '\')"><span class="glyphicon glyphicon-pencil"></span> Edit</a>'
@@ -76,6 +77,7 @@ CTS.Dojos = {
             +'              <div class="form-group"><label for="email" class="col-sm-2 control-label">Email</label><div class="col-sm-10"><input id="email" type="text" class="form-control"></div></div>'
             +'              <div class="form-group"><label for="facebook" class="col-sm-2 control-label">Facebook</label><div class="col-sm-10"><input id="facebook" type="text" class="form-control"></div></div>'
             +'              <div class="form-group"><label for="twitter" class="col-sm-2 control-label">Twitter</label><div class="col-sm-10"><input id="twitter" type="text" class="form-control"></div></div>'
+            +'              <div class="form-group"><label for="opening_date" class="col-sm-2 control-label">Opening</label><div class="col-sm-10"><input id="opening_date" type="date" class="form-control"></div></div>'
             +'              <div class="form-group"><label for="status" class="col-sm-2 control-label">Status</label><div class="col-sm-10"><select class="form-control" style="width: 100%" name="status" id="status"></select></div></div>'
             +'          </form>'
             +'      </div>'
@@ -105,6 +107,7 @@ CTS.Dojos = {
                 $("#email").val(atr[0].email);
                 $("#facebook").val(atr[0].facebook);
                 $("#twitter").val(atr[0].twitter);
+                $("#opening_date").val(atr[0].opening_date);
                 CTS.Utils.setStatus(atr[0].id_status,'status');
             },
             error: function () {
@@ -126,6 +129,7 @@ CTS.Dojos = {
                 email: $("#email").val(),
                 facebook: $("#facebook").val(),
                 twitter: $("#twitter").val(),
+                opening_date: $("#opening_date").val(),
                 id_status: $("#status").val()
             };
         jQuery.ajax({
@@ -162,6 +166,7 @@ CTS.Dojos = {
                 email: $("#email").val(),
                 facebook: $("#facebook").val(),
                 twitter: $("#twitter").val(),
+                opening_date: $("#opening_date").val(),
                 id_status: $("#status").val()
             };
         jQuery.ajax({

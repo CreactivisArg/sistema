@@ -9,7 +9,7 @@ if (!is_null($con)){
     if (isset($obj->id_dojo)) {
         $members = array();
         $id_dojo = $obj->id_dojo;
-        $queryPadawans = sprintf("select padawan.id, contact.name, contact.lastname, contact.dni, contact.birthdate, contact.country, contact.state, contact.city, contact.address, contact.phone, contact.mobile, contact.email, contact.facebook, contact.twitter, contact.school, status.name as status, padawan.id_status, padawan.admission_date from padawan left join contact on contact.id = padawan.id_contact left join status on status.id = padawan.id_status inner join dojo_padawan on dojo_padawan.id_padawan = padawan.id and dojo_padawan.id_dojo = '%s' order by contact.lastname, contact.name",$con->real_escape_string($id_dojo));
+        $queryPadawans = sprintf("select padawan.id, contact.name, contact.lastname, contact.dni, contact.birthdate, contact.country, contact.state, contact.city, contact.address, contact.phone, contact.mobile, contact.email, contact.facebook, contact.twitter, contact.school, status.name as status, padawan.id_status, padawan.admission_date, padawan.scholarship from padawan left join contact on contact.id = padawan.id_contact left join status on status.id = padawan.id_status inner join dojo_padawan on dojo_padawan.id_padawan = padawan.id and dojo_padawan.id_dojo = '%s' order by contact.lastname, contact.name",$con->real_escape_string($id_dojo));
         $resultPadawans = $con->query($queryPadawans);
         $padawans = array();
         while ($rowPadawan = $resultPadawans->fetch_array(MYSQLI_ASSOC)) {
@@ -57,6 +57,7 @@ if (!is_null($con)){
                                 'facebook' => utf8_encode($rowPadawan['facebook']),
                                 'twitter' => utf8_encode($rowPadawan['twitter']),
                                 'school' => utf8_encode($rowPadawan['school']),
+                                'scholarship' => utf8_encode($rowPadawan['scholarship']),
                                 'admission_date' => $rowPadawan['admission_date'],
                                 'status' => utf8_encode($rowPadawan['status']),
                                 'id_status' => $rowPadawan['id_status'],

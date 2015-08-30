@@ -17,6 +17,7 @@ if (!is_null($con)){
 	$email = $obj->email;
 	$facebook = $obj->facebook;
 	$twitter = $obj->twitter;
+	$opening_date = $obj->opening_date;
 	$id_status = $obj->id_status; 
 
 	$queryID = "select UUID() as uuid";
@@ -30,7 +31,7 @@ if (!is_null($con)){
 		$id_contact,$con->real_escape_string(utf8_decode($country)),$con->real_escape_string(utf8_decode($state)),$con->real_escape_string(utf8_decode($city)),$con->real_escape_string(utf8_decode($address)),$con->real_escape_string(utf8_decode($phone)),$con->real_escape_string(utf8_decode($email)),$con->real_escape_string(utf8_decode($facebook)),$con->real_escape_string(utf8_decode($twitter)));
 	$resultContact = $con->query($newContact);
 	if ($resultContact) {
-		$newDojo = sprintf("INSERT INTO dojo (id, id_environment, name, id_contact, description, id_status, creation_date) VALUES ((select UUID()), '%s', '%s', '%s', '%s', '%s', now())",$con->real_escape_string($id_environment),$con->real_escape_string(utf8_decode($name)),$id_contact,$con->real_escape_string(utf8_decode($description)),$con->real_escape_string($id_status));
+		$newDojo = sprintf("INSERT INTO dojo (id, id_environment, name, id_contact, description, opening_date, id_status, creation_date) VALUES ((select UUID()), '%s', '%s', '%s', '%s', '%s', '%s', now())",$con->real_escape_string($id_environment),$con->real_escape_string(utf8_decode($name)),$id_contact,$con->real_escape_string(utf8_decode($description)),$con->real_escape_string($opening_date),$con->real_escape_string($id_status));
 		$resultDojo = $con->query($newDojo);
 	    if ($resultDojo) {
 	    	$con->commit(); 
